@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_launcher_background"
-    tools:context=".LedStripActivity">
+    tools:context=".ledstrip.LedStripActivity">
 
     <SeekBar
         android:id="@+id/redSeekBar"

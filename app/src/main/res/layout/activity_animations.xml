@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".matrix.LedMatrixActivity">
+    android:background="@drawable/ic_launcher_background"
+    tools:context=".AnimationsActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

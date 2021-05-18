@@ -1,11 +1,11 @@
-package com.darvader.smarthome
+package com.darvader.smarthome.ledstrip
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.darvader.smarthome.ledstrip.FFTLed
-import com.darvader.smarthome.ledstrip.LedStrip
+import com.darvader.smarthome.R
+import com.darvader.smarthome.SmartHomeActivity
 import kotlinx.android.synthetic.main.activity_led_strip.*
 
 
