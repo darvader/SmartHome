@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/led_actitivy_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_launcher_background"
+    tools:context=".LedStripActivity">
+
+    <SeekBar
+        android:id="@+id/redSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#F37474"
+        android:max="255"
+        android:progress="1"
+        android:progressTint="#00FA0303"
+        app:layout_constraintBottom_toTopOf="@+id/greenSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/divisor"
+        android:layout_width="331dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="8dp"
+        android:background="#DCCBCB"
+        android:max="20"
+        android:progress="1"
+        android:progressTint="#00FA0303"
+        app:layout_constraintBottom_toTopOf="@+id/redSeekBar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/speed"
+        android:layout_width="331dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="8dp"
+        android:background="#DCCBCB"
+        android:max="200"
+        android:progress="1"
+        android:progressTint="#00FA0303"
+        app:layout_constraintBottom_toTopOf="@+id/divisor"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/blueSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#03A9F4"
+        android:max="255"
+        android:progress="1"
+        android:progressTint="#000000FA"
+        app:layout_constraintBottom_toTopOf="@+id/whiteSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/whiteSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
+        android:max="255"
+        android:progress="1"
+        android:progressTint="#000000FA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/greenSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#4CAF50"
+        android:max="255"
+        android:progress="1"
+        android:progressTint="#0003FA07"
+        app:layout_constraintBottom_toTopOf="@+id/blueSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/detect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Detect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/seven"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="seven"
+        app:layout_constraintStart_toEndOf="@+id/detect"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/rainbow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="rainbow"
+        app:layout_constraintStart_toEndOf="@+id/seven"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/fft_remote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="FFTR"
+        app:layout_constraintStart_toEndOf="@+id/fft"
+        app:layout_constraintTop_toBottomOf="@+id/seven" />
+
+    <Button
+        android:id="@+id/fft_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="FFTRo"
+        app:layout_constraintStart_toEndOf="@+id/fft_remote"
+        app:layout_constraintTop_toBottomOf="@+id/rainbow" />
+
+    <Button
+        android:id="@+id/fft_row_remote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="FFTRR"
+        app:layout_constraintStart_toEndOf="@+id/fft_row"
+        app:layout_constraintTop_toBottomOf="@+id/rainbow" />
+
+    <Button
+        android:id="@+id/fft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="FFT"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detect" />
+
+    <Button
+        android:id="@+id/off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="OFF"
+        app:layout_constraintStart_toEndOf="@+id/rainbow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Divisor"
+        app:layout_constraintBottom_toTopOf="@+id/redSeekBar"
+        app:layout_constraintEnd_toStartOf="@+id/divisor"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Speed"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/divisor"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/rain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Rain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fft" />
+
+    <Button
+        android:id="@+id/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="white"
+        app:layout_constraintStart_toEndOf="@+id/rain"
+        app:layout_constraintTop_toBottomOf="@+id/fft_remote" />
+
+    <Button
+        android:id="@+id/dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="dot"
+        app:layout_constraintStart_toEndOf="@+id/white"
+        app:layout_constraintTop_toBottomOf="@+id/fft_row" />
+
+    <Button
+        android:id="@+id/allOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="alloff"
+        app:layout_constraintBottom_toTopOf="@+id/speed"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
