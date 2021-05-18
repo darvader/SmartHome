@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".livingroomlight.LivingRoomLampActivity"></activity>
         <activity android:name=".SmartHomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +24,9 @@
         </activity>
         <activity android:name=".ledstrip.FFTLed" />
         <activity
-        android:name=".ledstrip.LedStripActivity"
-        android:configChanges="keyboardHidden|orientation"
-        android:screenOrientation="portrait">
+            android:name=".ledstrip.LedStripActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +35,7 @@
         </activity>
         <activity android:name=".matrix.activity.AnimationsActivity" />
         <activity android:name=".matrix.activity.LedMatrixActivity" />
-        <activity android:name=".matrix.activity.TimerActivity"/>
+        <activity android:name=".matrix.activity.TimerActivity" />
         <activity android:name=".matrix.activity.TimeActivity" />
         <activity android:name=".matrix.activity.VideoActivity" />
         <activity android:name=".matrix.activity.ScoreboardActivity" />

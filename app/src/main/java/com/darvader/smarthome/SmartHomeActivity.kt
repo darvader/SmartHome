@@ -3,8 +3,10 @@ package com.darvader.smarthome
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.darvader.smarthome.ledstrip.LedStrip
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import com.darvader.smarthome.ledstrip.LedStripActivity
+import com.darvader.smarthome.livingroomlight.LivingRoomLampActivity
 import kotlinx.android.synthetic.main.activity_smart_home.*
 
 class SmartHomeActivity : AppCompatActivity() {
@@ -31,5 +33,17 @@ class SmartHomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        livingRoomLamp.setOnClickListener {
+            val intent = Intent(this, LivingRoomLampActivity::class.java)
+            startActivity(intent)
+        }
+
+        allOff.setOnClickListener { allOff() }
+
+    }
+
+    private fun allOff() {
+        println("All off called.")
+        LedStrip.echoClient.sendBroadCast("off")
     }
 }

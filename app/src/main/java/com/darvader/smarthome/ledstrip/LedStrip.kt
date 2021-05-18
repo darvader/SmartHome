@@ -97,11 +97,6 @@ class LedStrip(private val ledStripActivity: LedStripActivity): HomeElement {
         echoClient.send("off", currentAddress)
     }
 
-    fun allOff() {
-        println("All off called.")
-        echoClient.sendBroadCast("off")
-    }
-
     fun changeRed(red: Byte) {
         this.red = red
         val colors = createColors(red, green, blue, white)

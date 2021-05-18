@@ -224,11 +224,4 @@
         app:layout_constraintStart_toEndOf="@+id/white"
         app:layout_constraintTop_toBottomOf="@+id/fft_row" />
 
-    <Button
-        android:id="@+id/allOff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="alloff"
-        app:layout_constraintBottom_toTopOf="@+id/speed"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

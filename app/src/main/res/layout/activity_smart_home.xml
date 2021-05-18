@@ -8,6 +8,14 @@
     tools:context=".SmartHomeActivity">
 
     <Button
+        android:id="@+id/allOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="alloff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
         android:id="@+id/ledstrips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,4 +30,13 @@
         android:text="LedMatrix"
         app:layout_constraintStart_toEndOf="@+id/ledstrips"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/livingRoomLamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LivLamp"
+        app:layout_constraintStart_toEndOf="@+id/ledMatrix"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

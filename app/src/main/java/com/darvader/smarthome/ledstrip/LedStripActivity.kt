@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import com.darvader.smarthome.ProgressChangedListener
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
 import kotlinx.android.synthetic.main.activity_led_strip.*
@@ -16,11 +17,6 @@ class LedStripActivity : AppCompatActivity() {
         SmartHomeActivity.echoServer.register(ledStrip)
     }
 
-    abstract class ProgressChangedListener : SeekBar.OnSeekBarChangeListener {
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_led_strip)
@@ -31,7 +27,6 @@ class LedStripActivity : AppCompatActivity() {
         rain.setOnClickListener { ledStrip.rain() }
         rainbow.setOnClickListener { ledStrip.rainbow() }
         off.setOnClickListener { ledStrip.off() }
-        allOff.setOnClickListener { ledStrip.allOff() }
         fft.setOnClickListener { ledStrip.fft() }
         fft_row.setOnClickListener { ledStrip.fftRow() }
         fft_row_remote.setOnClickListener {
