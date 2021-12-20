@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.ProgressChangedListener
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
+import com.darvader.smarthome.ledstrip.christmas.CalibrateActivity
 import kotlinx.android.synthetic.main.activity_led_strip.*
 
 
@@ -29,6 +30,12 @@ class LedStripActivity : AppCompatActivity() {
         off.setOnClickListener { ledStrip.off() }
         fft.setOnClickListener { ledStrip.fft() }
         fft_row.setOnClickListener { ledStrip.fftRow() }
+        calib.setOnClickListener {
+            if (LedStrip.currentAddress != "") {
+                val intent = Intent(this, CalibrateActivity::class.java)
+                startActivity(intent)
+            }
+        }
         fft_row_remote.setOnClickListener {
             ledStrip.fftRowRemote()
             val intent = Intent(this, FFTLed::class.java)

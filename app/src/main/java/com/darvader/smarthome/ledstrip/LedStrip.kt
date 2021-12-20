@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Constraints
 import com.darvader.smarthome.*
 import kotlinx.android.synthetic.main.activity_led_strip.*
+import java.io.UTFDataFormatException
 import java.net.InetAddress
 import java.util.ArrayList
 
@@ -52,7 +53,7 @@ class LedStrip(private val ledStripActivity: LedStripActivity): HomeElement {
 
         }
 
-        var currentAddress = ""
+        public var currentAddress = ""
         val echoClient = SmartHomeActivity.echoClient
     }
 

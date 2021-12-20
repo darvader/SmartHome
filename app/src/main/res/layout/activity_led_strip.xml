@@ -224,4 +224,14 @@
         app:layout_constraintStart_toEndOf="@+id/white"
         app:layout_constraintTop_toBottomOf="@+id/fft_row" />
 
+    <Button
+        android:id="@+id/calib"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Calib"
+        app:layout_constraintBottom_toTopOf="@+id/speed"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

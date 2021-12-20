@@ -14,9 +14,9 @@ class SmartHomeActivity : AppCompatActivity() {
     companion object {
         val echoServer = EchoServer()
         val echoClient = EchoClient()
-    }
-    init {
-        echoServer.start()
+        init {
+            echoServer.start()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
