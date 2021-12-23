@@ -34,6 +34,7 @@ class CalibrateActivity : AppCompatActivity() {
                 calibrate.calibrate()
             }.start()
         }
+        collectPoints.setOnClickListener { Thread { calibrate.collectPoints() }.start() }
         if (allPermissionsGranted()) {
             startCamera()
         } else {

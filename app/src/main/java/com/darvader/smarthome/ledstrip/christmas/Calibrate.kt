@@ -12,7 +12,6 @@ import com.darvader.smarthome.SmartHomeActivity
 import com.darvader.smarthome.ledstrip.LedStrip
 import kotlinx.android.synthetic.main.activity_calibrate.*
 import java.io.File
-import java.util.ArrayList
 
 
 class Calibrate(val calibrateActivity: CalibrateActivity) {
@@ -25,15 +24,24 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
 
     var isTakingPhoto = false
 
-    data class ChristmasPoint(val p: Point, val color: Color, val lowestDistance: Double) {
-        constructor() : this(Point(), Color(), 0.0)
+    data class ChristmasPoint(val p: Point, val color: Color, val lowestDistance: Double, var front: Point, var right: Point
+                              , var back: Point, var left: Point) {
+        var index = 0
+
+        constructor() : this(Point(), Color(), 0.0, Point(), Point(), Point(), Point())
+        constructor(front: Point, right: Point
+                    , back: Point, left: Point) : this(Point(), Color(), 0.0, front, right, back, left)
+
+        constructor(p: Point, lastColor: Color, lowestDistance: Double) : this(p, lastColor, lowestDistance, Point(), Point(), Point(), Point())
     }
 
     fun calibrate() {
+        val currentTimeMillis = System.currentTimeMillis()
+        val fileName = "ChristmasDots$currentTimeMillis.txt"
         val printWriter =
-            File(calibrateActivity.applicationContext.filesDir, "ChristmasDots.txt").printWriter()
+            File(calibrateActivity.applicationContext.filesDir, fileName).printWriter()
 
-        for (i in 0..10) {
+        for (i in 0..499) {
             val low = (i and 0xff).toByte()
             val high = (i shr 8).toByte()
             val msg = "setPixel=".toByteArray(Charsets.UTF_8) + high + low
@@ -41,34 +49,81 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
             println("setPixel=$high $low")
             echoClient.send(msg, currentAddress)
             Thread.sleep(50)
-            findPoints().forEach {
-               c -> printWriter.println("$i,${c.p.x},${c.p.y},${c.color.red()},${c.color.green()},${c.color.blue()},${c.lowestDistance}")
-            }
+            val c = findPoint()
+            printWriter.println("$i,${c.p.x},${c.p.y},${c.color.red()},${c.color.green()},${c.color.blue()},${c.lowestDistance}")
         }
         printWriter.close()
 
         val output =
-            File(calibrateActivity.applicationContext.filesDir, "ChristmasDots.txt").bufferedReader().use { it.readText() }
+            File(calibrateActivity.applicationContext.filesDir, fileName).bufferedReader().use { it.readText() }
         println(output)
 
     }
 
-    fun getHighestBlueLocation(image: Bitmap): Point {
-        var highestBlue = 0
-        val point = Point()
-        println("Image size: ${image.width} ${image.height} ")
+    fun collectPoints() {
+        val files = calibrateActivity.applicationContext.filesDir.listFiles()
+        files.forEach {
+            f -> println("File: $f")
+        }
+        val front = files[0]
+        val right = files[1]
+        val back = files[2]
+        val left = files[3]
 
-        for (x in 0 until image.width)
-            for (y in 0 until image.height) {
-                val color = image.getPixel(x, y)
-                val blue = color and 0xff
-                if (blue > highestBlue) {
-                    highestBlue = blue
-                    point.x = x
-                    point.y = y
-                }
+        val christmasPoints = ArrayList<ChristmasPoint>(500)
+        for (i in 0..499) { christmasPoints.add(ChristmasPoint())}
+
+        front.bufferedReader().use { it.lines().forEach { l ->
+                val split = l.split(",")
+                val index = split[0].toInt()
+                val p = Point(split[1].toInt(), split[2].toInt())
+                val cp = ChristmasPoint()
+                cp.index = index
+                cp.front = p
+                christmasPoints[index] = cp
+        }}
+        right.bufferedReader().use { it.lines().forEach { l ->
+                val split = l.split(",")
+                val index = split[0].toInt()
+                val p = Point(split[1].toInt(), split[2].toInt())
+                christmasPoints[index].right = p
+            }}
+        back.bufferedReader().use { it.lines().forEach { l ->
+                val split = l.split(",")
+                val index = split[0].toInt()
+                val p = Point(split[1].toInt(), split[2].toInt())
+                christmasPoints[index].back = p
+            }}
+        left.bufferedReader().use { it.lines().forEach { l ->
+                val split = l.split(",")
+                val index = split[0].toInt()
+                val p = Point(split[1].toInt(), split[2].toInt())
+                christmasPoints[index].left = p
+            }}
+
+        var count = 0
+        christmasPoints.forEach { p ->
+            var i = 0
+            if (p.front.x>0) i+=1
+            if (p.right.x>0) i+=1
+            if (p.back.x>0) i+=1
+            if (p.left.x>0) i+=1
+
+            val message = "i: ${p.index}, front: ${p.front}, right: ${p.right}, back: ${p.back}, left: ${p.left}"
+            if (i<2) {
+                System.err.println(message)
+                count++
             }
-        return point
+            else {
+               // println(message)
+            }
+        }
+        println("Count: $count")
+
+    }
+
+    private fun convert2Dto3D(p1: Point, p2: Point) {
+
     }
 
     private fun getColorDistance(color1: Int, color2: Int): Double {
@@ -83,51 +138,35 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getHighestBlueLocationFast(image: Bitmap): List<ChristmasPoint> {
+    fun getHighestBlueLocationFast(image: Bitmap): ChristmasPoint {
         val width = image.width
         val height = image.height
+        var lowestDistance = Double.MAX_VALUE
+        var lastColor = Color()
         val pixels = IntArray(width * height)
         image.getPixels(pixels, 0, width, 0, 0, width, height)
         println("Image size: $width $height ")
-        val cp = ArrayList<ChristmasPoint>()
-
+        var p = Point()
         for (x in 0 until width)
             for (y in 0 until height) {
                 val color = pixels[x + y*width]
                 val colorDistance = getColorDistance(Color.BLUE, color)
-                if (colorDistance<0.2)
-                    cp.add(findInnerPoint(pixels, x, y, width));
-            }
-        return cp
-    }
+                if (colorDistance<0.4)
+                    if (colorDistance < lowestDistance) {
+                        lowestDistance = colorDistance
+                        lastColor = Color.valueOf(color)
+                        p.x = x
+                        p.y = y
+                    }
 
-    private fun findInnerPoint(pixels: IntArray, posx: Int, posy: Int, width: Int):ChristmasPoint {
-        val size = 20
-        var lowestDistance = Double.MAX_VALUE
-        var lastColor = Color()
-        val p = Point()
-        for (x in posx until posx+size)
-            for (y in posy until posy+size) {
-                val pos = x + y * width
-                if (pos>pixels.size) continue
-                val color = pixels[pos]
-                val colorDistance = getColorDistance(Color.BLUE, color)
-
-                if (colorDistance < lowestDistance) {
-                    lowestDistance = colorDistance
-                    lastColor = Color.valueOf(color)
-                    p.x = x
-                    p.y = y
-                    pixels[pos] = 0
-                }
             }
         return ChristmasPoint(p, lastColor, lowestDistance)
     }
 
-    private fun findPoints(): List<ChristmasPoint> {
+    private fun findPoint(): ChristmasPoint {
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture
-        var christPoints = listOf(ChristmasPoint())
+        var christmasPoint = ChristmasPoint()
         isTakingPhoto = true
 
         // Set up image capture listener, which is triggered after photo has
@@ -147,14 +186,13 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
                     bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
                 }
 
-                christPoints = getHighestBlueLocationFast(bitmap)
+                christmasPoint = getHighestBlueLocationFast(bitmap)
                 val canvas = Canvas(bitmap)
                 val paint = Paint()
                 paint.color = Color.RED
                 paint.strokeWidth = 20f
                 paint.style = Paint.Style.STROKE
-
-                christPoints.forEach { cp -> canvas.drawCircle(cp.p.x.toFloat(), cp.p.y.toFloat(), 125.0f, paint) }
+                canvas.drawCircle(christmasPoint.p.x.toFloat(), christmasPoint.p.y.toFloat(), 125.0f, paint)
 
                 calibrateActivity.imageView.setImageBitmap(bitmap)
                 image.close()
@@ -163,7 +201,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         })
         while (isTakingPhoto) Thread.sleep(10)
 
-        return christPoints
+        return christmasPoint
     }
 
     fun Image.toBitmap(): Bitmap {
