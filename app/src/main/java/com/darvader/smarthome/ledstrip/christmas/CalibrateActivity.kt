@@ -2,6 +2,7 @@ package com.darvader.smarthome.ledstrip.christmas
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.media.Image
@@ -14,6 +15,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.darvader.smarthome.R
+import com.darvader.smarthome.ledstrip.FFTLed
 import kotlinx.android.synthetic.main.activity_calibrate.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -33,6 +35,10 @@ class CalibrateActivity : AppCompatActivity() {
                 calibrate.setImageCapture(imageCapture)
                 calibrate.calibrate()
             }.start()
+        }
+        showTree.setOnClickListener {
+            val intent = Intent(this, OpenGLES20Activity::class.java)
+            startActivity(intent)
         }
         collectPoints.setOnClickListener { Thread { calibrate.collectPoints() }.start() }
         if (allPermissionsGranted()) {

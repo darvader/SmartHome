@@ -24,17 +24,6 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
 
     var isTakingPhoto = false
 
-    data class ChristmasPoint(val p: Point, val color: Color, val lowestDistance: Double, var front: Point, var right: Point
-                              , var back: Point, var left: Point) {
-        var index = 0
-
-        constructor() : this(Point(), Color(), 0.0, Point(), Point(), Point(), Point())
-        constructor(front: Point, right: Point
-                    , back: Point, left: Point) : this(Point(), Color(), 0.0, front, right, back, left)
-
-        constructor(p: Point, lastColor: Color, lowestDistance: Double) : this(p, lastColor, lowestDistance, Point(), Point(), Point(), Point())
-    }
-
     fun calibrate() {
         val currentTimeMillis = System.currentTimeMillis()
         val fileName = "ChristmasDots$currentTimeMillis.txt"
@@ -110,7 +99,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
             if (p.left.x>0) i+=1
 
             val message = "i: ${p.index}, front: ${p.front}, right: ${p.right}, back: ${p.back}, left: ${p.left}"
-            if (i<2) {
+            if (i<1) {
                 System.err.println(message)
                 count++
             }
