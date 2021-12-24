@@ -55,7 +55,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         files.forEach {
             f -> println("File: $f")
         }
-        var filesList = files.filter { f -> f.name.startsWith("ChristmasDots") }
+        var filesList = files.filter { f -> f.name.startsWith("ChristmasDots") }.sortedBy { f -> f.name.split("ChristmasDots")[1] }
         val front = filesList[0]
         val right = filesList[1]
         val back = filesList[2]
