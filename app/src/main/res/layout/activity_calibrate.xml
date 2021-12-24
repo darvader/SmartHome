@@ -16,15 +16,16 @@
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
-        android:layout_width="183dp"
-        android:layout_height="253dp"
+        android:layout_width="205dp"
+        android:layout_height="329dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="275dp"
-        android:layout_height="400dp"
+        android:layout_width="185dp"
+        android:layout_height="296dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />

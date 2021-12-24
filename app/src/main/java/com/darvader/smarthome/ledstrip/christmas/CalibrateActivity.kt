@@ -33,10 +33,11 @@ class CalibrateActivity : AppCompatActivity() {
         calibrateButton.setOnClickListener {
             Thread {
                 calibrate.setImageCapture(imageCapture)
-                calibrate.calibrate()
+                // calibrate.calibrate()
             }.start()
         }
         showTree.setOnClickListener {
+            calibrate.collectPoints()
             val intent = Intent(this, OpenGLES20Activity::class.java)
             startActivity(intent)
         }

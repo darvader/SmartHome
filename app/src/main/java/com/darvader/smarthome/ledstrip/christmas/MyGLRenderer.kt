@@ -9,7 +9,7 @@ import android.opengl.Matrix
 
 class MyGLRenderer : GLSurfaceView.Renderer {
 
-    private lateinit var mTriangle: Triangle
+    private lateinit var christmasStrip: ChristmasStrip
     private val rotationMatrix = FloatArray(16)
 
     @Volatile
@@ -19,14 +19,14 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
         // initialize a triangle
-        mTriangle = Triangle()
+        christmasStrip = ChristmasStrip()
     }
 
     override fun onDrawFrame(unused: GL10) {
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
         // Set the camera position (View matrix)
-        Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, 3f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
+        Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, 6f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
@@ -37,15 +37,21 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         // Create a rotation for the triangle
         // long time = SystemClock.uptimeMillis() % 4000L;
         // float angle = 0.090f * ((int) time);
-        Matrix.setRotateM(rotationMatrix, 0, angle, 0f, 0f, -1.0f)
+        Matrix.setRotateM(rotationMatrix, 0, angle, 0f, -1f, 0f)
 
+        val scratch2 = FloatArray(16)
         // Combine the rotation matrix with the projection and camera view
         // Note that the mvpMatrix factor *must be first* in order
         // for the matrix multiplication product to be correct.
         Matrix.multiplyMM(scratch, 0, mvpMatrix, 0, rotationMatrix, 0)
 
+        Matrix.setRotateM(rotationMatrix, 0, 180.0f, 0f, 0f, -1f)
+        Matrix.multiplyMM(scratch, 0, scratch, 0, rotationMatrix, 0)
+        Matrix.translateM(scratch, 0, 0f, -0.2f, 0f)
+        Matrix.scaleM(scratch, 0, 2f, 3.5f, 2f)
+
         // Draw triangle
-        mTriangle.draw(scratch)
+        christmasStrip.draw(scratch)
     }
 
     // vPMatrix is an abbreviation for "Model View Projection Matrix"

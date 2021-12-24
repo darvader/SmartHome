@@ -12,6 +12,7 @@ import com.darvader.smarthome.SmartHomeActivity
 import com.darvader.smarthome.ledstrip.LedStrip
 import kotlinx.android.synthetic.main.activity_calibrate.*
 import java.io.File
+import kotlin.math.max
 
 
 class Calibrate(val calibrateActivity: CalibrateActivity) {
@@ -54,10 +55,11 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         files.forEach {
             f -> println("File: $f")
         }
-        val front = files[0]
-        val right = files[1]
-        val back = files[2]
-        val left = files[3]
+        var filesList = files.filter { f -> f.name.startsWith("ChristmasDots") }
+        val front = filesList[0]
+        val right = filesList[1]
+        val back = filesList[2]
+        val left = filesList[3]
 
         val christmasPoints = ArrayList<ChristmasPoint>(500)
         for (i in 0..499) { christmasPoints.add(ChristmasPoint())}
@@ -69,34 +71,36 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
                 val cp = ChristmasPoint()
                 cp.index = index
                 cp.front = p
+                cp.frontLD = split[6].toDouble()
                 christmasPoints[index] = cp
         }}
         right.bufferedReader().use { it.lines().forEach { l ->
                 val split = l.split(",")
                 val index = split[0].toInt()
                 val p = Point(split[1].toInt(), split[2].toInt())
+                christmasPoints[index].rightLD = split[6].toDouble()
                 christmasPoints[index].right = p
             }}
         back.bufferedReader().use { it.lines().forEach { l ->
                 val split = l.split(",")
                 val index = split[0].toInt()
                 val p = Point(split[1].toInt(), split[2].toInt())
+                christmasPoints[index].backLD = split[6].toDouble()
                 christmasPoints[index].back = p
             }}
         left.bufferedReader().use { it.lines().forEach { l ->
                 val split = l.split(",")
                 val index = split[0].toInt()
                 val p = Point(split[1].toInt(), split[2].toInt())
+                christmasPoints[index].leftLD = split[6].toDouble()
                 christmasPoints[index].left = p
             }}
 
         var count = 0
         christmasPoints.forEach { p ->
             var i = 0
-            if (p.front.x>0) i+=1
-            if (p.right.x>0) i+=1
-            if (p.back.x>0) i+=1
-            if (p.left.x>0) i+=1
+            if (p.front.x>0 && (p.right.x>0 || p.left.x>0)) i+=1
+            if (p.back.x>0 && (p.right.x>0 || p.left.x>0)) i+=1
 
             val message = "i: ${p.index}, front: ${p.front}, right: ${p.right}, back: ${p.back}, left: ${p.left}"
             if (i<1) {
@@ -108,11 +112,89 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
             }
         }
         println("Count: $count")
+        calculate3dPoints(christmasPoints)
+
 
     }
 
-    private fun convert2Dto3D(p1: Point, p2: Point) {
+    val maxWidth = 2448
+    val maxHeight = 3264
 
+    private fun calculate3dPoints(christmasPoints: ArrayList<ChristmasPoint>) {
+        christmasPoints.filter{ it.index < 500}.forEach { p ->
+            if (p.frontLD < p.backLD && p.front.x>0) {
+                if (p.rightLD < p.leftLD && p.right.x>0) {
+                    p.p3.x = normalize(p.front.x.toFloat(), maxWidth)
+                    p.p3.y = normalize(p.front.y.toFloat(), maxHeight)
+                    p.p3.z = normalize(p.right.x.toFloat(), maxWidth)
+                } else
+                if (p.left.x>0) {
+                    p.p3.x = normalize(p.front.x.toFloat(), maxWidth)
+                    p.p3.y = normalize(p.front.y.toFloat(), maxHeight)
+                    p.p3.z = -normalize(p.left.x.toFloat(), maxWidth)
+                } else {
+                    p.p3.x = normalize(p.front.x.toFloat(), maxWidth)
+                    p.p3.y = normalize(p.front.y.toFloat(), maxHeight)
+                    p.p3.z = 0f
+                }
+            } else
+            if (p.back.x>0) {
+                if (p.rightLD < p.leftLD && p.right.x>0) {
+                    p.p3.x = -normalize(p.back.x.toFloat(), maxWidth)
+                    p.p3.y = normalize(p.back.y.toFloat(), maxHeight)
+                    p.p3.z = normalize(p.right.x.toFloat(), maxWidth)
+                } else
+                if (p.left.x>0) {
+                    p.p3.x = -normalize(p.back.x.toFloat(), maxWidth)
+                    p.p3.y = normalize(p.back.y.toFloat(), maxHeight)
+                    p.p3.z = -normalize(p.left.x.toFloat(), maxWidth)
+                } else {
+                    p.p3.x = -normalize(p.back.x.toFloat(), maxWidth)
+                    p.p3.y = normalize(p.back.y.toFloat(), maxHeight)
+                    p.p3.z = 0f
+                }
+            } else if (p.left.x > 0) {
+                p.p3.x = 0f
+                p.p3.y = normalize(p.left.y.toFloat(), maxHeight)
+                p.p3.z = -normalize(p.left.x.toFloat(), maxWidth)
+            } else if (p.right.x > 0) {
+                p.p3.x = 0f
+                p.p3.y = normalize(p.right.y.toFloat(), maxHeight)
+                p.p3.z = normalize(p.right.x.toFloat(), maxWidth)
+            }
+
+        }
+        christmasPoints.forEach { p ->
+            println("3D Id: ${p.index} P:${p.p3}")
+        }
+
+        val printWriter =
+            File(calibrateActivity.applicationContext.filesDir, "3dPoints.txt").printWriter()
+        christmasPoints.forEach {
+            with(it) {
+                printWriter.println("$index,${p3.x},${p3.y},${p3.z}")
+            }
+        }
+        printWriter.close()
+        val maxOf = christmasPoints.maxByOrNull { p -> p.p3.y }
+        println("Max: ${maxOf?.index}, ${maxOf?.p3}")
+
+        var first = true
+        var lineCoords = ArrayList<Float>()
+        christmasPoints.forEach { p ->
+            println("3d: ${p.p3}")
+            lineCoords.add(p.p3.x)
+            lineCoords.add(p.p3.y)
+            lineCoords.add(p.p3.z)
+        }
+        ChristmasStrip.coords = lineCoords.toFloatArray()
+        ChristmasStrip.dirty = true
+
+
+    }
+
+    private fun normalize(f: Float, max: Int): Float {
+        return f/max.toFloat() - 0.5f
     }
 
     private fun getColorDistance(color1: Int, color2: Int): Double {
@@ -139,8 +221,8 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         for (x in 0 until width)
             for (y in 0 until height) {
                 val color = pixels[x + y*width]
-                val colorDistance = getColorDistance(Color.BLUE, color)
-                if (colorDistance<0.4)
+                val colorDistance = getColorDistance(Color.RED, color)
+                if (colorDistance<0.5)
                     if (colorDistance < lowestDistance) {
                         lowestDistance = colorDistance
                         lastColor = Color.valueOf(color)

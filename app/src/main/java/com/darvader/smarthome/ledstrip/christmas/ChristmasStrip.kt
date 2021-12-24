@@ -4,20 +4,10 @@ import android.opengl.GLES20
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
+import java.nio.ShortBuffer
 
 // number of coordinates per vertex in this array
-const val COORDS_PER_VERTEX = 3
-var triangleCoords = floatArrayOf(     // in counterclockwise order:
-    0.0f, 0.622008459f, 0.0f,      // top
-    -0.5f, -0.311004243f, 0.0f,    // bottom left
-    -0.5f, -0.311004243f, 0.0f,    // bottom left
-    0.5f, -0.311004243f, 0.0f,      // bottom right
-    0.5f, -0.311004243f, 0.0f,      // bottom right
-    0.0f, 0.622008459f, 0.0f      // top
-)
-
-class Triangle {
-
+class ChristmasStrip {
     companion object {
         fun loadShader(type: Int, shaderCode: String): Int {
 
@@ -30,6 +20,16 @@ class Triangle {
                 GLES20.glCompileShader(shader)
             }
         }
+        var coords = floatArrayOf(     // in counterclockwise order:
+            0.0f, 0.622008459f, 0.0f,      // top
+            -0.5f, -0.311004243f, 0.0f,    // bottom left
+            -0.5f, -0.311004243f, 0.0f,    // bottom left
+            0.5f, -0.311004243f, 0.0f,      // bottom right
+            0.5f, -0.311004243f, 0.0f,      // bottom right
+            0.0f, 0.622008459f, 0.0f      // top
+        )
+        var dirty = false
+
     }
 
     private val vertexShaderCode =
@@ -79,14 +79,14 @@ class Triangle {
 
     private var vertexBuffer: FloatBuffer =
         // (number of coordinate values * 4 bytes per float)
-        ByteBuffer.allocateDirect(triangleCoords.size * 4).run {
+        ByteBuffer.allocateDirect(coords.size * 4).run {
             // use the device hardware's native byte order
             order(ByteOrder.nativeOrder())
 
             // create a floating point buffer from the ByteBuffer
             asFloatBuffer().apply {
                 // add the coordinates to the FloatBuffer
-                put(triangleCoords)
+                put(coords)
                 // set the buffer to read the first coordinate
                 position(0)
             }
@@ -94,11 +94,33 @@ class Triangle {
     private var positionHandle: Int = 0
     private var mColorHandle: Int = 0
 
-    private val vertexCount: Int = triangleCoords.size / COORDS_PER_VERTEX
+    private var vertexCount: Int = coords.size / COORDS_PER_VERTEX
     private val vertexStride: Int = COORDS_PER_VERTEX * 4 // 4 bytes per vertex
+
+    fun reload() {
+        vertexBuffer =
+        // (number of coordinate values * 4 bytes per float)
+        ByteBuffer.allocateDirect(coords.size * 4).run {
+            // use the device hardware's native byte order
+            order(ByteOrder.nativeOrder())
+
+            // create a floating point buffer from the ByteBuffer
+            asFloatBuffer().apply {
+                // add the coordinates to the FloatBuffer
+                put(coords)
+                // set the buffer to read the first coordinate
+                position(0)
+            }
+        }
+        vertexCount = coords.size / COORDS_PER_VERTEX
+    }
 
     fun draw(mvpMatrix: FloatArray) { // pass in the calculated transformation matrix
 
+        if (dirty) {
+            reload()
+            dirty = false
+        }
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram)
 
@@ -130,7 +152,7 @@ class Triangle {
                 GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, mvpMatrix, 0)
 
                 // Draw the triangle
-                GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount)
+                GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, vertexCount)
 
                 // Disable vertex array
                 GLES20.glDisableVertexAttribArray(positionHandle)

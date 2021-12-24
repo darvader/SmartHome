@@ -60,8 +60,8 @@ public class Line {
         // set the buffer to read the first coordinate
         VertexBuffer.position(0);
 
-        int vertexShader = Triangle.Companion.loadShader(GLES20.GL_VERTEX_SHADER, VertexShaderCode);
-        int fragmentShader = Triangle.Companion.loadShader(GLES20.GL_FRAGMENT_SHADER, FragmentShaderCode);
+        int vertexShader = ChristmasStrip.Companion.loadShader(GLES20.GL_VERTEX_SHADER, VertexShaderCode);
+        int fragmentShader = ChristmasStrip.Companion.loadShader(GLES20.GL_FRAGMENT_SHADER, FragmentShaderCode);
 
         GlProgram = GLES20.glCreateProgram();             // create empty OpenGL ES Program
         GLES20.glAttachShader(GlProgram, vertexShader);   // add the vertex shader to program
