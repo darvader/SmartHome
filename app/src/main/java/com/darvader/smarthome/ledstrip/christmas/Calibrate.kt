@@ -169,10 +169,10 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         }
 
         val printWriter =
-            File(calibrateActivity.applicationContext.filesDir, "3dPoints.txt").printWriter()
+            File(calibrateActivity.applicationContext.filesDir, "3dPoints.h").printWriter()
         christmasPoints.forEach {
             with(it) {
-                printWriter.println("$index,${p3.x},${p3.y},${p3.z}")
+                printWriter.println("{${p3.x}f,${p3.y}f,${p3.z}f},")
             }
         }
         printWriter.close()

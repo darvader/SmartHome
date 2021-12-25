@@ -96,8 +96,6 @@
         android:id="@+id/detect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="Detect"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -106,8 +104,6 @@
         android:id="@+id/seven"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="seven"
         app:layout_constraintStart_toEndOf="@+id/detect"
         app:layout_constraintTop_toTopOf="parent" />
@@ -116,8 +112,6 @@
         android:id="@+id/rainbow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="rainbow"
         app:layout_constraintStart_toEndOf="@+id/seven"
         app:layout_constraintTop_toTopOf="parent" />
@@ -126,8 +120,6 @@
         android:id="@+id/fft_remote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="FFTR"
         app:layout_constraintStart_toEndOf="@+id/fft"
         app:layout_constraintTop_toBottomOf="@+id/seven" />
@@ -136,8 +128,6 @@
         android:id="@+id/fft_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="FFTRo"
         app:layout_constraintStart_toEndOf="@+id/fft_remote"
         app:layout_constraintTop_toBottomOf="@+id/rainbow" />
@@ -146,8 +136,6 @@
         android:id="@+id/fft_row_remote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="FFTRR"
         app:layout_constraintStart_toEndOf="@+id/fft_row"
         app:layout_constraintTop_toBottomOf="@+id/rainbow" />
@@ -156,8 +144,6 @@
         android:id="@+id/fft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="FFT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detect" />
@@ -166,8 +152,6 @@
         android:id="@+id/off"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="OFF"
         app:layout_constraintStart_toEndOf="@+id/rainbow"
         app:layout_constraintTop_toTopOf="parent" />
@@ -201,7 +185,6 @@
         android:id="@+id/rain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="Rain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fft" />
@@ -210,7 +193,6 @@
         android:id="@+id/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="white"
         app:layout_constraintStart_toEndOf="@+id/rain"
         app:layout_constraintTop_toBottomOf="@+id/fft_remote" />
@@ -219,10 +201,33 @@
         android:id="@+id/dot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="dot"
         app:layout_constraintStart_toEndOf="@+id/white"
         app:layout_constraintTop_toBottomOf="@+id/fft_row" />
+
+    <Button
+        android:id="@+id/christmasHor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ChristH"
+        app:layout_constraintStart_toEndOf="@+id/dot"
+        app:layout_constraintTop_toBottomOf="@+id/fft_row_remote" />
+
+    <Button
+        android:id="@+id/christmasVer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ChristV"
+        app:layout_constraintStart_toEndOf="@+id/dot"
+        app:layout_constraintTop_toBottomOf="@+id/christmasHor" />
+
+    <Button
+        android:id="@+id/christmasZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ChristZ"
+        app:layout_constraintStart_toEndOf="@+id/dot"
+        app:layout_constraintTop_toBottomOf="@+id/christmasVer" />
 
     <Button
         android:id="@+id/calib"
