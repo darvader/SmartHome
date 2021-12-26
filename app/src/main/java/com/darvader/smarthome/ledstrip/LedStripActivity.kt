@@ -34,6 +34,7 @@ class LedStripActivity : AppCompatActivity() {
         christmasVer.setOnClickListener { ledStrip.christmasVertical() }
         christmasZ.setOnClickListener { ledStrip.christmasZ() }
         christmasSevenH.setOnClickListener { ledStrip.christmasSevenH() }
+        christmasRotation.setOnClickListener { ledStrip.christmasRotation() }
         calib.setOnClickListener {
             if (LedStrip.currentAddress != "") {
                 val intent = Intent(this, CalibrateActivity::class.java)

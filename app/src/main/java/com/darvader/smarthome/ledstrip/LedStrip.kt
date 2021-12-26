@@ -163,6 +163,11 @@ class LedStrip(private val ledStripActivity: LedStripActivity): HomeElement {
         echoClient.send("christmasSevenH", currentAddress)
     }
 
+    fun christmasRotation() {
+        println("christmasRotation.")
+        echoClient.send("christmasRotation", currentAddress)
+    }
+
     fun fftRowRemote() {
         println("fftRowRemote.")
         echoClient.send("fftRowRemote", currentAddress)

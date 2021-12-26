@@ -168,16 +168,8 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
             println("3D Id: ${p.index} P:${p.p3}")
         }
 
-        val printWriter =
-            File(calibrateActivity.applicationContext.filesDir, "3dPoints.h").printWriter()
-        christmasPoints.forEach {
-            with(it) {
-                printWriter.println("{${p3.x}f,${p3.y}f,${p3.z}f},")
-            }
-        }
-        printWriter.close()
-        val maxOf = christmasPoints.maxByOrNull { p -> p.p3.y }
-        println("Max: ${maxOf?.index}, ${maxOf?.p3}")
+        optimizePoints(christmasPoints)
+        write3DPoints(christmasPoints)
 
         var first = true
         var lineCoords = ArrayList<Float>()
@@ -191,6 +183,39 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         ChristmasStrip.dirty = true
 
 
+    }
+
+    private fun optimizePoints(cp: List<ChristmasPoint>) {
+        var totalDistance = 0.0;
+        for (i in 0..10) {
+            for (i in 0 .. cp.size-2) {
+                val length = (cp[i].p3 - cp[i + 1].p3).length()
+                totalDistance += length
+                cp[i+1].length = length
+            }
+            var averageDistance = totalDistance/498.0;
+            for (i in 1 .. cp.size-2) {
+                if (cp[i].length > averageDistance * 1.1 || cp[i+1].length>1.1) {
+                    println(cp[i].index)
+                    cp[i].p3 = (cp[i+1].p3 - cp[i-1].p3)/2.0f + cp[i-1].p3
+                }
+            }
+            println("Average: $averageDistance")
+
+        }
+
+
+    }
+
+    private fun write3DPoints(christmasPoints: ArrayList<ChristmasPoint>) {
+        val printWriter =
+            File(calibrateActivity.applicationContext.filesDir, "3dPoints.h").printWriter()
+        christmasPoints.forEach {
+            with(it) {
+                printWriter.println("{${p3.x}f,${p3.y}f,${p3.z}f},")
+            }
+        }
+        printWriter.close()
     }
 
     private fun normalize(f: Float, max: Int): Float {
