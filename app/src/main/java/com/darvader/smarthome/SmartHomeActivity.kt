@@ -3,10 +3,12 @@ package com.darvader.smarthome
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.darvader.smarthome.kitchen_light.KitchenLightActivity
 import com.darvader.smarthome.ledstrip.LedStrip
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import com.darvader.smarthome.ledstrip.LedStripActivity
-import com.darvader.smarthome.livingroomlight.LivingRoomLampActivity
+import com.darvader.smarthome.ledstrip.christmas.ChristmasTreeActivity
+import com.darvader.smarthome.livingroomlight.LightsActivity
 import kotlinx.android.synthetic.main.activity_smart_home.*
 
 class SmartHomeActivity : AppCompatActivity() {
@@ -34,7 +36,17 @@ class SmartHomeActivity : AppCompatActivity() {
         }
 
         livingRoomLamp.setOnClickListener {
-            val intent = Intent(this, LivingRoomLampActivity::class.java)
+            val intent = Intent(this, LightsActivity::class.java)
+            startActivity(intent)
+        }
+
+        christmasTree.setOnClickListener {
+            val intent = Intent(this, ChristmasTreeActivity::class.java)
+            startActivity(intent)
+        }
+
+        kitchen.setOnClickListener {
+            val intent = Intent(this, KitchenLightActivity::class.java)
             startActivity(intent)
         }
 

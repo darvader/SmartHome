@@ -1,10 +1,11 @@
-package com.darvader.smarthome.livingroomlight
+package com.darvader.smarthome.kitchen_light
 
 import com.darvader.smarthome.*
 import com.darvader.smarthome.ledstrip.LedStrip
+import com.darvader.smarthome.ledstrip.christmas.Calibrate
 import java.net.InetAddress
 
-class LivingRoomLamp(): HomeElement {
+class KitchenLight(): HomeElement {
 
     companion object {
         var currentAddress = ""
@@ -16,20 +17,23 @@ class LivingRoomLamp(): HomeElement {
         echoClient.send("off", currentAddress)
     }
 
+    fun on() {
+        println("On called.")
+        echoClient.send("on", currentAddress)
+    }
+
     override fun refresh(address: InetAddress, received: String) {
-        if (received.startsWith("LivingRoomLamp")) {
+        println("Received: $received")
+        if (received.startsWith("KitchenDeskLight")) {
+            println("Found Kitchen")
             currentAddress = address.hostAddress
         }
     }
 
-    fun turnLampsOn(numLamps: Int) {
-        println("Turn lamps on: $numLamps")
-        echoClient.send("numLamps=${numLamps.toChar()}", currentAddress)
-    }
 
     fun detect() {
         println("Detect called.")
-        LedStrip.echoClient.sendBroadCast("Detect")
+        echoClient.sendBroadCast("Detect")
     }
 
 }

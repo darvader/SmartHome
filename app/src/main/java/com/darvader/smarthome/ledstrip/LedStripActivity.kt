@@ -8,6 +8,7 @@ import com.darvader.smarthome.ProgressChangedListener
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
 import com.darvader.smarthome.ledstrip.christmas.CalibrateActivity
+import kotlinx.android.synthetic.main.activity_christmas_tree.*
 import kotlinx.android.synthetic.main.activity_led_strip.*
 
 
@@ -30,17 +31,22 @@ class LedStripActivity : AppCompatActivity() {
         off.setOnClickListener { ledStrip.off() }
         fft.setOnClickListener { ledStrip.fft() }
         fft_row.setOnClickListener { ledStrip.fftRow() }
-        christmasHor.setOnClickListener { ledStrip.christmasHorizontal() }
+     /*   christmasHor.setOnClickListener { ledStrip.christmasHorizontal() }
         christmasVer.setOnClickListener { ledStrip.christmasVertical() }
         christmasZ.setOnClickListener { ledStrip.christmasZ() }
         christmasSevenH.setOnClickListener { ledStrip.christmasSevenH() }
-        christmasRotation.setOnClickListener { ledStrip.christmasRotation() }
+        christmasRotationY.setOnClickListener { ledStrip.christmasRotationY() }
+        christmasRotationX.setOnClickListener { ledStrip.christmasRotationX() }
+        christmasRotationZ.setOnClickListener { ledStrip.christmasRotationZ() }
+        christmasSmoothRotationY.setOnClickListener { ledStrip.christmasSmoothRotationY() }
+        christmasSmoothRotationX.setOnClickListener { ledStrip.christmasSmoothRotationX() }
+        christmasSmoothRotationZ.setOnClickListener { ledStrip.christmasSmoothRotationZ() }
         calib.setOnClickListener {
             if (LedStrip.currentAddress != "") {
                 val intent = Intent(this, CalibrateActivity::class.java)
                 startActivity(intent)
             }
-        }
+        }*/
         fft_row_remote.setOnClickListener {
             ledStrip.fftRowRemote()
             val intent = Intent(this, FFTLed::class.java)
