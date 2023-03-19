@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.darvader.smarthome.matrix.LedMatrix
 import com.darvader.smarthome.R
-import kotlinx.android.synthetic.main.activity_video.*
+import com.darvader.smarthome.databinding.ActivityVideoBinding
 import wseemann.media.FFmpegMediaMetadataRetriever
 import java.util.*
 import kotlin.concurrent.schedule
@@ -24,6 +24,8 @@ class VideoActivity : AppCompatActivity() {
      //var uri = "content://media/external/video/media/21862" // trump
     // var uri = "content://media/external/video/media/8233"
     var ledMatrix: LedMatrix? = null
+
+    lateinit var binding: ActivityVideoBinding
 
     fun checkPermissionForReadExtertalStorage(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -49,7 +51,11 @@ class VideoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video)
+        binding = ActivityVideoBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+
         ledMatrix = LedMatrixActivity.ledMatrix
         ledMatrix?.pictureMode()
 
@@ -112,7 +118,7 @@ class VideoActivity : AppCompatActivity() {
 
         val bitmaps = ArrayList<Bitmap>()
 
-        start.setOnClickListener {
+        binding.start.setOnClickListener {
             println("Start caching bitmaps")
             for (i in 0L..10000L) {
                 val b: Bitmap? = mmr.getScaledFrameAtTime(

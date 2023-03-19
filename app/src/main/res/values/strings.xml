@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">SmartHome</string>
+    <string name="detect">Detect</string>
+    <string name="seven">seven</string>
+    <string name="rainbow">rainbow</string>
+    <string name="fftr">FFTR</string>
+    <string name="fftro">FFTRo</string>
+    <string name="fftrr">FFTRR</string>
+    <string name="fft">FFT</string>
+    <string name="off">OFF</string>
+    <string name="divisor">Divisor</string>
+    <string name="speed">Speed</string>
+    <string name="rain">Rain</string>
+    <string name="white">white</string>
+    <string name="dot">dot</string>
 </resources>

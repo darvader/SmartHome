@@ -7,8 +7,8 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.matrix.LedMatrix
 import com.darvader.smarthome.R
+import com.darvader.smarthome.databinding.ActivityScoreboardBinding
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
-import kotlinx.android.synthetic.main.activity_scoreboard.*
 
 
 class ScoreboardActivity : AppCompatActivity() {
@@ -19,36 +19,43 @@ class ScoreboardActivity : AppCompatActivity() {
         override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     }
 
+    lateinit var binding: ActivityScoreboardBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.ledMatrix = LedMatrixActivity.ledMatrix
 
+        binding = ActivityScoreboardBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+
         ledMatrix?.scoreboardActivity = this
         setContentView(R.layout.activity_scoreboard)
-        pointsUpLeft.setOnClickListener { ledMatrix?.pointsLeftUp() }
-        pointsDownLeft.setOnClickListener { ledMatrix?.pointsLeftDown() }
-        pointsUpRight.setOnClickListener { ledMatrix?.pointsRightUp() }
-        pointsDownRight.setOnClickListener { ledMatrix?.pointsRightDown() }
-        ballLeft.setOnClickListener { ledMatrix?.ballLeft() }
-        ballRight.setOnClickListener { ledMatrix?.ballRight() }
+        binding.pointsUpLeft.setOnClickListener { ledMatrix?.pointsLeftUp() }
+        binding.pointsDownLeft.setOnClickListener { ledMatrix?.pointsLeftDown() }
+        binding.pointsUpRight.setOnClickListener { ledMatrix?.pointsRightUp() }
+        binding.pointsDownRight.setOnClickListener { ledMatrix?.pointsRightDown() }
+        binding.ballLeft.setOnClickListener { ledMatrix?.ballLeft() }
+        binding.ballRight.setOnClickListener { ledMatrix?.ballRight() }
 
-        reset_points.setOnClickListener { ledMatrix?.clearPoints() }
+        binding.resetPoints.setOnClickListener { ledMatrix?.clearPoints() }
 
-        setsUpLeft.setOnClickListener { ledMatrix?.setsLeftUp() }
-        setsDownLeft.setOnClickListener { ledMatrix?.setsLeftDown() }
-        setsUpRight.setOnClickListener { ledMatrix?.setsRightUp() }
-        setsDownRight.setOnClickListener { ledMatrix?.setsRightDown() }
-        switchButton.setOnClickListener { ledMatrix?.switch() }
+        binding.setsUpLeft.setOnClickListener { ledMatrix?.setsLeftUp() }
+        binding.setsDownLeft.setOnClickListener { ledMatrix?.setsLeftDown() }
+        binding.setsUpRight.setOnClickListener { ledMatrix?.setsRightUp() }
+        binding.setsDownRight.setOnClickListener { ledMatrix?.setsRightDown() }
+        binding.switchButton.setOnClickListener { ledMatrix?.switch() }
 
-        timeout.setOnClickListener { ledMatrix?.timeout() }
-        invert.setOnClickListener { ledMatrix?.invert() }
+        binding.timeout.setOnClickListener { ledMatrix?.timeout() }
+        binding.invert.setOnClickListener { ledMatrix?.invert() }
 
-        reset.setOnClickListener { ledMatrix?.reset() }
-        off.setOnClickListener { ledMatrix?.off() }
+        binding.reset.setOnClickListener { ledMatrix?.reset() }
+        binding.off.setOnClickListener { ledMatrix?.off() }
 
 
 
-        scrollText.addTextChangedListener(object : TextWatcher {
+        binding.scrollText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 

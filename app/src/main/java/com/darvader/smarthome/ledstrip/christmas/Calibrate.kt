@@ -10,7 +10,6 @@ import androidx.camera.core.ImageProxy
 import androidx.core.content.ContextCompat
 import com.darvader.smarthome.SmartHomeActivity
 import com.darvader.smarthome.ledstrip.LedStrip
-import kotlinx.android.synthetic.main.activity_calibrate.*
 import java.io.File
 import kotlin.math.max
 
@@ -290,7 +289,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
                 paint.style = Paint.Style.STROKE
                 canvas.drawCircle(christmasPoint.p.x.toFloat(), christmasPoint.p.y.toFloat(), 125.0f, paint)
 
-                calibrateActivity.imageView.setImageBitmap(bitmap)
+                calibrateActivity.binding.imageView.setImageBitmap(bitmap)
                 image.close()
                 isTakingPhoto = false
             }

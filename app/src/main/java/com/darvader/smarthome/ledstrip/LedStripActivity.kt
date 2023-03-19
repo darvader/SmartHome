@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.ProgressChangedListener
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
+import com.darvader.smarthome.databinding.ActivityLedStripBinding
 import com.darvader.smarthome.ledstrip.christmas.CalibrateActivity
-import kotlinx.android.synthetic.main.activity_christmas_tree.*
-import kotlinx.android.synthetic.main.activity_led_strip.*
 
 
 class LedStripActivity : AppCompatActivity() {
@@ -19,18 +18,24 @@ class LedStripActivity : AppCompatActivity() {
         SmartHomeActivity.echoServer.register(ledStrip)
     }
 
+    lateinit var binding: ActivityLedStripBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_led_strip)
-        detect.setOnClickListener { ledStrip.detect() }
-        seven.setOnClickListener { ledStrip.seven() }
-        white.setOnClickListener { ledStrip.white() }
-        dot.setOnClickListener { ledStrip.dot() }
-        rain.setOnClickListener { ledStrip.rain() }
-        rainbow.setOnClickListener { ledStrip.rainbow() }
-        off.setOnClickListener { ledStrip.off() }
-        fft.setOnClickListener { ledStrip.fft() }
-        fft_row.setOnClickListener { ledStrip.fftRow() }
+        binding = ActivityLedStripBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.detect.setOnClickListener { ledStrip.detect() }
+        binding.seven.setOnClickListener { ledStrip.seven() }
+        binding.white.setOnClickListener { ledStrip.white() }
+        binding.dot.setOnClickListener { ledStrip.dot() }
+        binding.rain.setOnClickListener { ledStrip.rain() }
+        binding.rainbow.setOnClickListener { ledStrip.rainbow() }
+        binding.off.setOnClickListener { ledStrip.off() }
+        binding.fft.setOnClickListener { ledStrip.fft() }
+        binding.fftRow.setOnClickListener { ledStrip.fftRow() }
      /*   christmasHor.setOnClickListener { ledStrip.christmasHorizontal() }
         christmasVer.setOnClickListener { ledStrip.christmasVertical() }
         christmasZ.setOnClickListener { ledStrip.christmasZ() }
@@ -47,12 +52,12 @@ class LedStripActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }*/
-        fft_row_remote.setOnClickListener {
+        binding.fftRowRemote.setOnClickListener {
             ledStrip.fftRowRemote()
             val intent = Intent(this, FFTLed::class.java)
             startActivity(intent)
         }
-        fft_remote.setOnClickListener {
+        binding.fftRemote.setOnClickListener {
             ledStrip.fftRemote()
             // Thread.sleep(1000)
             val intent = Intent(this, FFTLed::class.java)
@@ -60,37 +65,37 @@ class LedStripActivity : AppCompatActivity() {
         }
 
 
-        redSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.redSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledStrip.changeRed(progress.toByte())
             }
         })
 
-        greenSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.greenSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledStrip.changeGreen(progress.toByte())
             }
         })
 
-        blueSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.blueSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledStrip.changeBlue(progress.toByte())
             }
         })
 
-        whiteSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.whiteSeekBar.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledStrip.changeWhite(progress.toByte())
             }
         })
 
-        divisor.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.divisor.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledStrip.changeDivisor(progress)
             }
         })
 
-        speed.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.speed.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledStrip.changeSpeed(progress)
             }

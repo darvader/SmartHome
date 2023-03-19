@@ -7,7 +7,8 @@ import android.widget.SeekBar
 import com.darvader.smarthome.matrix.LedMatrix
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
-import kotlinx.android.synthetic.main.activity_matrix.*
+import com.darvader.smarthome.databinding.ActivityLedMatrixBinding
+import com.darvader.smarthome.databinding.ActivityMatrixBinding
 
 class LedMatrixActivity : AppCompatActivity() {
 
@@ -24,41 +25,45 @@ class LedMatrixActivity : AppCompatActivity() {
         override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     }
 
+    lateinit var binding: ActivityMatrixBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ledMatrix.detect()
+        binding = ActivityMatrixBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setContentView(R.layout.activity_matrix)
-        scoreboard.setOnClickListener {
+
+        binding.scoreboard.setOnClickListener {
             val intent = Intent(this, ScoreboardActivity::class.java)
             startActivity(intent)
         }
 
-        videoPlayer.setOnClickListener {
+        binding.videoPlayer.setOnClickListener {
             val intent = Intent(this, VideoActivity::class.java)
             startActivity(intent)
         }
 
-        time.setOnClickListener {
+        binding.time.setOnClickListener {
             val intent = Intent(this, TimeActivity::class.java)
             startActivity(intent)
         }
 
-        animations.setOnClickListener {
+        binding.animations.setOnClickListener {
             val intent = Intent(this, AnimationsActivity::class.java)
             startActivity(intent)
         }
 
-        timer.setOnClickListener {
+        binding.timer.setOnClickListener {
             val intent = Intent(this, TimerActivity::class.java)
             startActivity(intent)
         }
 
-        detect.setOnClickListener {
+        binding.detect.setOnClickListener {
             ledMatrix?.detect()
         }
 
-        brightness.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.brightness.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledMatrix?.changeBrightness(progress)
             }

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -15,8 +14,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.darvader.smarthome.R
-import com.darvader.smarthome.ledstrip.FFTLed
-import kotlinx.android.synthetic.main.activity_calibrate.*
+import com.darvader.smarthome.databinding.ActivityCalibrateBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -27,21 +25,26 @@ class CalibrateActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var calibrate: Calibrate
 
+    lateinit var binding: ActivityCalibrateBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calibrate)
-        calibrateButton.setOnClickListener {
+        binding = ActivityCalibrateBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.calibrateButton.setOnClickListener {
             Thread {
                 calibrate.setImageCapture(imageCapture)
                 // calibrate.calibrate()
             }.start()
         }
-        showTree.setOnClickListener {
+        binding.showTree.setOnClickListener {
             calibrate.collectPoints()
             val intent = Intent(this, OpenGLES20Activity::class.java)
             startActivity(intent)
         }
-        collectPoints.setOnClickListener { Thread { calibrate.collectPoints() }.start() }
+        binding.collectPoints.setOnClickListener { Thread { calibrate.collectPoints() }.start() }
         if (allPermissionsGranted()) {
             startCamera()
         } else {
@@ -56,6 +59,7 @@ class CalibrateActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
         IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 startCamera()
@@ -72,16 +76,14 @@ class CalibrateActivity : AppCompatActivity() {
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
-        cameraProviderFuture.addListener(Runnable {
+        cameraProviderFuture.addListener({
             // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             // Preview
             val preview = Preview.Builder()
                 .build()
-                .also {
-                    it.setSurfaceProvider(viewFinder.surfaceProvider)
-                }
+
 
             imageCapture = ImageCapture.Builder().build()
 
@@ -115,9 +117,7 @@ class CalibrateActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "CameraXBasic"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        private var point = Point(0,0)
     }
 }

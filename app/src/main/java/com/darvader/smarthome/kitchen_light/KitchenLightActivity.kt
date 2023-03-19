@@ -6,7 +6,6 @@ import android.widget.SeekBar
 import com.darvader.smarthome.ProgressChangedListener
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
-import kotlinx.android.synthetic.main.activity_kitchen_light.*
 
 class KitchenLightActivity : AppCompatActivity() {
     val kitchenLight = KitchenLight()

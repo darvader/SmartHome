@@ -4,23 +4,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.darvader.smarthome.matrix.LedMatrix
 import com.darvader.smarthome.R
+import com.darvader.smarthome.databinding.ActivitySampleBinding
+import com.darvader.smarthome.databinding.ActivityTimerBinding
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
-import kotlinx.android.synthetic.main.activity_sample.*
 
 class TimeActivity() : AppCompatActivity() {
 
     private var ledMatrix: LedMatrix? = null
+    lateinit var binding: ActivitySampleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
+        binding = ActivitySampleBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+
         this.ledMatrix = LedMatrixActivity.ledMatrix
 
-        time1.setOnClickListener { ledMatrix?.startTime1() }
-        time2.setOnClickListener { ledMatrix?.startTime2() }
-        time3.setOnClickListener { ledMatrix?.startTime3() }
-        time4.setOnClickListener { ledMatrix?.startTime4() }
-        snow.setOnClickListener { ledMatrix?.startSnow() }
-        mandelbrot.setOnClickListener { ledMatrix?.mandelbrot() }
+        binding.time1.setOnClickListener { ledMatrix?.startTime1() }
+        binding.time2.setOnClickListener { ledMatrix?.startTime2() }
+        binding.time3.setOnClickListener { ledMatrix?.startTime3() }
+        binding.time4.setOnClickListener { ledMatrix?.startTime4() }
+        binding.snow.setOnClickListener { ledMatrix?.startSnow() }
+        binding.mandelbrot.setOnClickListener { ledMatrix?.mandelbrot() }
     }
 }

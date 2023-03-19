@@ -5,43 +5,47 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.matrix.LedMatrix
 import com.darvader.smarthome.R
+import com.darvader.smarthome.databinding.ActivityTimerBinding
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
-import kotlinx.android.synthetic.main.activity_timer.*
 
 class TimerActivity : AppCompatActivity() {
-    private var ledMatrix: LedMatrix? = null
+    private lateinit var ledMatrix: LedMatrix
+    lateinit var binding: ActivityTimerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_timer)
+        binding = ActivityTimerBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
 
         this.ledMatrix = LedMatrixActivity.ledMatrix
 
-        timeBar.setOnSeekBarChangeListener(object : LedMatrixActivity.ProgressChangedListener() {
+        binding.timeBar.setOnSeekBarChangeListener(object : LedMatrixActivity.ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ledMatrix?.setTime(progress * 5)
-                timeText.setText("${progress * 5}")
+                binding.timeText.text = "${progress * 5}"
             }
         })
 
-        start.setOnClickListener {
-            ledMatrix?.startTimer()
+        binding.start.setOnClickListener {
+            ledMatrix.startTimer()
         }
 
-        pause.setOnClickListener {
-            ledMatrix?.pauseTimer()
+        binding.pause.setOnClickListener {
+            ledMatrix.pauseTimer()
         }
 
-        stopWatch.setOnClickListener {
-            ledMatrix?.stopWatch()
+        binding.stopWatch.setOnClickListener {
+            ledMatrix.stopWatch()
         }
 
-        stopWatchStart.setOnClickListener {
-            ledMatrix?.stopWatchStart()
+        binding.stopWatchStart.setOnClickListener {
+            ledMatrix.stopWatchStart()
         }
 
-        stopWatchStop.setOnClickListener {
-            ledMatrix?.stopWatchStop()
+        binding.stopWatchStop.setOnClickListener {
+            ledMatrix.stopWatchStop()
         }
 
     }

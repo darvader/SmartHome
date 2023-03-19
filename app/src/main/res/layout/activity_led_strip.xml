@@ -96,7 +96,7 @@
         android:id="@+id/detect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detect"
+        android:text="@string/detect"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,7 +104,7 @@
         android:id="@+id/seven"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="seven"
+        android:text="@string/seven"
         app:layout_constraintStart_toEndOf="@+id/detect"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,7 +112,7 @@
         android:id="@+id/rainbow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rainbow"
+        android:text="@string/rainbow"
         app:layout_constraintStart_toEndOf="@+id/seven"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -120,7 +120,7 @@
         android:id="@+id/fft_remote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FFTR"
+        android:text="@string/fftr"
         app:layout_constraintStart_toEndOf="@+id/fft"
         app:layout_constraintTop_toBottomOf="@+id/seven" />
 
@@ -128,7 +128,7 @@
         android:id="@+id/fft_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FFTRo"
+        android:text="@string/fftro"
         app:layout_constraintStart_toEndOf="@+id/fft_remote"
         app:layout_constraintTop_toBottomOf="@+id/rainbow" />
 
@@ -136,7 +136,7 @@
         android:id="@+id/fft_row_remote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FFTRR"
+        android:text="@string/fftrr"
         app:layout_constraintStart_toEndOf="@+id/fft_row"
         app:layout_constraintTop_toBottomOf="@+id/rainbow" />
 
@@ -144,7 +144,7 @@
         android:id="@+id/fft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FFT"
+        android:text="@string/fft"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detect" />
 
@@ -152,9 +152,10 @@
         android:id="@+id/off"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OFF"
+        android:text="@string/off"
         app:layout_constraintStart_toEndOf="@+id/rainbow"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
 
     <TextView
         android:id="@+id/textView"
@@ -163,7 +164,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Divisor"
+        android:text="@string/divisor"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/redSeekBar"
         app:layout_constraintEnd_toStartOf="@+id/divisor"
         app:layout_constraintStart_toStartOf="parent" />
@@ -175,7 +177,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Speed"
+        android:text="@string/speed"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/divisor"
         app:layout_constraintHorizontal_bias="0.55"
@@ -185,7 +188,7 @@
         android:id="@+id/rain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rain"
+        android:text="@string/rain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fft" />
 
@@ -193,7 +196,7 @@
         android:id="@+id/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="white"
+        android:text="@string/white"
         app:layout_constraintStart_toEndOf="@+id/rain"
         app:layout_constraintTop_toBottomOf="@+id/fft_remote" />
 
@@ -201,7 +204,7 @@
         android:id="@+id/dot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dot"
+        android:text="@string/dot"
         app:layout_constraintStart_toEndOf="@+id/white"
         app:layout_constraintTop_toBottomOf="@+id/fft_row" />
 

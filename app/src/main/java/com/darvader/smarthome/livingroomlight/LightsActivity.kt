@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.ProgressChangedListener
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
-import kotlinx.android.synthetic.main.activity_kitchen_light.*
-import kotlinx.android.synthetic.main.activity_lights.*
+import com.darvader.smarthome.databinding.ActivityKitchenLightBinding
+import com.darvader.smarthome.databinding.ActivityLightsBinding
 
 class LightsActivity : AppCompatActivity() {
     val lights = Lights()
@@ -16,28 +16,32 @@ class LightsActivity : AppCompatActivity() {
         SmartHomeActivity.echoServer.register(lights)
     }
 
+    private lateinit var binding: ActivityLightsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lights)
+        binding = ActivityLightsBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        numLamps.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.numLamps.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 lights.turnLivLightsOn(progress)
             }
         })
-        bedLightSwitch.setOnClickListener { lights.switchBedLight() }
-        bedLightDimmer.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.bedLightSwitch.setOnClickListener { lights.switchBedLight() }
+        binding.bedLightDimmer.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 lights.changeBed(progress)
             }
         })
 
-        kitchenLightDimmer.setOnSeekBarChangeListener(object : ProgressChangedListener() {
+        binding.kitchenLightDimmer.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 lights.changeKitchen(progress)
             }
         })
-        kitchenLightSwitch.setOnClickListener { lights.switchKitchenLight() }
+        binding.kitchenLightSwitch.setOnClickListener { lights.switchKitchenLight() }
 
         lights.detect()
 
