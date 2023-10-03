@@ -29,7 +29,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
         binding = ActivitySmartHomeBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(view)
+        setContentView(view)-
 
 
         binding.ledstrips.setOnClickListener {
