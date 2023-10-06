@@ -29,7 +29,7 @@ class Lights(): HomeElement {
         if (received.startsWith("BedLightDimmer")) {
             bedLightAddress = address.hostAddress
         }
-        if (received.startsWith("KitchenLightDimmer")) {
+        if (received.startsWith("KitchenDeskLight")) {
             kitchenLightAddress = address.hostAddress
         }
     }
