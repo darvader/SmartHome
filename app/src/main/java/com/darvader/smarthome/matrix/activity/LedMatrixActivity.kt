@@ -1,14 +1,12 @@
 package com.darvader.smarthome.matrix.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
-import com.darvader.smarthome.matrix.LedMatrix
-import com.darvader.smarthome.R
+import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.SmartHomeActivity
-import com.darvader.smarthome.databinding.ActivityLedMatrixBinding
 import com.darvader.smarthome.databinding.ActivityMatrixBinding
+import com.darvader.smarthome.matrix.LedMatrix
 
 class LedMatrixActivity : AppCompatActivity() {
 
@@ -39,6 +37,11 @@ class LedMatrixActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.liveScoreboard.setOnClickListener {
+            val intent = Intent(this, LiveScoreActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.videoPlayer.setOnClickListener {
             val intent = Intent(this, VideoActivity::class.java)
             startActivity(intent)
@@ -60,12 +63,12 @@ class LedMatrixActivity : AppCompatActivity() {
         }
 
         binding.detect.setOnClickListener {
-            ledMatrix?.detect()
+            ledMatrix.detect()
         }
 
         binding.brightness.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                ledMatrix?.changeBrightness(progress)
+                ledMatrix.changeBrightness(progress)
             }
         })
     }

@@ -14,8 +14,8 @@
 
     <Button
         android:id="@+id/ballRight"
-        android:layout_width="37dp"
-        android:layout_height="41dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:text="B"
         app:layout_constraintEnd_toEndOf="@+id/pointsDownRight"
         app:layout_constraintTop_toBottomOf="@+id/pointsDownRight" />
@@ -24,7 +24,7 @@
         android:id="@+id/switchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:text="Switch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -34,7 +34,7 @@
     <Button
         android:id="@+id/setsUpLeft"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Up"
         app:layout_constraintEnd_toStartOf="@+id/sets"
         app:layout_constraintTop_toTopOf="@+id/sets" />
@@ -43,7 +43,6 @@
         android:id="@+id/reset_points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
         android:text="Clear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +62,7 @@
     <Button
         android:id="@+id/setsDownRight"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Down"
         app:layout_constraintStart_toEndOf="@+id/sets"
         app:layout_constraintTop_toBottomOf="@+id/setsUpRight" />
@@ -71,7 +70,7 @@
     <Button
         android:id="@+id/setsDownLeft"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Down"
         app:layout_constraintEnd_toStartOf="@+id/sets"
         app:layout_constraintTop_toBottomOf="@+id/setsUpLeft" />
@@ -79,7 +78,7 @@
     <Button
         android:id="@+id/setsUpRight"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Up"
         app:layout_constraintStart_toEndOf="@+id/sets"
         app:layout_constraintTop_toTopOf="@+id/sets" />
@@ -87,7 +86,7 @@
     <Button
         android:id="@+id/pointsUpRight"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Up"
         app:layout_constraintStart_toEndOf="@+id/points"
         app:layout_constraintTop_toTopOf="parent" />
@@ -95,7 +94,7 @@
     <Button
         android:id="@+id/pointsDownRight"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Down"
         app:layout_constraintStart_toEndOf="@+id/points"
         app:layout_constraintTop_toBottomOf="@+id/pointsUpRight" />
@@ -114,7 +113,7 @@
     <Button
         android:id="@+id/pointsUpLeft"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Up"
         app:layout_constraintEnd_toStartOf="@+id/points"
         app:layout_constraintTop_toTopOf="@+id/points" />
@@ -122,7 +121,7 @@
     <Button
         android:id="@+id/pointsDownLeft"
         android:layout_width="70sp"
-        android:layout_height="45sp"
+        android:layout_height="48sp"
         android:text="Down"
         app:layout_constraintEnd_toStartOf="@+id/points"
         app:layout_constraintTop_toBottomOf="@+id/pointsUpLeft" />
@@ -151,8 +150,8 @@
 
     <Button
         android:id="@+id/ballLeft"
-        android:layout_width="37dp"
-        android:layout_height="41dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:text="B"
         app:layout_constraintStart_toStartOf="@+id/pointsDownLeft"
         app:layout_constraintTop_toBottomOf="@+id/pointsDownLeft" />
@@ -170,6 +169,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="30dp"
+        android:layout_marginTop="16dp"
         android:max="100"
         android:scaleY="8"
         app:layout_constraintEnd_toEndOf="parent"

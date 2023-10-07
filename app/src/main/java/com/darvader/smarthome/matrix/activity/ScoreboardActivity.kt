@@ -5,10 +5,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.darvader.smarthome.matrix.LedMatrix
 import com.darvader.smarthome.R
 import com.darvader.smarthome.databinding.ActivityScoreboardBinding
-import com.darvader.smarthome.matrix.activity.LedMatrixActivity
+import com.darvader.smarthome.matrix.LedMatrix
 
 
 class ScoreboardActivity : AppCompatActivity() {
@@ -31,7 +30,6 @@ class ScoreboardActivity : AppCompatActivity() {
 
 
         ledMatrix?.scoreboardActivity = this
-        setContentView(R.layout.activity_scoreboard)
         binding.pointsUpLeft.setOnClickListener { ledMatrix?.pointsLeftUp() }
         binding.pointsDownLeft.setOnClickListener { ledMatrix?.pointsLeftDown() }
         binding.pointsUpRight.setOnClickListener { ledMatrix?.pointsRightUp() }
