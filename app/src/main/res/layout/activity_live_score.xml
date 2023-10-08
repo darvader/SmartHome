@@ -8,18 +8,33 @@
     tools:context=".matrix.activity.LiveScoreActivity" >
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/games"
+        android:id="@+id/leagues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
         android:tooltipText="Select Game"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/matches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:tooltipText="Select Game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leagues" />
+
     <TextView
-        android:id="@+id/btc_price_tv"
+        android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40sp"

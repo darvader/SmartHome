@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.darvader.smarthome.R
 import com.darvader.smarthome.databinding.ActivityScoreboardBinding
 import com.darvader.smarthome.matrix.LedMatrix
 
