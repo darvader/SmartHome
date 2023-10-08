@@ -138,14 +138,16 @@
 
     <EditText
         android:id="@+id/scrollText"
-        android:layout_width="339dp"
-        android:layout_height="48dp"
+        android:layout_width="391dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:focusedByDefault="false"
         android:inputType="textPersonName"
         android:lines="3"
         android:text="VSV Jena 90 e.V. : Gastmannschaft"
         app:layout_constraintBottom_toTopOf="@+id/reset"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

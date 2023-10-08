@@ -16,11 +16,13 @@ data class Match(val matchJSON: JSONObject) {
     var started: Boolean = false
     var finished: Boolean = false
     var matchSets = ArrayList<MatchSet>()
+    var leftTeamServes: Boolean = true
     fun update(matchesPayload: JSONObject) {
         val matchStates = matchesPayload.getJSONObject("matchStates")
         val match = matchStates.optJSONObject(id) ?: return
         started = match.getBoolean("started")
         finished = match.getBoolean("finished")
+
 
         if (started) {
             val setPoints = match.getJSONObject("setPoints")
@@ -35,6 +37,7 @@ data class Match(val matchJSON: JSONObject) {
     private fun parseSets(match: JSONObject) {
         val matchSetsJson = match.getJSONArray("matchSets")
         matchSets.clear()
+        leftTeamServes = match.getString("serving") == "team1"
         (0 until matchSetsJson.length()).forEach {
             val matchSet = MatchSet(matchSetsJson.getJSONObject(it))
             this.matchSets.add(matchSet)

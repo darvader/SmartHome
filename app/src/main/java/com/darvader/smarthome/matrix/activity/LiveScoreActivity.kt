@@ -1,6 +1,7 @@
 package com.darvader.smarthome.matrix.activity
 
 import android.R
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -22,17 +23,22 @@ import javax.net.ssl.SSLSocketFactory
 
 class LiveScoreActivity : AppCompatActivity() {
 
-    private var matchSeries: JSONObject = JSONObject()
-    private var matchesPayload: JSONObject = JSONObject()
-    private lateinit var binding: ActivityLiveScoreBinding
-    private lateinit var webSocketClient: WebSocketClient
-    val items = ArrayList<String>()
-    val matches = ArrayList<Match>()
-    val matchesMap = HashMap<String, Match>()
-    var match: Match? = null
-    val leagues = ArrayList<League>()
-    val leaguesMap = HashMap<String, League>()
-    var selectedLeague: League? = null
+    companion object {
+        // const val WEB_SOCKET_URL = "wss://ws-feed.pro.coinbase.com"
+        const val WEB_SOCKET_URL = "wss://backend.sams-ticker.de/dvv"
+        const val TAG = "Coinbase"
+        var matchSeries: JSONObject = JSONObject()
+        var matchesPayload: JSONObject = JSONObject()
+        lateinit var binding: ActivityLiveScoreBinding
+        lateinit var webSocketClient: WebSocketClient
+        var scoreboardActivity: ScoreboardActivity? = null
+        val matches = ArrayList<Match>()
+        val matchesMap = HashMap<String, Match>()
+        var match: Match? = null
+        val leagues = ArrayList<League>()
+        val leaguesMap = HashMap<String, League>()
+        var selectedLeague: League? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,11 +73,11 @@ class LiveScoreActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-    }
 
-    override fun onPause() {
-        super.onPause()
-        webSocketClient.close()
+        binding.startScoreboard.setOnClickListener {
+            val intent = Intent(this, ScoreboardActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initWebSocket() {
@@ -135,6 +141,7 @@ class LiveScoreActivity : AppCompatActivity() {
                 if (match?.id == uuid) {
                     match?.updateMatch(payload)
                     showSets()
+                    scoreboardActivity?.inform()
                 }
             }
         }
@@ -143,8 +150,8 @@ class LiveScoreActivity : AppCompatActivity() {
     private fun parseMatches(type: String, payload: JSONObject) {
         if (type == "FETCH_ASSOCIATION_TICKER_RESPONSE") {
             Log.d(TAG, "read FETCH_ASSOCIATION_TICKER_RESPONSE")
-            this.matchesPayload = payload
-            this.matchSeries = matchesPayload.getJSONObject("matchSeries")
+            matchesPayload = payload
+            matchSeries = matchesPayload.getJSONObject("matchSeries")
             if (matches.size > 0) return
             val matchDays = payload.getJSONArray("matchDays")
             (0 until matchDays.length()).forEach {
@@ -187,7 +194,7 @@ class LiveScoreActivity : AppCompatActivity() {
         league!!.matchesMap[match.id] = match
         league.matches.add(match)
 
-        this.matches.add(match)
+        LiveScoreActivity.matches.add(match)
     }
 
     private fun showSets() {
@@ -196,11 +203,5 @@ class LiveScoreActivity : AppCompatActivity() {
             result += "${it.team1}:${it.team2}(${it.setNumber} )"
         }
         runOnUiThread { binding.result.text = "$result" }
-    }
-
-    companion object {
-        // const val WEB_SOCKET_URL = "wss://ws-feed.pro.coinbase.com"
-        const val WEB_SOCKET_URL = "wss://backend.sams-ticker.de/dvv"
-        const val TAG = "Coinbase"
     }
 }

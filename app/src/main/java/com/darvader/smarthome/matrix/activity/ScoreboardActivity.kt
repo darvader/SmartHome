@@ -10,7 +10,7 @@ import com.darvader.smarthome.matrix.LedMatrix
 
 
 class ScoreboardActivity : AppCompatActivity() {
-    var ledMatrix : LedMatrix? = null
+    lateinit var ledMatrix : LedMatrix
 
     abstract class ProgressChangedListener : SeekBar.OnSeekBarChangeListener {
         override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -64,6 +64,29 @@ class ScoreboardActivity : AppCompatActivity() {
             }
         })
 
+        LiveScoreActivity.scoreboardActivity = this
+
         ledMatrix?.startScoreboard()
+        if (LiveScoreActivity.webSocketClient != null) {
+            inform()
+        }
+    }
+
+    fun inform() {
+        val match = LiveScoreActivity.match!!
+        ledMatrix.setsLeft = match.setPointsTeam1.toByte()
+        ledMatrix.setsRight = match.setPointsTeam2.toByte()
+        val size = match.matchSets.size
+        val lastSet = match.matchSets[size - 1]
+        ledMatrix.pointsLeft = lastSet.team1.toByte()
+        ledMatrix.pointsRight = lastSet.team2.toByte()
+        ledMatrix.leftTeamServes = if (match.leftTeamServes) 1 else 0
+        val text = "${match.teamDescription1}:${match.teamDescription2}"
+        if (text != binding.scrollText.text.toString()) {
+            runOnUiThread {
+                binding.scrollText.setText(text)
+            }
+        }
+        ledMatrix.updateScore()
     }
 }

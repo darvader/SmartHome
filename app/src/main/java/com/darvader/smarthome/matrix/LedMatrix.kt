@@ -1,6 +1,7 @@
 package com.darvader.smarthome.matrix
 
 import android.graphics.Bitmap
+import android.text.Editable
 import androidx.core.graphics.get
 import com.darvader.smarthome.HomeElement
 import com.darvader.smarthome.matrix.activity.ScoreboardActivity
@@ -52,7 +53,7 @@ class LedMatrix(): HomeElement {
         }
     }
 
-    private fun updateScore() {
+    fun updateScore() {
         updateText()
         if (invert)
             send("updateScore=${pointsRight.toChar()}${pointsLeft.toChar()}${setsRight.toChar()}${setsLeft.toChar()}${(1-leftTeamServes).toChar()}")
@@ -220,6 +221,7 @@ class LedMatrix(): HomeElement {
 
     fun invert() {
         invert = !invert
+        updateScore()
     }
 
     fun pictureMode() {
