@@ -1,7 +1,6 @@
 package com.darvader.smarthome.livingroomlight
 
 import com.darvader.smarthome.*
-import com.darvader.smarthome.kitchen_light.KitchenLight
 import com.darvader.smarthome.ledstrip.LedStrip
 import java.net.InetAddress
 
@@ -61,16 +60,15 @@ class Lights(): HomeElement {
         println("Turn lamps on: $intensity")
         val msg = "dimm=".toByteArray(Charsets.UTF_8) + intensity.toByte()
         println("dimm=$intensity")
-        KitchenLight.echoClient.send(msg, bedLightAddress)
+        echoClient.send(msg, bedLightAddress)
     }
 
     fun changeKitchen(intensity: Int) {
         println("Turn lamps on: $intensity")
         val msg = "dimm=".toByteArray(Charsets.UTF_8) + intensity.toByte()
         println("dimm=$intensity")
-        KitchenLight.echoClient.send(msg, kitchenLightAddress)
+        echoClient.send(msg, kitchenLightAddress)
     }
-
 
     fun detect() {
         println("Detect called.")

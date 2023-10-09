@@ -15,7 +15,7 @@ class LedMatrix(): HomeElement {
         val buttonAddresses = ArrayList<String>()
     }
     private var time: Int = 0
-    private var invert = true
+    var invert = true
     private var timeoutThread: Thread? = null
     var pointsLeft: Byte = 0
     var pointsRight: Byte = 0
@@ -50,6 +50,9 @@ class LedMatrix(): HomeElement {
         }
         if (received.startsWith("PushButton")) {
             buttonAddresses += address.hostAddress
+        }
+        if (received.startsWith("ButtonPressed")) {
+            handleButtonPressed()
         }
     }
 
@@ -303,18 +306,19 @@ class LedMatrix(): HomeElement {
     var buttonPressedNr = 0;
     var mode = TimerMode.timer
 
-    fun received(address: InetAddress?, received: String) {
-        if (received.contains("ButtonPressed")) {
-            if (mode == TimerMode.timer) {
+    private fun handleButtonPressed() {
+        if (mode == TimerMode.timer) {
+            if (buttonPressedNr % 2 == 0)
                 startTimer()
-            } else if (mode == TimerMode.stopWatch) {
-                if (buttonPressedNr % 2 == 0)
-                    stopWatchStart()
-                else
-                    stopWatchStop()
-            }
-            buttonPressedNr++;
+            else
+                pauseTimer()
+        } else if (mode == TimerMode.stopWatch) {
+            if (buttonPressedNr % 2 == 0)
+                stopWatchStart()
+            else
+                stopWatchStop()
         }
+        buttonPressedNr++;
 
     }
 }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.databinding.ActivitySmartHomeBinding
-import com.darvader.smarthome.kitchen_light.KitchenLightActivity
 import com.darvader.smarthome.ledstrip.LedStrip
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import com.darvader.smarthome.ledstrip.LedStripActivity
@@ -49,11 +48,6 @@ class SmartHomeActivity : AppCompatActivity() {
 
         binding.christmasTree.setOnClickListener {
             val intent = Intent(this, ChristmasTreeActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.kitchen.setOnClickListener {
-            val intent = Intent(this, KitchenLightActivity::class.java)
             startActivity(intent)
         }
 

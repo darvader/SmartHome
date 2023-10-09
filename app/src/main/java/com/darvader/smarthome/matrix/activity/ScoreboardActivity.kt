@@ -45,7 +45,10 @@ class ScoreboardActivity : AppCompatActivity() {
         binding.switchButton.setOnClickListener { ledMatrix?.switch() }
 
         binding.timeout.setOnClickListener { ledMatrix?.timeout() }
-        binding.invert.setOnClickListener { ledMatrix?.invert() }
+        binding.invert.setOnClickListener {
+            ledMatrix?.invert()
+            inform()
+        }
 
         binding.reset.setOnClickListener { ledMatrix?.reset() }
         binding.off.setOnClickListener { ledMatrix?.off() }
@@ -81,7 +84,8 @@ class ScoreboardActivity : AppCompatActivity() {
         ledMatrix.pointsLeft = lastSet.team1.toByte()
         ledMatrix.pointsRight = lastSet.team2.toByte()
         ledMatrix.leftTeamServes = if (match.leftTeamServes) 1 else 0
-        val text = "${match.teamDescription1}:${match.teamDescription2}"
+
+        val text = if (!ledMatrix.invert) "${match.teamDescription1}:${match.teamDescription2}" else "${match.teamDescription2}:${match.teamDescription1}"
         if (text != binding.scrollText.text.toString()) {
             runOnUiThread {
                 binding.scrollText.setText(text)

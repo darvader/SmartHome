@@ -23,9 +23,6 @@
             android:name=".matrix.activity.LiveScoreActivity"
             android:exported="false" />
         <activity
-            android:name=".kitchen_light.KitchenLightActivity"
-            android:exported="false" />
-        <activity
             android:name=".ledstrip.christmas.ChristmasTreeActivity"
             android:exported="false" />
         <activity

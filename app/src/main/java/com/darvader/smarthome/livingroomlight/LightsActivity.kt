@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.ProgressChangedListener
-import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
-import com.darvader.smarthome.databinding.ActivityKitchenLightBinding
 import com.darvader.smarthome.databinding.ActivityLightsBinding
 
 class LightsActivity : AppCompatActivity() {

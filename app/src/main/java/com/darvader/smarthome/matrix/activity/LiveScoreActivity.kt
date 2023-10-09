@@ -152,7 +152,11 @@ class LiveScoreActivity : AppCompatActivity() {
             Log.d(TAG, "read FETCH_ASSOCIATION_TICKER_RESPONSE")
             matchesPayload = payload
             matchSeries = matchesPayload.getJSONObject("matchSeries")
-            if (matches.size > 0) return
+            if (matches.size > 0) {
+                match?.update(matchesPayload)
+                scoreboardActivity?.inform()
+                return
+            }
             val matchDays = payload.getJSONArray("matchDays")
             (0 until matchDays.length()).forEach {
                 val matchDay = matchDays.getJSONObject(it)
