@@ -16,6 +16,7 @@ class LedMatrix(): HomeElement {
     }
     private var time: Int = 0
     var invert = true
+    var switch = false
     private var timeoutThread: Thread? = null
     var pointsLeft: Byte = 0
     var pointsRight: Byte = 0
@@ -156,6 +157,7 @@ class LedMatrix(): HomeElement {
     }
 
     fun switch() {
+        this.switch = !this.switch
         pointsLeft = pointsRight.also { pointsRight = pointsLeft }
         setsLeft = setsRight.also { setsRight = setsLeft }
         if (leftTeamServes == 0.toByte()) {

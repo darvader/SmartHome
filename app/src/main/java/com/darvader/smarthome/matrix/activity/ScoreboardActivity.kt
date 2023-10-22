@@ -43,6 +43,9 @@ class ScoreboardActivity : AppCompatActivity() {
         binding.setsUpRight.setOnClickListener { ledMatrix?.setsRightUp() }
         binding.setsDownRight.setOnClickListener { ledMatrix?.setsRightDown() }
         binding.switchButton.setOnClickListener { ledMatrix?.switch() }
+        binding.reconnect.setOnClickListener {
+            LiveScoreActivity.livescoreActivity?.reInitWebSocket()
+        }
 
         binding.timeout.setOnClickListener { ledMatrix?.timeout() }
         binding.invert.setOnClickListener {
@@ -77,15 +80,17 @@ class ScoreboardActivity : AppCompatActivity() {
 
     fun inform() {
         val match = LiveScoreActivity.match!!
-        ledMatrix.setsLeft = match.setPointsTeam1.toByte()
-        ledMatrix.setsRight = match.setPointsTeam2.toByte()
+        ledMatrix.setsLeft = if (ledMatrix.switch) match.setPointsTeam2.toByte() else match.setPointsTeam1.toByte()
+        ledMatrix.setsRight = if (ledMatrix.switch) match.setPointsTeam1.toByte() else match.setPointsTeam2.toByte()
         val size = match.matchSets.size
-        val lastSet = match.matchSets[size - 1]
-        ledMatrix.pointsLeft = lastSet.team1.toByte()
-        ledMatrix.pointsRight = lastSet.team2.toByte()
-        ledMatrix.leftTeamServes = if (match.leftTeamServes) 1 else 0
+        if (size>0) {
+            val lastSet = match.matchSets[size - 1]
+            ledMatrix.pointsLeft = if (ledMatrix.switch) lastSet.team2.toByte() else lastSet.team1.toByte()
+            ledMatrix.pointsRight = if (ledMatrix.switch) lastSet.team1.toByte() else lastSet.team2.toByte()
+            ledMatrix.leftTeamServes = if (match.leftTeamServes && !ledMatrix.switch) 1 else 0
+        }
 
-        val text = if (!ledMatrix.invert) "${match.teamDescription1}:${match.teamDescription2}" else "${match.teamDescription2}:${match.teamDescription1}"
+        val text = if (!ledMatrix.invert xor ledMatrix.switch) "${match.teamDescription1}:${match.teamDescription2}" else "${match.teamDescription2}:${match.teamDescription1}"
         if (text != binding.scrollText.text.toString()) {
             runOnUiThread {
                 binding.scrollText.setText(text)
