@@ -2,10 +2,14 @@ package com.darvader.smarthome.matrix
 
 import android.graphics.Bitmap
 import android.text.Editable
+import android.widget.Button
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Constraints
 import androidx.core.graphics.get
 import com.darvader.smarthome.HomeElement
 import com.darvader.smarthome.matrix.activity.ScoreboardActivity
 import com.darvader.smarthome.SmartHomeActivity
+import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import java.net.InetAddress
 
 class LedMatrix(): HomeElement {
@@ -14,6 +18,9 @@ class LedMatrix(): HomeElement {
         val echoClient = SmartHomeActivity.echoClient
         val buttonAddresses = ArrayList<String>()
     }
+
+    private lateinit var ledMatrixActivity: LedMatrixActivity
+    private val addresses = java.util.ArrayList<String>()
     private var time: Int = 0
     var invert = true
     var switch = false
@@ -24,6 +31,9 @@ class LedMatrix(): HomeElement {
     var setsRight: Byte = 0
     var leftTeamServes: Byte = 1
     var scoreboardActivity: ScoreboardActivity? = null
+    private var buttonCounter = 1
+    private val buttons = java.util.ArrayList<Button>()
+
 
     fun detect() {
         println("Detect called.")
@@ -44,10 +54,12 @@ class LedMatrix(): HomeElement {
     }
 
     override fun refresh(address: InetAddress, received: String) {
+        val hostAddress = address.hostAddress
         if (received.startsWith("LedMatrix")) {
-            val hostAddress = address.hostAddress
-            println("Got LedMatrix: $hostAddress")
-            matrixAddress = hostAddress
+            if (!addresses.contains(hostAddress)) {
+                addresses.add(hostAddress)
+                ledMatrixActivity.runOnUiThread { addButton(hostAddress) }
+            }
         }
         if (received.startsWith("PushButton")) {
             buttonAddresses += address.hostAddress
@@ -212,6 +224,10 @@ class LedMatrix(): HomeElement {
         send("timeSnow")
     }
 
+    fun startPlasma() {
+        send("timePlasma")
+    }
+
     fun startScoreboard() {
         send("scoreboard")
     }
@@ -322,5 +338,41 @@ class LedMatrix(): HomeElement {
         }
         buttonPressedNr++;
 
+    }
+
+    private fun addButton(address: String) {
+        //set the properties for button
+        val button = Button(ledMatrixActivity)
+        button.layoutParams = Constraints.LayoutParams(Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.WRAP_CONTENT)
+        button.text = buttonCounter.toString()
+        button.id = buttonCounter++
+        button.setOnClickListener {
+            matrixAddress = address
+        }
+
+        matrixAddress = address
+        val layoutParams = button.layoutParams as ConstraintLayout.LayoutParams
+        val size = buttons.size
+        if (size == 0) {
+            layoutParams.topToBottom = ledMatrixActivity.binding.timer.id
+        } else {
+            if (size>=4) {
+                layoutParams.topToBottom = buttons[size - 4].id
+                layoutParams.leftToLeft = buttons[size - 4].id
+            }
+            else {
+                layoutParams.topToBottom = ledMatrixActivity.binding.timer.id
+                layoutParams.leftToRight = buttons[size - 1].id
+            }
+        }
+        //button.layoutParams = ConstraintLayout.LayoutParams(20, 10)
+        this.buttons.add(button)
+
+        //add button to the layout
+        ledMatrixActivity.binding.mainLayout.addView(button)
+    }
+
+    fun setActivity(ledMatrixActivity: LedMatrixActivity) {
+        this.ledMatrixActivity = ledMatrixActivity
     }
 }

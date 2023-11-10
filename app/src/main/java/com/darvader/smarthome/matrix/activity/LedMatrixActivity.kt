@@ -27,6 +27,7 @@ class LedMatrixActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ledMatrix.detect()
+        ledMatrix.setActivity(this)
         binding = ActivityMatrixBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)

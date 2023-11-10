@@ -54,4 +54,12 @@
         android:text="Snow"
         app:layout_constraintStart_toEndOf="@+id/time3"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/plasma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plasma"
+        app:layout_constraintStart_toEndOf="@+id/mandelbrot"
+        app:layout_constraintTop_toBottomOf="@+id/snow" />
 </androidx.constraintlayout.widget.ConstraintLayout>
