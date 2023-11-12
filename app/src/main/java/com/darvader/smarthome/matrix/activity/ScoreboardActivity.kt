@@ -80,15 +80,23 @@ class ScoreboardActivity : AppCompatActivity() {
 
     fun inform() {
         val match = LiveScoreActivity.match!!
-        ledMatrix.setsLeft = if (ledMatrix.switch) match.setPointsTeam2.toByte() else match.setPointsTeam1.toByte()
-        ledMatrix.setsRight = if (ledMatrix.switch) match.setPointsTeam1.toByte() else match.setPointsTeam2.toByte()
         val size = match.matchSets.size
+
         if (size>0) {
             val lastSet = match.matchSets[size - 1]
+            // switch on a new set
+            if ((ledMatrix.pointsLeft > 0 || ledMatrix.pointsRight > 0) && (lastSet.team1 == 0 && lastSet.team2 == 0))
+                ledMatrix.switch = !ledMatrix.switch
+            // switch on tie-break at 8 points in set 5
+            if ((lastSet.team1 == 8 || lastSet.team2.toInt() == 8) && size == 5 && (ledMatrix.pointsLeft < 8 && ledMatrix.pointsRight < 8))
+                ledMatrix.switch = !ledMatrix.switch
+
             ledMatrix.pointsLeft = if (ledMatrix.switch) lastSet.team2.toByte() else lastSet.team1.toByte()
             ledMatrix.pointsRight = if (ledMatrix.switch) lastSet.team1.toByte() else lastSet.team2.toByte()
             ledMatrix.leftTeamServes = if (match.leftTeamServes && !ledMatrix.switch) 1 else 0
         }
+        ledMatrix.setsLeft = if (ledMatrix.switch) match.setPointsTeam2.toByte() else match.setPointsTeam1.toByte()
+        ledMatrix.setsRight = if (ledMatrix.switch) match.setPointsTeam1.toByte() else match.setPointsTeam2.toByte()
 
         val text = if (!ledMatrix.invert xor ledMatrix.switch) "${match.teamDescription1}:${match.teamDescription2}" else "${match.teamDescription2}:${match.teamDescription1}"
         if (text != binding.scrollText.text.toString()) {
