@@ -224,6 +224,10 @@ class LedMatrix(): HomeElement {
         send("timeSnow")
     }
 
+    fun startColoredSnow() {
+        send("timeColoredSnow")
+    }
+
     fun startPlasma() {
         send("timePlasma")
     }
@@ -261,13 +265,14 @@ class LedMatrix(): HomeElement {
         return (r or g or b);
     }
 
-    var byteArray: ByteArray = ByteArray(64*32*3)
+
 
     fun sendBitmap(bitmap: Bitmap) {
+        var byteArray = ByteArray(128 * 64 * 3)
         var i = 0
-        for (x in 0 until 64)
-            for (y in 0 until 32) {
-                if (x >= bitmap.width || y >=bitmap.height) {
+        for (x in 0 until 128) {
+            for (y in 0 until 64) {
+                if (x >= bitmap.width || y >= bitmap.height) {
                     byteArray[i++] = 0
                     byteArray[i++] = 0
                     byteArray[i++] = 0
@@ -280,7 +285,8 @@ class LedMatrix(): HomeElement {
                 byteArray[i++] = (c shr 8).toByte()
                 byteArray[i++] = (c and 0xff).toByte()
             }
-        echoClient.send(byteArray, matrixAddress)
+        }
+        echoClient.sendTcp(byteArray, matrixAddress)
         println("Bitmap send.")
     }
 

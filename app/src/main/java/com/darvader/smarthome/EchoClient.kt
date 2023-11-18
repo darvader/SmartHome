@@ -3,10 +3,12 @@ package com.darvader.smarthome
 import android.os.AsyncTask
 
 import java.io.IOException
+import java.io.OutputStream
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
 import java.net.NetworkInterface
+import java.net.Socket
 import java.net.SocketException
 import java.net.UnknownHostException
 import java.util.ArrayList
@@ -99,6 +101,17 @@ constructor() {
     fun sendBroadCast(colors: ByteArray) {
         for (a in addresses) {
             SendAsyncBroadcast(a, colors).execute()
+        }
+    }
+
+    fun sendTcp(byteArray: ByteArray, matrixAddress: String) {
+        try {
+            val clientSocket = Socket(matrixAddress, 80)
+            val outToServer: OutputStream = clientSocket.getOutputStream()
+            outToServer.write(byteArray)
+            clientSocket.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
