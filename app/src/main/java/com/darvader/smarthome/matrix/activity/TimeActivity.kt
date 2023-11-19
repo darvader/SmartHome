@@ -31,5 +31,6 @@ class TimeActivity() : AppCompatActivity() {
         binding.csnow.setOnClickListener { ledMatrix?.startColoredSnow() }
         binding.plasma.setOnClickListener { ledMatrix?.startPlasma() }
         binding.mandelbrot.setOnClickListener { ledMatrix?.mandelbrot() }
+        binding.gameOfLife.setOnClickListener { ledMatrix?.gameOfLife() }
     }
 }

@@ -240,6 +240,10 @@ class LedMatrix(): HomeElement {
         send("mandelbrot")
     }
 
+    fun gameOfLife() {
+        send("timeGameOfLife")
+    }
+
     fun changeBrightness(brightness: Int) {
         send("brightness=${brightness.toChar()}")
     }
