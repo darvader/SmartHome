@@ -17,6 +17,7 @@ class LedMatrix(): HomeElement {
         var matrixAddress = ""
         val echoClient = SmartHomeActivity.echoClient
         val buttonAddresses = ArrayList<String>()
+        public var broadcast = false
     }
 
     private lateinit var ledMatrixActivity: LedMatrixActivity
@@ -133,15 +134,25 @@ class LedMatrix(): HomeElement {
     }
 
     fun send(message: String) {
-        echoClient.send(message, matrixAddress)
+        if (broadcast)
+            echoClient.sendBroadCast(message)
+        else
+            echoClient.send(message, matrixAddress)
     }
 
     fun send(message: ByteArray) {
-        echoClient.send(message, matrixAddress)
+        if (broadcast)
+            echoClient.sendBroadCast(message)
+        else
+            echoClient.send(message, matrixAddress)
     }
 
     fun off() {
         send("off")
+    }
+
+    fun broadcast() {
+        broadcast = !broadcast
     }
 
     fun setsLeftUp() {

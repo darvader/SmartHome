@@ -1,22 +1,21 @@
 package com.darvader.smarthome.matrix.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.darvader.smarthome.matrix.LedMatrix
+import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.R
-import com.darvader.smarthome.databinding.ActivitySampleBinding
-import com.darvader.smarthome.databinding.ActivityTimerBinding
-import com.darvader.smarthome.matrix.activity.LedMatrixActivity
+import com.darvader.smarthome.databinding.ActivityTimeSampleBinding
+import com.darvader.smarthome.matrix.LedMatrix
 
 class TimeActivity() : AppCompatActivity() {
 
     private var ledMatrix: LedMatrix? = null
-    lateinit var binding: ActivitySampleBinding
+    lateinit var binding: ActivityTimeSampleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sample)
-        binding = ActivitySampleBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_time_sample)
+        binding = ActivityTimeSampleBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -32,5 +31,11 @@ class TimeActivity() : AppCompatActivity() {
         binding.plasma.setOnClickListener { ledMatrix?.startPlasma() }
         binding.mandelbrot.setOnClickListener { ledMatrix?.mandelbrot() }
         binding.gameOfLife.setOnClickListener { ledMatrix?.gameOfLife() }
+
+        binding.brightness.setOnSeekBarChangeListener(object : LedMatrixActivity.ProgressChangedListener() {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                LedMatrixActivity.ledMatrix.changeBrightness(progress)
+            }
+        })
     }
 }

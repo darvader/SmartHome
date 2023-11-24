@@ -115,6 +115,10 @@ constructor() {
         }
     }
 
+    fun getBroadcastAddress(): String {
+        return ""
+    }
+
     private inner class SendAsyncBroadcast(private val address: InetAddress, private val msg: ByteArray) : AsyncTask<String, Void, String>() {
 
         override fun doInBackground(vararg strings: String): String? {

@@ -12,6 +12,18 @@
     android:minHeight="10sp"
     tools:context=".matrix.activity.ScoreboardActivity">
 
+    <SeekBar
+        android:id="@+id/brightness"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="24dp"
+        android:max="100"
+        android:progress="50"
+        app:layout_constraintBottom_toTopOf="@+id/reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/ballRight"
         android:layout_width="48dp"
@@ -146,8 +158,9 @@
         android:inputType="textPersonName"
         android:lines="3"
         android:text="VSV Jena 90 e.V. : Gastmannschaft"
-        app:layout_constraintBottom_toTopOf="@+id/reset"
+        app:layout_constraintBottom_toTopOf="@+id/brightness"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

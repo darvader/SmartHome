@@ -1,6 +1,7 @@
 package com.darvader.smarthome.matrix.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
@@ -66,6 +67,15 @@ class LedMatrixActivity : AppCompatActivity() {
         binding.detect.setOnClickListener {
             ledMatrix.detect()
         }
+
+        binding.broadcast.setOnClickListener {
+            ledMatrix.broadcast()
+            if (LedMatrix.broadcast)
+                binding.broadcast.setBackgroundColor(Color.GREEN)
+            else
+                binding.broadcast.setBackgroundColor(Color.GRAY)
+        }
+        binding.off.setOnClickListener { ledMatrix?.off() }
 
         binding.brightness.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
