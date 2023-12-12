@@ -365,7 +365,7 @@ class LedMatrix(): HomeElement {
         //set the properties for button
         val button = Button(ledMatrixActivity)
         button.layoutParams = Constraints.LayoutParams(Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.WRAP_CONTENT)
-        button.text = buttonCounter.toString()
+        button.text = address.substring(address.length - 3)
         button.id = buttonCounter++
         button.setOnClickListener {
             matrixAddress = address

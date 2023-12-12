@@ -2,96 +2,119 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_launcher_background"
     tools:context=".ledstrip.christmas.ChristmasTreeActivity">
 
     <Button
-        android:id="@+id/christmasHor"
+        android:id="@+id/christmasZ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ChristH"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fft_row_remote" />
-
-    <Button
-        android:id="@+id/christmasVer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ChristV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/christmasHor" />
+        android:layout_marginStart="8dp"
+        android:text="ChristZ"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasSevenH"
+        app:layout_constraintTop_toBottomOf="@+id/calib" />
 
     <Button
         android:id="@+id/christmasRotationY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="CRY"
-        app:layout_constraintEnd_toStartOf="@+id/christmasVer"
-        app:layout_constraintTop_toBottomOf="@+id/dot" />
-
-    <Button
-        android:id="@+id/christmasSmoothRotationY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CSRY"
-        app:layout_constraintEnd_toStartOf="@+id/christmasRotationY"
-        app:layout_constraintTop_toBottomOf="@+id/white" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasSmoothRotationZ"
+        app:layout_constraintTop_toBottomOf="@+id/christmasRotationX" />
 
     <Button
         android:id="@+id/christmasSmoothRotationX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="CSRX"
-        app:layout_constraintEnd_toStartOf="@+id/christmasRotationX"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasZ"
         app:layout_constraintTop_toBottomOf="@+id/christmasSmoothRotationY" />
+
+    <Button
+        android:id="@+id/christmasSmoothRotationZ"
+        android:layout_width="90dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:text="CSRZ"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasZ"
+        app:layout_constraintTop_toBottomOf="@+id/calib" />
 
     <Button
         android:id="@+id/christmasSevenH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CSH"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/christmasZ" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/calib"
+        app:layout_constraintTop_toBottomOf="@+id/calib" />
 
     <Button
-        android:id="@+id/christmasZ"
+        android:id="@+id/christmasSmoothRotationY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ChristZ"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/christmasVer" />
-
-    <Button
-        android:id="@+id/christmasRotationX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CRX"
-        app:layout_constraintEnd_toStartOf="@+id/christmasZ"
-        app:layout_constraintTop_toBottomOf="@+id/christmasRotationY" />
-
-    <Button
-        android:id="@+id/christmasRotationZ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CRZ"
-        app:layout_constraintEnd_toStartOf="@+id/christmasSevenH"
-        app:layout_constraintTop_toBottomOf="@+id/christmasRotationX" />
-
-    <Button
-        android:id="@+id/christmasSmoothRotationZ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CSRX"
-        app:layout_constraintEnd_toStartOf="@+id/christmasRotationX"
-        app:layout_constraintTop_toBottomOf="@+id/christmasSmoothRotationX" />
+        android:layout_marginStart="8dp"
+        android:text="CSRY"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasZ"
+        app:layout_constraintTop_toBottomOf="@+id/christmasSmoothRotationZ" />
 
     <Button
         android:id="@+id/calib"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="Calib"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/christmasVer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="ChristV"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasSevenH"
+        app:layout_constraintTop_toBottomOf="@+id/christmasHor" />
+
+    <Button
+        android:id="@+id/christmasHor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="ChristH"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasSevenH"
+        app:layout_constraintTop_toBottomOf="@+id/christmasZ" />
+
+    <Button
+        android:id="@+id/christmasRotationZ"
+        android:layout_width="87dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:text="CRZ"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasSmoothRotationZ"
+        app:layout_constraintTop_toBottomOf="@+id/christmasRotationY" />
+
+    <Button
+        android:id="@+id/christmasRotationX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="CRX"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/christmasSmoothRotationZ"
+        app:layout_constraintTop_toBottomOf="@+id/calib" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

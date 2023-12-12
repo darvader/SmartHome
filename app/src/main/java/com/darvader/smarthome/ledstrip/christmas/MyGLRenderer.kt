@@ -19,7 +19,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
         // initialize a triangle
-        christmasStrip = ChristmasStrip()
+        christmasStrip = ChristmasStrip(this)
     }
 
     override fun onDrawFrame(unused: GL10) {

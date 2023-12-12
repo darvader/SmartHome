@@ -51,7 +51,7 @@ class LedStrip(private val ledStripActivity: LedStripActivity): HomeElement {
 
         }
 
-        public var currentAddress = ""
+        var currentAddress = ""
         val echoClient = SmartHomeActivity.echoClient
     }
 
@@ -141,55 +141,6 @@ class LedStrip(private val ledStripActivity: LedStripActivity): HomeElement {
         echoClient.send("fftRow", currentAddress)
     }
 
-    fun christmasHorizontal() {
-        println("christmasHorizontal.")
-        echoClient.send("christmasHorizontal", currentAddress)
-    }
-
-    fun christmasVertical() {
-        println("christmasVertical.")
-        echoClient.send("christmasVertical", currentAddress)
-    }
-
-    fun christmasZ() {
-        println("christmasZ.")
-        echoClient.send("christmasZ", currentAddress)
-    }
-
-    fun christmasSevenH() {
-        println("christmasSevenH.")
-        echoClient.send("christmasSevenH", currentAddress)
-    }
-
-    fun christmasRotationY() {
-        println("christmasRotationY.")
-        echoClient.send("christmasRotationY", currentAddress)
-    }
-
-    fun christmasRotationX() {
-        println("christmasRotationX.")
-        echoClient.send("christmasRotationX", currentAddress)
-    }
-
-    fun christmasRotationZ() {
-        println("christmasRotationZ.")
-        echoClient.send("christmasRotationZ", currentAddress)
-    }
-
-    fun christmasSmoothRotationY() {
-        println("christmasSmoothRotationY.")
-        echoClient.send("christmasSmoothRotationY", currentAddress)
-    }
-
-    fun christmasSmoothRotationX() {
-        println("christmasSmoothRotationX.")
-        echoClient.send("christmasSmoothRotationX", currentAddress)
-    }
-
-    fun christmasSmoothRotationZ() {
-        println("christmasSmoothRotationZ.")
-        echoClient.send("christmasSmoothRotationZ", currentAddress)
-    }
 
     fun fftRowRemote() {
         println("fftRowRemote.")
@@ -214,7 +165,7 @@ class LedStrip(private val ledStripActivity: LedStripActivity): HomeElement {
         //set the properties for button
         val button = Button(ledStripActivity)
         button.layoutParams = Constraints.LayoutParams(Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.WRAP_CONTENT)
-        button.text = buttonCounter.toString()
+        button.text = address.substring(address.length - 3)
         button.id = buttonCounter++
         button.setOnClickListener {
             currentAddress = address;
