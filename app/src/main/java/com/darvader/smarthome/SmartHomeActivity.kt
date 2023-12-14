@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -11,6 +12,7 @@ import com.darvader.smarthome.databinding.ActivitySmartHomeBinding
 import com.darvader.smarthome.ledstrip.LedStrip
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import com.darvader.smarthome.ledstrip.LedStripActivity
+import com.darvader.smarthome.ledstrip.christmas.CalibrateActivity
 import com.darvader.smarthome.ledstrip.christmas.ChristmasTreeActivity
 import com.darvader.smarthome.livingroomlight.LightsActivity
 
@@ -22,6 +24,10 @@ class SmartHomeActivity : AppCompatActivity() {
         init {
             echoServer.start()
         }
+
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+
     }
 
     private lateinit var binding: ActivitySmartHomeBinding
@@ -55,6 +61,16 @@ class SmartHomeActivity : AppCompatActivity() {
             requestPermission()
         }
 
+        if (allPermissionsGranted()) {
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                REQUIRED_PERMISSIONS,
+                REQUEST_CODE_PERMISSIONS
+            )
+        }
+
+
 
         binding = ActivitySmartHomeBinding.inflate(layoutInflater)
         val view = binding.root
@@ -83,6 +99,26 @@ class SmartHomeActivity : AppCompatActivity() {
 
         binding.allOff.setOnClickListener { allOff() }
 
+    }
+
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            baseContext, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults:
+        IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+            } else {
+                Toast.makeText(this,
+                    "Permissions not granted by the user.",
+                    Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
     }
 
     private fun allOff() {

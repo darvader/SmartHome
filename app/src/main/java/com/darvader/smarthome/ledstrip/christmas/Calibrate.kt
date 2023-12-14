@@ -9,28 +9,31 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageProxy
 import androidx.core.content.ContextCompat
 import com.darvader.smarthome.SmartHomeActivity
-import com.darvader.smarthome.ledstrip.LedStrip
 import java.io.File
-import kotlin.math.max
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+import java.io.PrintWriter
 
 
 class Calibrate(val calibrateActivity: CalibrateActivity) {
+    var perspective = ""
     private lateinit var imageCapture: ImageCapture
 
     companion object {
-        var currentAddress = LedStrip.currentAddress
+        var currentAddress = ChristmasStrip.currentAddress
         val echoClient = SmartHomeActivity.echoClient
     }
 
     var isTakingPhoto = false
 
     fun calibrate() {
-        val currentTimeMillis = System.currentTimeMillis()
-        val fileName = "ChristmasDots$currentTimeMillis.txt"
-        val printWriter =
-            File(calibrateActivity.applicationContext.filesDir, fileName).printWriter()
+        val fileName = "ChristmasDots$perspective.txt"
+        val file = File(calibrateActivity.applicationContext.filesDir, fileName)
+        val fileOutputStream = FileOutputStream(file, false)
+        val outputStreamWriter = OutputStreamWriter(fileOutputStream)
+        val printWriter = PrintWriter(outputStreamWriter)
 
-        for (i in 0..499) {
+        for (i in 0..650) {
             val low = (i and 0xff).toByte()
             val high = (i shr 8).toByte()
             val msg = "setPixel=".toByteArray(Charsets.UTF_8) + high + low
@@ -44,7 +47,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         printWriter.close()
 
         val output =
-            File(calibrateActivity.applicationContext.filesDir, fileName).bufferedReader().use { it.readText() }
+            file.bufferedReader().use { it.readText() }
         println(output)
 
     }
@@ -55,13 +58,13 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
             f -> println("File: $f")
         }
         var filesList = files.filter { f -> f.name.startsWith("ChristmasDots") }.sortedBy { f -> f.name.split("ChristmasDots")[1] }
-        val front = filesList[0]
-        val right = filesList[1]
-        val back = filesList[2]
-        val left = filesList[3]
+        val front = files.filter { f -> f.name.startsWith("ChristmasDotsfront") }.first()
+        val right = files.filter { f -> f.name.startsWith("ChristmasDotsright") }.first()
+        val back = files.filter { f -> f.name.startsWith("ChristmasDotsback") }.first()
+        val left = files.filter { f -> f.name.startsWith("ChristmasDotsleft") }.first()
 
-        val christmasPoints = ArrayList<ChristmasPoint>(500)
-        for (i in 0..499) { christmasPoints.add(ChristmasPoint())}
+        val christmasPoints = ArrayList<ChristmasPoint>(650)
+        for (i in 0..650) { christmasPoints.add(ChristmasPoint())}
 
         front.bufferedReader().use { it.lines().forEach { l ->
                 val split = l.split(",")
@@ -120,7 +123,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
     val maxHeight = 3264
 
     private fun calculate3dPoints(christmasPoints: ArrayList<ChristmasPoint>) {
-        christmasPoints.filter{ it.index < 500}.forEach { p ->
+        christmasPoints.filter{ it.index < 650}.forEach { p ->
             if (p.frontLD < p.backLD && p.front.x>0) {
                 if (p.rightLD < p.leftLD && p.right.x>0) {
                     p.p3.x = normalize(p.front.x.toFloat(), maxWidth)
@@ -212,6 +215,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         christmasPoints.forEach {
             with(it) {
                 printWriter.println("{${p3.x}f,${p3.y}f,${p3.z}f},")
+                println("{${p3.x}f,${p3.y}f,${p3.z}f},")
             }
         }
         printWriter.close()

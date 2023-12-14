@@ -11,7 +11,9 @@ import com.darvader.smarthome.databinding.ActivityLedStripBinding
 
 class ChristmasTreeActivity : AppCompatActivity() {
 
-    val tree = ChristmasStrip(this)
+    companion object {
+        val tree = ChristmasStrip()
+    }
     init {
         SmartHomeActivity.echoServer.register(tree)
     }
@@ -20,9 +22,11 @@ class ChristmasTreeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_christmas_tree)
+        tree.christmasTreeActivity = this
         binding = ActivityChristmasTreeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        tree.detect()
 
         binding.christmasHor.setOnClickListener { tree.christmasHorizontal() }
         binding.christmasVer.setOnClickListener { tree.christmasVertical() }
@@ -35,11 +39,11 @@ class ChristmasTreeActivity : AppCompatActivity() {
         binding.christmasSmoothRotationX.setOnClickListener { tree.christmasSmoothRotationX() }
         binding.christmasSmoothRotationZ.setOnClickListener { tree.christmasSmoothRotationZ() }
         binding.calib.setOnClickListener {
-       if (tree.currentAddress != "") {
-           val intent = Intent(this, CalibrateActivity::class.java)
-           startActivity(intent)
-       }
-   }
+            if (tree.currentAddress != "") {
+                val intent = Intent(this, CalibrateActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
     }
 

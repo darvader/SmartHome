@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Constraints
 import com.darvader.smarthome.HomeElement
 import com.darvader.smarthome.R
+import com.darvader.smarthome.SmartHomeActivity
 import com.darvader.smarthome.ledstrip.LedStrip
 import java.net.InetAddress
 import java.nio.ByteBuffer
@@ -14,7 +15,7 @@ import java.nio.FloatBuffer
 import java.util.ArrayList
 
 // number of coordinates per vertex in this array
-class ChristmasStrip(private val christmasTreeActivity: ChristmasTreeActivity) : HomeElement {
+class ChristmasStrip() : HomeElement {
     companion object {
         fun loadShader(type: Int, shaderCode: String): Int {
 
@@ -36,9 +37,11 @@ class ChristmasStrip(private val christmasTreeActivity: ChristmasTreeActivity) :
             0.0f, 0.622008459f, 0.0f      // top
         )
         var dirty = false
-
+        var currentAddress = ""
+        val echoClient = SmartHomeActivity.echoClient
     }
 
+    lateinit var christmasTreeActivity: ChristmasTreeActivity
     private val addresses = ArrayList<String>()
     private var buttonCounter = 1
     private val buttons = ArrayList<Button>()
@@ -190,79 +193,82 @@ class ChristmasStrip(private val christmasTreeActivity: ChristmasTreeActivity) :
         button.text = address.substring(address.length - 3)
         button.id = buttonCounter++
         button.setOnClickListener {
-            LedStrip.currentAddress = address;
+            ChristmasStrip.currentAddress = address;
         }
 
         val layoutParams = button.layoutParams as ConstraintLayout.LayoutParams
         val size = buttons.size
         if (size == 0) {
-            layoutParams.topToBottom = R.id.rain
+            layoutParams.topToBottom = christmasTreeActivity.binding.christmasRotationZ.id
         } else {
             if (size>=4) {
                 layoutParams.topToBottom = buttons[size - 4].id
                 layoutParams.leftToLeft = buttons[size - 4].id
             }
             else {
-                layoutParams.topToBottom = R.id.rain
+                layoutParams.topToBottom = christmasTreeActivity.binding.christmasRotationZ.id
                 layoutParams.leftToRight = buttons[size - 1].id
             }
         }
         //button.layoutParams = ConstraintLayout.LayoutParams(20, 10)
         this.buttons.add(button)
         //add button to the layout
-        christmasTreeActivity.binding.ledActitivyLayout.addView(button)
+        christmasTreeActivity.binding.layout.addView(button)
+        currentAddress = address
         println("button added")
     }
 
     fun christmasHorizontal() {
         println("christmasHorizontal.")
-        LedStrip.echoClient.send("christmasHorizontal", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasHorizontal", ChristmasStrip.currentAddress)
     }
 
     fun christmasVertical() {
         println("christmasVertical.")
-        LedStrip.echoClient.send("christmasVertical", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasVertical", ChristmasStrip.currentAddress)
     }
 
     fun christmasZ() {
         println("christmasZ.")
-        LedStrip.echoClient.send("christmasZ", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasZ", ChristmasStrip.currentAddress)
     }
 
     fun christmasSevenH() {
         println("christmasSevenH.")
-        LedStrip.echoClient.send("christmasSevenH", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasSevenH", ChristmasStrip.currentAddress)
     }
 
     fun christmasRotationY() {
         println("christmasRotationY.")
-        LedStrip.echoClient.send("christmasRotationY", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasRotationY", ChristmasStrip.currentAddress)
     }
 
     fun christmasRotationX() {
         println("christmasRotationX.")
-        LedStrip.echoClient.send("christmasRotationX", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasRotationX", ChristmasStrip.currentAddress)
     }
 
     fun christmasRotationZ() {
         println("christmasRotationZ.")
-        LedStrip.echoClient.send("christmasRotationZ", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasRotationZ", ChristmasStrip.currentAddress)
     }
 
     fun christmasSmoothRotationY() {
         println("christmasSmoothRotationY.")
-        LedStrip.echoClient.send("christmasSmoothRotationY", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasSmoothRotationY", ChristmasStrip.currentAddress)
     }
 
     fun christmasSmoothRotationX() {
         println("christmasSmoothRotationX.")
-        LedStrip.echoClient.send("christmasSmoothRotationX", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasSmoothRotationX", ChristmasStrip.currentAddress)
     }
 
     fun christmasSmoothRotationZ() {
         println("christmasSmoothRotationZ.")
-        LedStrip.echoClient.send("christmasSmoothRotationZ", LedStrip.currentAddress)
+        ChristmasStrip.echoClient.send("christmasSmoothRotationZ", ChristmasStrip.currentAddress)
     }
-
-
+    fun detect() {
+        println("Detect called.")
+        ChristmasStrip.echoClient.sendBroadCast("Detect")
+    }
 }

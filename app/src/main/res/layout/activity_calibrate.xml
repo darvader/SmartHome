@@ -7,11 +7,35 @@
     tools:context=".ledstrip.christmas.CalibrateActivity">
 
     <Button
-        android:id="@+id/calibrateButton"
+        android:id="@+id/front"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calibrate"
+        android:text="front"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="right"
+        app:layout_constraintStart_toEndOf="@+id/front"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"
+        app:layout_constraintStart_toEndOf="@+id/right"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="left"
+        app:layout_constraintStart_toEndOf="@+id/back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.camera.view.PreviewView
@@ -19,8 +43,7 @@
         android:layout_width="205dp"
         android:layout_height="329dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -35,8 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Collect"
-        app:layout_constraintStart_toEndOf="@+id/calibrateButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/front" />
 
     <Button
         android:id="@+id/showTree"
@@ -44,5 +67,5 @@
         android:layout_height="wrap_content"
         android:text="Show"
         app:layout_constraintStart_toEndOf="@+id/collectPoints"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/front" />
 </androidx.constraintlayout.widget.ConstraintLayout>

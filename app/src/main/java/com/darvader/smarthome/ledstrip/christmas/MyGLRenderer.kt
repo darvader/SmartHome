@@ -9,7 +9,7 @@ import android.opengl.Matrix
 
 class MyGLRenderer : GLSurfaceView.Renderer {
 
-    private lateinit var christmasStrip: ChristmasStrip
+    private lateinit var tree: ChristmasStrip
     private val rotationMatrix = FloatArray(16)
 
     @Volatile
@@ -19,7 +19,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
         // initialize a triangle
-        christmasStrip = ChristmasStrip(this)
+        tree = ChristmasTreeActivity.tree
     }
 
     override fun onDrawFrame(unused: GL10) {
@@ -51,7 +51,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         Matrix.scaleM(scratch, 0, 2f, 3.5f, 2f)
 
         // Draw triangle
-        christmasStrip.draw(scratch)
+        tree.draw(scratch)
     }
 
     // vPMatrix is an abbreviation for "Model View Projection Matrix"

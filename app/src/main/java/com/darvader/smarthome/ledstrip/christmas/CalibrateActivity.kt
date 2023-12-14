@@ -33,10 +33,32 @@ class CalibrateActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.calibrateButton.setOnClickListener {
+        binding.front.setOnClickListener {
             Thread {
+                calibrate.perspective = "front"
                 calibrate.setImageCapture(imageCapture)
-                // calibrate.calibrate()
+                calibrate.calibrate()
+            }.start()
+        }
+        binding.left.setOnClickListener {
+            Thread {
+                calibrate.perspective = "left"
+                calibrate.setImageCapture(imageCapture)
+                calibrate.calibrate()
+            }.start()
+        }
+        binding.back.setOnClickListener {
+            Thread {
+                calibrate.perspective = "back"
+                calibrate.setImageCapture(imageCapture)
+                calibrate.calibrate()
+            }.start()
+        }
+        binding.right.setOnClickListener {
+            Thread {
+                calibrate.perspective = "right"
+                calibrate.setImageCapture(imageCapture)
+                calibrate.calibrate()
             }.start()
         }
         binding.showTree.setOnClickListener {
@@ -45,31 +67,10 @@ class CalibrateActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.collectPoints.setOnClickListener { Thread { calibrate.collectPoints() }.start() }
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
+        startCamera()
         calibrate = Calibrate(this)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                Toast.makeText(this,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -105,10 +106,6 @@ class CalibrateActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -117,7 +114,5 @@ class CalibrateActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "CameraXBasic"
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
 }
