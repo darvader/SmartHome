@@ -1,6 +1,6 @@
 package com.darvader.smarthome.ledstrip.christmas;
 
-import android.opengl.GLES20;
+import android.opengl.GLES30;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -60,13 +60,13 @@ public class Line {
         // set the buffer to read the first coordinate
         VertexBuffer.position(0);
 
-        int vertexShader = ChristmasStrip.Companion.loadShader(GLES20.GL_VERTEX_SHADER, VertexShaderCode);
-        int fragmentShader = ChristmasStrip.Companion.loadShader(GLES20.GL_FRAGMENT_SHADER, FragmentShaderCode);
+        int vertexShader = ChristmasStrip.Companion.loadShader(GLES30.GL_VERTEX_SHADER, VertexShaderCode);
+        int fragmentShader = ChristmasStrip.Companion.loadShader(GLES30.GL_FRAGMENT_SHADER, FragmentShaderCode);
 
-        GlProgram = GLES20.glCreateProgram();             // create empty OpenGL ES Program
-        GLES20.glAttachShader(GlProgram, vertexShader);   // add the vertex shader to program
-        GLES20.glAttachShader(GlProgram, fragmentShader); // add the fragment shader to program
-        GLES20.glLinkProgram(GlProgram);                  // creates OpenGL ES program executables
+        GlProgram = GLES30.glCreateProgram();             // create empty OpenGL ES Program
+        GLES30.glAttachShader(GlProgram, vertexShader);   // add the vertex shader to program
+        GLES30.glAttachShader(GlProgram, fragmentShader); // add the fragment shader to program
+        GLES30.glLinkProgram(GlProgram);                  // creates OpenGL ES program executables
     }
 
     public void SetVerts(float v0, float v1, float v2, float v3, float v4, float v5) {
@@ -91,35 +91,35 @@ public class Line {
 
     public void draw(float[] mvpMatrix) {
         // Add program to OpenGL ES environment
-        GLES20.glUseProgram(GlProgram);
+        GLES30.glUseProgram(GlProgram);
 
         // get handle to vertex shader's vPosition member
-        PositionHandle = GLES20.glGetAttribLocation(GlProgram, "vPosition");
+        PositionHandle = GLES30.glGetAttribLocation(GlProgram, "vPosition");
 
         // Enable a handle to the triangle vertices
-        GLES20.glEnableVertexAttribArray(PositionHandle);
+        GLES30.glEnableVertexAttribArray(PositionHandle);
 
         // Prepare the triangle coordinate data
-        GLES20.glVertexAttribPointer(PositionHandle, COORDS_PER_VERTEX,
-                                 GLES20.GL_FLOAT, false,
+        GLES30.glVertexAttribPointer(PositionHandle, COORDS_PER_VERTEX,
+                                 GLES30.GL_FLOAT, false,
                                  VertexStride, VertexBuffer);
 
         // get handle to fragment shader's vColor member
-        ColorHandle = GLES20.glGetUniformLocation(GlProgram, "vColor");
+        ColorHandle = GLES30.glGetUniformLocation(GlProgram, "vColor");
 
         // Set color for drawing the triangle
-        GLES20.glUniform4fv(ColorHandle, 1, color, 0);
+        GLES30.glUniform4fv(ColorHandle, 1, color, 0);
 
         // get handle to shape's transformation matrix
-        MVPMatrixHandle = GLES20.glGetUniformLocation(GlProgram, "uMVPMatrix");
+        MVPMatrixHandle = GLES30.glGetUniformLocation(GlProgram, "uMVPMatrix");
 
         // Apply the projection and view transformation
-        GLES20.glUniformMatrix4fv(MVPMatrixHandle, 1, false, mvpMatrix, 0);
+        GLES30.glUniformMatrix4fv(MVPMatrixHandle, 1, false, mvpMatrix, 0);
 
         // Draw the triangle
-        GLES20.glDrawArrays(GLES20.GL_LINES, 0, VertexCount);
+        GLES30.glDrawArrays(GLES30.GL_LINES, 0, VertexCount);
 
         // Disable vertex array
-        GLES20.glDisableVertexAttribArray(PositionHandle);
+        GLES30.glDisableVertexAttribArray(PositionHandle);
     }
  }

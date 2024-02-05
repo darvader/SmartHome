@@ -115,10 +115,8 @@ class ScoreboardActivity : AppCompatActivity() {
         ledMatrix.setsRight = if (ledMatrix.switch) match.setPointsTeam1.toByte() else match.setPointsTeam2.toByte()
 
         val text = if (!ledMatrix.invert xor ledMatrix.switch) "${match.teamDescription1}:${match.teamDescription2}" else "${match.teamDescription2}:${match.teamDescription1}"
-        if (text != binding.scrollText.text.toString()) {
-            runOnUiThread {
-                binding.scrollText.setText(text)
-            }
+        runOnUiThread {
+            binding.scrollText.setText(text)
         }
         ledMatrix.updateScore()
     }
