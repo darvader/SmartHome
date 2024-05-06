@@ -8,11 +8,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.darvader.smarthome.circulation.CirculationPumpActivity
 import com.darvader.smarthome.databinding.ActivitySmartHomeBinding
 import com.darvader.smarthome.ledstrip.LedStrip
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import com.darvader.smarthome.ledstrip.LedStripActivity
-import com.darvader.smarthome.ledstrip.christmas.CalibrateActivity
 import com.darvader.smarthome.ledstrip.christmas.ChristmasTreeActivity
 import com.darvader.smarthome.livingroomlight.LightsActivity
 
@@ -94,6 +94,11 @@ class SmartHomeActivity : AppCompatActivity() {
 
         binding.christmasTree.setOnClickListener {
             val intent = Intent(this, ChristmasTreeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.circulationPump.setOnClickListener {
+            val intent = Intent(this, CirculationPumpActivity::class.java)
             startActivity(intent)
         }
 
