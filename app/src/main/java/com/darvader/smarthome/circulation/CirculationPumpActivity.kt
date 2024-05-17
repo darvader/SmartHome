@@ -2,14 +2,20 @@ package com.darvader.smarthome.circulation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.darvader.smarthome.R
+import com.darvader.smarthome.SmartHomeActivity
 import com.darvader.smarthome.databinding.ActivityCirculationPumpBinding
-import com.darvader.smarthome.databinding.ActivityLightsBinding
+import java.util.Timer
+import java.util.TimerTask
 
 class CirculationPumpActivity : AppCompatActivity() {
-    val circulationPump = CirculationPump()
+    val circulationPump = CirculationPump(this)
 
-    private lateinit var binding: ActivityCirculationPumpBinding
+    public lateinit var binding: ActivityCirculationPumpBinding
+    val timer = Timer()
+
+    init {
+        SmartHomeActivity.echoServer.register(circulationPump)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,5 +27,18 @@ class CirculationPumpActivity : AppCompatActivity() {
         binding.offCirculation.setOnClickListener { circulationPump.off() }
         binding.circ5Min.setOnClickListener { circulationPump.circ5Min() }
 
+        val task = object : TimerTask() {
+            override fun run() {
+                circulationPump.status()
+            }
+        }
+
+        timer.scheduleAtFixedRate(task, 0, 5000)
+
+    }
+
+    override fun onDestroy() {
+        timer.cancel()
+        super.onDestroy()
     }
 }

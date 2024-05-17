@@ -1,11 +1,12 @@
 package com.darvader.smarthome.circulation
 
+import android.graphics.Color
 import com.darvader.smarthome.*
 import com.darvader.smarthome.ledstrip.LedStrip
 import com.darvader.smarthome.livingroomlight.Lights
 import java.net.InetAddress
 
-class CirculationPump {
+class CirculationPump(val circulationPumpActivity: CirculationPumpActivity) : HomeElement {
 
     companion object {
         var circulationAddress = "192.168.0.61"
@@ -28,9 +29,27 @@ class CirculationPump {
         echoClient.send("on", circulationAddress)
     }
 
+    fun status() {
+        println("Status called.")
+        echoClient.send("status", circulationAddress)
+    }
 
     fun detect() {
         println("Detect called.")
         LedStrip.echoClient.sendBroadCast("Detect")
+    }
+
+    override fun refresh(address: InetAddress, received: String) {
+        if (received.startsWith("CirculationOn")) {
+            this.circulationPumpActivity.binding.onCirculation.setBackgroundColor(Color.GREEN)
+            this.circulationPumpActivity.binding.offCirculation.setBackgroundColor(Color.GREEN)
+            this.circulationPumpActivity.binding.circ5Min.setBackgroundColor(Color.GREEN)
+        }
+        if (received.startsWith("CirculationOff")) {
+            this.circulationPumpActivity.binding.onCirculation.setBackgroundColor(Color.RED)
+            this.circulationPumpActivity.binding.offCirculation.setBackgroundColor(Color.RED)
+            this.circulationPumpActivity.binding.circ5Min.setBackgroundColor(Color.RED)
+        }
+
     }
 }
