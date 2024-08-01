@@ -11,7 +11,7 @@ class CirculationPumpActivity : AppCompatActivity() {
     val circulationPump = CirculationPump(this)
 
     public lateinit var binding: ActivityCirculationPumpBinding
-    val timer = Timer()
+    private val timer = Timer()
 
     init {
         SmartHomeActivity.echoServer.register(circulationPump)
@@ -23,8 +23,8 @@ class CirculationPumpActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.onCirculation.setOnClickListener { circulationPump.on() }
-        binding.offCirculation.setOnClickListener { circulationPump.off() }
+        binding.on.setOnClickListener { circulationPump.on() }
+        binding.off.setOnClickListener { circulationPump.off() }
         binding.circ5Min.setOnClickListener { circulationPump.circ5Min() }
 
         val task = object : TimerTask() {

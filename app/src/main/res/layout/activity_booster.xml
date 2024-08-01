@@ -5,7 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_launcher_background"
-    tools:context=".circulation.CirculationPumpActivity">
+    tools:context=".booster.BoosterActivity">
+
+    <SeekBar
+        android:id="@+id/boosterBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:background="#DCCBCB"
+        android:max="255"
+        android:progress="1"
+        android:progressTint="#00FA0303"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/off" />
 
     <Button
         android:id="@+id/on"
@@ -23,11 +36,15 @@
         app:layout_constraintStart_toEndOf="@+id/on"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/circ5Min"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5min"
-        app:layout_constraintStart_toEndOf="@+id/off"
-        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/tempText"
+        android:layout_width="307dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Temp: 0  Huminity: 0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boosterBar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.darvader.smarthome.matrix
 
 import android.graphics.Bitmap
-import android.text.Editable
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Constraints

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.darvader.smarthome.booster.BoosterActivity
 import com.darvader.smarthome.circulation.CirculationPumpActivity
 import com.darvader.smarthome.databinding.ActivitySmartHomeBinding
 import com.darvader.smarthome.ledstrip.LedStrip
@@ -99,6 +100,11 @@ class SmartHomeActivity : AppCompatActivity() {
 
         binding.circulationPump.setOnClickListener {
             val intent = Intent(this, CirculationPumpActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.booster.setOnClickListener {
+            val intent = Intent(this, BoosterActivity::class.java)
             startActivity(intent)
         }
 

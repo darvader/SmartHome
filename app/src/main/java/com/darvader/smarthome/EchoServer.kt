@@ -29,7 +29,7 @@ constructor() : Thread() {
                 packet = DatagramPacket(buf, buf.size, address, port)
                 val received = String(packet.data, 0, packet.length)
                 homeElements.forEach {
-                    it -> it.refresh(address, received)
+                    it.refresh(address, received)
                 }
                 if (received == "end") {
                     running = false
