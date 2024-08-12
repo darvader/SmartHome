@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_launcher_background"
-    tools:context=".booster.BoosterActivity">
+    tools:context=".booster.CounterActivity">
 
     <SeekBar
         android:id="@+id/boosterBar"

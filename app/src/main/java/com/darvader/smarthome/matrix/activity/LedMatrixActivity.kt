@@ -64,6 +64,11 @@ class LedMatrixActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.counter.setOnClickListener {
+            val intent = Intent(this, CounterActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.detect.setOnClickListener {
             ledMatrix.detect()
         }

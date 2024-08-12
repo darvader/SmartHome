@@ -16,6 +16,7 @@ import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import com.darvader.smarthome.ledstrip.LedStripActivity
 import com.darvader.smarthome.ledstrip.christmas.ChristmasTreeActivity
 import com.darvader.smarthome.livingroomlight.LightsActivity
+import com.darvader.smarthome.matrix.activity.CounterActivity
 
 class SmartHomeActivity : AppCompatActivity() {
 

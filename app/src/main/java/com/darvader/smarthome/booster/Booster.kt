@@ -1,10 +1,7 @@
 package com.darvader.smarthome.booster
 
 import com.darvader.smarthome.*
-import java.net.DatagramPacket
 import java.net.InetAddress
-import java.nio.ByteBuffer
-import java.util.Arrays
 
 class Booster(private val boosterActivity: BoosterActivity) : HomeElement {
 

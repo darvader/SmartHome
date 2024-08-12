@@ -8,6 +8,7 @@ import androidx.core.graphics.get
 import com.darvader.smarthome.HomeElement
 import com.darvader.smarthome.matrix.activity.ScoreboardActivity
 import com.darvader.smarthome.SmartHomeActivity
+import com.darvader.smarthome.matrix.activity.CounterActivity
 import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import java.net.InetAddress
 
@@ -19,6 +20,7 @@ class LedMatrix(): HomeElement {
         public var broadcast = false
     }
 
+    lateinit var counterActivity: CounterActivity
     private lateinit var ledMatrixActivity: LedMatrixActivity
     private val addresses = java.util.ArrayList<String>()
     private var time: Int = 0
@@ -304,8 +306,8 @@ class LedMatrix(): HomeElement {
         println("Bitmap send.")
     }
 
-    enum class TimerMode {
-        timer, stopWatch;
+    enum class Mode {
+        timer, stopWatch, counter;
     }
 
     fun setTime(time: Int) {
@@ -314,13 +316,13 @@ class LedMatrix(): HomeElement {
         val lowChar = (time and 0xff).toByte()
         val bytes = "timer=".toByteArray(Charsets.UTF_8) + highChar + lowChar
         send(bytes)
-        var mode = TimerMode.timer
+        var mode = Mode.timer
 
         println("Timer send with highchar: ${highChar} and lowChar: ${lowChar}")
     }
 
     fun startTimer() {
-        mode = TimerMode.timer
+        mode = Mode.timer
         send("timerStart")
     }
 
@@ -329,7 +331,7 @@ class LedMatrix(): HomeElement {
     }
 
     fun stopWatch() {
-        mode = TimerMode.stopWatch
+        mode = Mode.stopWatch
         send("stopWatch")
     }
 
@@ -341,20 +343,51 @@ class LedMatrix(): HomeElement {
         send("stopWatchStop")
     }
 
+    fun plusCounter() {
+        counter++;
+        sendCounter()
+    }
+
+    private fun sendCounter() {
+        val highChar = (counter shr 8).toByte()
+        val lowChar = (counter and 0xff).toByte()
+        val bytes = "counter=".toByteArray(Charsets.UTF_8) + highChar + lowChar
+        send(bytes)
+    }
+
+    fun minusCounter() {
+        counter--;
+        if (counter<0) counter = 0
+        sendCounter()
+    }
+
+    fun resetCounter() {
+        counter=0;
+        sendCounter()
+    }
+
+    var counter = 0
+        set(value) {
+            field = value
+            sendCounter()
+        }
     var buttonPressedNr = 0;
-    var mode = TimerMode.timer
+    var mode = Mode.timer
 
     private fun handleButtonPressed() {
-        if (mode == TimerMode.timer) {
+        if (mode == Mode.timer) {
             if (buttonPressedNr % 2 == 0)
                 startTimer()
             else
                 pauseTimer()
-        } else if (mode == TimerMode.stopWatch) {
+        } else if (mode == Mode.stopWatch) {
             if (buttonPressedNr % 2 == 0)
                 stopWatchStart()
             else
                 stopWatchStop()
+        } else if (mode == Mode.counter) {
+            plusCounter()
+            counterActivity.runOnUiThread{ counterActivity.binding.counterText.setText(counter.toString())}
         }
         buttonPressedNr++;
 

@@ -61,6 +61,7 @@
             android:exported="true"
             android:screenOrientation="fullSensor"></activity>
         <activity android:name=".matrix.activity.AnimationsActivity" />
+        <activity android:name=".matrix.activity.CounterActivity" />
         <activity android:name=".matrix.activity.LedMatrixActivity" />
         <activity android:name=".matrix.activity.TimerActivity" />
         <activity android:name=".matrix.activity.TimeActivity" />
