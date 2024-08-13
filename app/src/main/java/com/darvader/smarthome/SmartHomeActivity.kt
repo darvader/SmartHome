@@ -1,10 +1,16 @@
 package com.darvader.smarthome
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.wifi.WifiConfiguration
+import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -12,14 +18,14 @@ import com.darvader.smarthome.booster.BoosterActivity
 import com.darvader.smarthome.circulation.CirculationPumpActivity
 import com.darvader.smarthome.databinding.ActivitySmartHomeBinding
 import com.darvader.smarthome.ledstrip.LedStrip
-import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 import com.darvader.smarthome.ledstrip.LedStripActivity
 import com.darvader.smarthome.ledstrip.christmas.ChristmasTreeActivity
 import com.darvader.smarthome.livingroomlight.LightsActivity
-import com.darvader.smarthome.matrix.activity.CounterActivity
+import com.darvader.smarthome.matrix.activity.LedMatrixActivity
 
 class SmartHomeActivity : AppCompatActivity() {
 
+    private val PERMISSIONS_REQUEST_CODE = 123
     companion object {
         val echoServer = EchoServer()
         val echoClient = EchoClient()
@@ -54,10 +60,100 @@ class SmartHomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun hasPermissions(): Boolean {
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.CHANGE_NETWORK_STATE,
+            Manifest.permission.WRITE_SETTINGS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        return permissions.all {
+            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    private fun requestPermissions() {
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.CHANGE_NETWORK_STATE,
+            Manifest.permission.WRITE_SETTINGS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        ActivityCompat.requestPermissions(this, permissions, PERMISSIONS_REQUEST_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                // Permissions granted, proceed with creating hotspot
+                createHotspot()
+            } else {
+                // Handle the case where permissions are not granted
+            }
+        }
+    }
+
+    private fun createHotspot() {
+        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // For Android 8.0 and above
+            enableHotspotOreo(wifiManager)
+        } else {
+            // For Android 7.1 and below
+            enableHotspotLegacy(wifiManager)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun enableHotspotOreo(wifiManager: WifiManager) {
+        val wifiConfig = WifiConfiguration().apply {
+            SSID = "MyHotspot"
+            preSharedKey = "password123"
+            allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
+        }
+
+        try {
+            val method = wifiManager.javaClass.getMethod("setWifiApEnabled", WifiConfiguration::class.java, Boolean::class.javaPrimitiveType)
+            method.invoke(wifiManager, wifiConfig, true)
+        } catch (e: Exception) {
+            Log.e("Hotspot", "Failed to enable hotspot", e)
+        }
+    }
+
+    private fun enableHotspotLegacy(wifiManager: WifiManager) {
+        val wifiConfig = WifiConfiguration().apply {
+            SSID = "andi_hotspot"
+            preSharedKey = "1q2w3e4r"
+            allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
+        }
+
+        try {
+            val method = wifiManager.javaClass.getMethod("setWifiApEnabled", WifiConfiguration::class.java, Boolean::class.javaPrimitiveType)
+            method.invoke(wifiManager, wifiConfig, true)
+        } catch (e: Exception) {
+            Log.e("Hotspot", "Failed to enable hotspot", e)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_smart_home)
+
+        if (!hasPermissions()) {
+            requestPermissions()
+        } else {
+            // Permissions are already granted, proceed with creating hotspot
+            createHotspot()
+        }
+
         if (haveStoragePermission()) {
         } else {
             requestPermission()
@@ -71,8 +167,6 @@ class SmartHomeActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-
-
 
         binding = ActivitySmartHomeBinding.inflate(layoutInflater)
         val view = binding.root
