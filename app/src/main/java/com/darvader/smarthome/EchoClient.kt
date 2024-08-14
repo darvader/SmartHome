@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.darvader.smarthome
 
 import android.os.AsyncTask

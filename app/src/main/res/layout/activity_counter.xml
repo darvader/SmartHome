@@ -9,6 +9,14 @@
     tools:context=".matrix.activity.CounterActivity">
 
     <Button
+        android:id="@+id/detect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/plusCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

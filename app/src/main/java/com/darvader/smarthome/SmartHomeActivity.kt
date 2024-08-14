@@ -50,7 +50,7 @@ class SmartHomeActivity : AppCompatActivity() {
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
 
-    private fun requestPermission() {
+    private fun requestPermissionStorage() {
         if (!haveStoragePermission()) {
             val permissions = arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -60,7 +60,7 @@ class SmartHomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun hasPermissions(): Boolean {
+    private fun hasPermissionsHotspot(): Boolean {
         val permissions = arrayOf(
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.CHANGE_WIFI_STATE,
@@ -75,7 +75,7 @@ class SmartHomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestPermissions() {
+    private fun requestPermissionsHotspot() {
         val permissions = arrayOf(
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.CHANGE_WIFI_STATE,
@@ -86,18 +86,6 @@ class SmartHomeActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
         ActivityCompat.requestPermissions(this, permissions, PERMISSIONS_REQUEST_CODE)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                // Permissions granted, proceed with creating hotspot
-                createHotspot()
-            } else {
-                // Handle the case where permissions are not granted
-            }
-        }
     }
 
     private fun createHotspot() {
@@ -115,8 +103,8 @@ class SmartHomeActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun enableHotspotOreo(wifiManager: WifiManager) {
         val wifiConfig = WifiConfiguration().apply {
-            SSID = "MyHotspot"
-            preSharedKey = "password123"
+            SSID = "andi_hotspot"
+            preSharedKey = "1q2w3e4r"
             allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
         }
 
@@ -147,8 +135,8 @@ class SmartHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_smart_home)
 
-        if (!hasPermissions()) {
-            requestPermissions()
+        if (!hasPermissionsHotspot()) {
+            requestPermissionsHotspot()
         } else {
             // Permissions are already granted, proceed with creating hotspot
             createHotspot()
@@ -156,7 +144,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
         if (haveStoragePermission()) {
         } else {
-            requestPermission()
+            requestPermissionStorage()
         }
 
         if (allPermissionsGranted()) {
@@ -223,6 +211,14 @@ class SmartHomeActivity : AppCompatActivity() {
                     "Permissions not granted by the user.",
                     Toast.LENGTH_SHORT).show()
                 finish()
+            }
+        }
+        if (requestCode == PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                // Permissions granted, proceed with creating hotspot
+                createHotspot()
+            } else {
+                // Handle the case where permissions are not granted
             }
         }
     }

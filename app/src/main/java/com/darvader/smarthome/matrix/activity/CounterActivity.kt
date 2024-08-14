@@ -1,9 +1,10 @@
 package com.darvader.smarthome.matrix.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.appcompat.app.AppCompatActivity
 import com.darvader.smarthome.databinding.ActivityCounterBinding
 import com.darvader.smarthome.matrix.LedMatrix
 
@@ -22,19 +23,34 @@ class CounterActivity : AppCompatActivity() {
         ledMatrix.counter = ledMatrix.counter
         setContentView(view)
 
+        val sharedPreferences = getSharedPreferences("CounterPrefs", Context.MODE_PRIVATE)
+        ledMatrix.counter = sharedPreferences.getInt("counter", 0)
+        binding.counterText.setText(ledMatrix.counter.toString())
+        val editor = sharedPreferences.edit()
+
         binding.plusCounter.setOnClickListener {
+            editor.putInt("counter", ledMatrix.counter)
+            editor.apply()
             ledMatrix.plusCounter()
             binding.counterText.setText(ledMatrix.counter.toString())
         }
 
         binding.minusCounter.setOnClickListener {
             ledMatrix.minusCounter()
+            editor.putInt("counter", ledMatrix.counter)
+            editor.apply()
             binding.counterText.setText(ledMatrix.counter.toString())
         }
 
         binding.resetCounter.setOnClickListener {
             ledMatrix.counter = 0
+            editor.putInt("counter", ledMatrix.counter)
+            editor.apply()
             binding.counterText.setText(ledMatrix.counter.toString())
+        }
+
+        binding.detect.setOnClickListener {
+            ledMatrix.detect()
         }
 
         binding.counterText.addTextChangedListener(object : TextWatcher {
@@ -52,6 +68,8 @@ class CounterActivity : AppCompatActivity() {
                 if (number != null) {
                     ledMatrix.counter = number
                 }
+                editor.putInt("counter", ledMatrix.counter)
+                editor.apply()
             }
         })
 

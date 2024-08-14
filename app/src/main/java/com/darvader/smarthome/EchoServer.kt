@@ -12,7 +12,7 @@ constructor() : Thread() {
     private val socket = DatagramSocket(4445)
     private var running = false
     private val buf = ByteArray(256)
-    val homeElements = ArrayList<HomeElement>()
+    val homeElements = HashSet<HomeElement>()
 
     override fun run() {
         running = true
