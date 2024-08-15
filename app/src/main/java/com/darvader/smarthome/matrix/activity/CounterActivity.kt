@@ -1,6 +1,7 @@
 package com.darvader.smarthome.matrix.activity
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -29,23 +30,20 @@ class CounterActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
 
         binding.plusCounter.setOnClickListener {
-            editor.putInt("counter", ledMatrix.counter)
-            editor.apply()
             ledMatrix.plusCounter()
+            storeCounter(editor)
             binding.counterText.setText(ledMatrix.counter.toString())
         }
 
         binding.minusCounter.setOnClickListener {
             ledMatrix.minusCounter()
-            editor.putInt("counter", ledMatrix.counter)
-            editor.apply()
+            storeCounter(editor)
             binding.counterText.setText(ledMatrix.counter.toString())
         }
 
         binding.resetCounter.setOnClickListener {
             ledMatrix.counter = 0
-            editor.putInt("counter", ledMatrix.counter)
-            editor.apply()
+            storeCounter(editor)
             binding.counterText.setText(ledMatrix.counter.toString())
         }
 
@@ -68,11 +66,15 @@ class CounterActivity : AppCompatActivity() {
                 if (number != null) {
                     ledMatrix.counter = number
                 }
-                editor.putInt("counter", ledMatrix.counter)
-                editor.apply()
+                storeCounter(editor)
             }
         })
 
+    }
+
+    private fun storeCounter(editor: SharedPreferences.Editor) {
+        editor.putInt("counter", ledMatrix.counter)
+        editor.apply()
     }
 
     override fun onDestroy() {
