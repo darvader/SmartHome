@@ -256,6 +256,10 @@ class LedMatrix(): HomeElement {
         send("timeGameOfLife")
     }
 
+    fun ellipse() {
+        send("timeEllipse")
+    }
+
     fun changeBrightness(brightness: Int) {
         send("brightness=${brightness.toChar()}")
     }

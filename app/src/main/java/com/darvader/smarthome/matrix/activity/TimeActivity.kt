@@ -31,6 +31,7 @@ class TimeActivity() : AppCompatActivity() {
         binding.plasma.setOnClickListener { ledMatrix?.startPlasma() }
         binding.mandelbrot.setOnClickListener { ledMatrix?.mandelbrot() }
         binding.gameOfLife.setOnClickListener { ledMatrix?.gameOfLife() }
+        binding.ellipse.setOnClickListener { ledMatrix?.ellipse() }
 
         binding.brightness.setOnSeekBarChangeListener(object : LedMatrixActivity.ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {

@@ -38,12 +38,13 @@
 
     <EditText
         android:id="@+id/tempText"
-        android:layout_width="307dp"
-        android:layout_height="43dp"
+        android:layout_width="398dp"
+        android:layout_height="60dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Temp: 0  Huminity: 0"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/boosterBar" />
 

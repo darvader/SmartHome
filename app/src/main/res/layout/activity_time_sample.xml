@@ -88,4 +88,12 @@
         android:text="GOL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time4" />
+
+    <Button
+        android:id="@+id/ellipse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ellipse"
+        app:layout_constraintStart_toEndOf="@+id/gameOfLife"
+        app:layout_constraintTop_toBottomOf="@+id/mandelbrot" />
 </androidx.constraintlayout.widget.ConstraintLayout>

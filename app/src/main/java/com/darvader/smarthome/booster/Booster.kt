@@ -40,14 +40,15 @@ class Booster(private val boosterActivity: BoosterActivity) : HomeElement {
     override fun refresh(address: InetAddress, received: String) {
         if (received.startsWith("statusBooster=")) {
             // Remove the prefix
-            val dataWithoutPrefix = received.substring("statusBooster=".length, "statusBooster=".length + 13)
+            val dataWithoutPrefix = received.substring("statusBooster=".length, "statusBooster=".length + 17)
 
             // Split the remaining data into parts
             val parts = dataWithoutPrefix.split(",")
             val temp = parts[0].trim().toFloat()
             val humidity = parts[1].trim().toFloat()
+            val pwm = parts[2].trim().toFloat()
 
-            val result = "Temp: $temp; Humidity: $humidity"
+            val result = "Temp: $temp; Humidity: $humidity; Pwm: $pwm"
             println(result)
             boosterActivity.runOnUiThread {this.boosterActivity.binding.tempText.setText(result)}
         }
