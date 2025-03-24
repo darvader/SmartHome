@@ -40,12 +40,19 @@ data class Match(val matchJSON: JSONObject) {
         setPointsTeam1 = setPoints.getInt("team1")
         setPointsTeam2 = setPoints.getInt("team2")
 
+        val size = matchSets.size
+        var lastSet: MatchSet? = null
+        if (size>0)
+          lastSet = matchSets[size - 1]
         val matchSetsJson = match.getJSONArray("matchSets")
         matchSets.clear()
-        leftTeamServes = match.getString("serving") == "team1"
         (0 until matchSetsJson.length()).forEach {
             val matchSet = MatchSet(matchSetsJson.getJSONObject(it))
             this.matchSets.add(matchSet)
+        }
+        if (size > 0 && lastSet != null) {
+            val newLastSet = matchSets[size - 1]
+            leftTeamServes = newLastSet.team1 > lastSet.team1
         }
     }
 

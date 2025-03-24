@@ -5,10 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_launcher_background"
-    tools:context=".booster.CounterActivity">
+    tools:context=".booster.BoosterActivity">
+
+    <Button
+        android:id="@+id/off2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="off"
+        app:layout_constraintStart_toEndOf="@+id/on2"
+        app:layout_constraintTop_toBottomOf="@+id/tempText" />
+
+    <Button
+        android:id="@+id/on2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="ON"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempText" />
+
+    <EditText
+        android:id="@+id/tempText"
+        android:layout_width="398dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Temp: 0  Huminity: 0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boosterBar" />
 
     <SeekBar
         android:id="@+id/boosterBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:background="#DCCBCB"
+        android:max="255"
+        android:progress="1"
+        android:progressTint="#00FA0303"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/off" />
+
+    <SeekBar
+        android:id="@+id/boosterBar2"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
@@ -17,8 +64,9 @@
         android:progress="1"
         android:progressTint="#00FA0303"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/off" />
+        app:layout_constraintTop_toBottomOf="@+id/off2" />
 
     <Button
         android:id="@+id/on"
@@ -37,15 +85,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/tempText"
+        android:id="@+id/tempText2"
         android:layout_width="398dp"
         android:layout_height="60dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Temp: 0  Huminity: 0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boosterBar" />
+        app:layout_constraintTop_toBottomOf="@+id/boosterBar2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

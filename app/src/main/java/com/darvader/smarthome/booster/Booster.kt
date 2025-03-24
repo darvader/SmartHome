@@ -7,6 +7,7 @@ class Booster(private val boosterActivity: BoosterActivity) : HomeElement {
 
     companion object {
         var address = "192.168.0.11"
+        var address2 = "192.168.0.23"
         val echoClient = SmartHomeActivity.echoClient
     }
 

@@ -15,6 +15,8 @@ import java.io.OutputStreamWriter
 import java.io.PrintWriter
 
 
+private const val numberLED = 550
+
 class Calibrate(val calibrateActivity: CalibrateActivity) {
     var perspective = ""
     private lateinit var imageCapture: ImageCapture
@@ -33,7 +35,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         val outputStreamWriter = OutputStreamWriter(fileOutputStream)
         val printWriter = PrintWriter(outputStreamWriter)
 
-        for (i in 0..650) {
+        for (i in 0..numberLED) {
             val low = (i and 0xff).toByte()
             val high = (i shr 8).toByte()
             val msg = "setPixel=".toByteArray(Charsets.UTF_8) + high + low
@@ -63,8 +65,8 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
         val back = files.filter { f -> f.name.startsWith("ChristmasDotsback") }.first()
         val left = files.filter { f -> f.name.startsWith("ChristmasDotsleft") }.first()
 
-        val christmasPoints = ArrayList<ChristmasPoint>(650)
-        for (i in 0..650) { christmasPoints.add(ChristmasPoint())}
+        val christmasPoints = ArrayList<ChristmasPoint>(numberLED)
+        for (i in 0..numberLED) { christmasPoints.add(ChristmasPoint())}
 
         front.bufferedReader().use { it.lines().forEach { l ->
                 val split = l.split(",")
@@ -123,7 +125,7 @@ class Calibrate(val calibrateActivity: CalibrateActivity) {
     val maxHeight = 3264
 
     private fun calculate3dPoints(christmasPoints: ArrayList<ChristmasPoint>) {
-        christmasPoints.filter{ it.index < 650}.forEach { p ->
+        christmasPoints.filter{ it.index < numberLED }.forEach { p ->
             if (p.frontLD < p.backLD && p.front.x>0) {
                 if (p.rightLD < p.leftLD && p.right.x>0) {
                     p.p3.x = normalize(p.front.x.toFloat(), maxWidth)

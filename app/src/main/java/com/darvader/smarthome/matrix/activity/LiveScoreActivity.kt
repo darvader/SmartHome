@@ -20,17 +20,22 @@ import java.net.URI
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import javax.net.ssl.SSLSocketFactory
+import okhttp3.OkHttpClient
+import okhttp3.Request
+
 
 class LiveScoreActivity : AppCompatActivity() {
 
     companion object {
-        // const val WEB_SOCKET_URL = "wss://ws-feed.pro.coinbase.com"
+        const val URL_DVV = "https://backend.sams-ticker.de/live/tickers/dvv"
+        const val URL_TVV = "https://backend.sams-ticker.de/live/tickers/tvv"
         const val WEB_SOCKET_URL_DVV = "wss://backend.sams-ticker.de/dvv"
         const val WEB_SOCKET_URL_TVV = "wss://backend.sams-ticker.de/tvv"
         const val TAG = "Coinbase"
         var matchSeries: JSONObject = JSONObject()
         var matchesPayload: JSONObject = JSONObject()
-        var selectedRegion: String = ""
+        var selectedRegion: String = "https://backend.sams-ticker.de/live/tickers/tvv"
+        var selectedRegionWebsocket: String = "wss://backend.sams-ticker.de/tvv"
         lateinit var binding: ActivityLiveScoreBinding
         var webSocketClient: WebSocketClient? = null
         var scoreboardActivity: ScoreboardActivity? = null
@@ -49,8 +54,7 @@ class LiveScoreActivity : AppCompatActivity() {
         binding = ActivityLiveScoreBinding.inflate(layoutInflater)
         livescoreActivity = this
         setContentView(binding.root)
-        reInitWebSocket()
-        val regions = arrayOf(WEB_SOCKET_URL_TVV, WEB_SOCKET_URL_DVV)
+        val regions = arrayOf(URL_TVV, URL_DVV)
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, regions)
         binding.region.adapter = adapter
 
@@ -58,10 +62,16 @@ class LiveScoreActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val region = regions[position]
                 selectedRegion = region
+                if (selectedRegion.contains("tvv"))
+                    selectedRegionWebsocket = WEB_SOCKET_URL_TVV
+                else
+                    selectedRegionWebsocket = WEB_SOCKET_URL_DVV
+                readMatches();
                 matches.clear()
                 leagues.clear()
                 leaguesMap.clear()
                 webSocketClient?.close()
+                reInitWebSocket()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -101,14 +111,40 @@ class LiveScoreActivity : AppCompatActivity() {
         }
     }
 
+    fun fetchJsonFromUrl(url: String): String? {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        return try {
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                response.body?.string()
+            } else {
+                println("Request failed with code: ${response.code}")
+                null
+            }
+        } catch (e: Exception) {
+            println("Error fetching JSON: ${e.message}")
+            null
+        }
+    }
+
+    private fun readMatches() {
+        Thread {
+            val message = fetchJsonFromUrl(selectedRegion)
+            val json = JSONObject(message)
+            parseMatches(json)
+        }.start()
+    }
+
     fun reInitWebSocket() {
         if (null != webSocketClient) {
             if (webSocketClient!!.isOpen)
                 return
         }
 
-        val coinbaseUri: URI? = URI(selectedRegion)
-        createWebSocketClient(coinbaseUri)
+        val uri: URI? = URI(selectedRegionWebsocket)
+        createWebSocketClient(uri)
 
         val socketFactory: SSLSocketFactory = SSLSocketFactory.getDefault() as SSLSocketFactory
         webSocketClient?.setSocketFactory(socketFactory)
@@ -116,8 +152,8 @@ class LiveScoreActivity : AppCompatActivity() {
 
     }
 
-    private fun createWebSocketClient(coinbaseUri: URI?) {
-        webSocketClient = object : WebSocketClient(coinbaseUri) {
+    private fun createWebSocketClient(uri: URI?) {
+        webSocketClient = object : WebSocketClient(uri) {
 
             override fun onOpen(handshakedata: ServerHandshake?) {
                 Log.d(TAG, "onOpen")
@@ -140,21 +176,11 @@ class LiveScoreActivity : AppCompatActivity() {
         }
     }
 
-    private fun subscribe() {
-        webSocketClient?.send(
-            "{\n" +
-                    "    \"type\": \"subscribe\",\n" +
-                    "    \"channels\": [{ \"name\": \"ticker\", \"product_ids\": [\"BTC-EUR\"] }]\n" +
-                    "}"
-        )
-    }
-
     private fun readMessage(message: String?) {
         message?.let {
             val json = JSONObject(message)
             val type = json.getString("type")
             val payload = json.getJSONObject("payload")
-            parseMatches(type, payload)
             matchUpdate(type, payload)
         }
     }
@@ -174,36 +200,28 @@ class LiveScoreActivity : AppCompatActivity() {
         }
     }
 
-    private fun parseMatches(type: String, payload: JSONObject) {
-        if (type == "FETCH_ASSOCIATION_TICKER_RESPONSE") {
-            Log.d(TAG, "read FETCH_ASSOCIATION_TICKER_RESPONSE")
-            matchesPayload = payload
-            matchSeries = matchesPayload.getJSONObject("matchSeries")
-            if (matches.size > 0) {
-                match?.update(matchesPayload)
-                scoreboardActivity?.inform()
-                return
-            }
-            val matchDays = payload.getJSONArray("matchDays")
-            (0 until matchDays.length()).forEach {
-                val matchDay = matchDays.getJSONObject(it)
-                val dateTime = ZonedDateTime.parse(matchDay.getString("date"))
-                if (dateTime.toLocalDate().equals(LocalDate.now().plusDays(0))) {
-                    println(dateTime)
+    private fun parseMatches(payload: JSONObject) {
+        matchesPayload = payload
+        matchSeries = payload.getJSONObject("matchSeries")
+        val matchDays = payload.getJSONArray("matchDays")
+        (0 until matchDays.length()).forEach {
+            val matchDay = matchDays.getJSONObject(it)
+            val dateTime = ZonedDateTime.parse(matchDay.getString("date"))
+            if (dateTime.toLocalDate().equals(LocalDate.now().plusDays(0))) {
+                println(dateTime)
 
-                    val matches = matchDay.getJSONArray("matches")
+                val matches = matchDay.getJSONArray("matches")
 
-                    (0 until matches.length()).forEach {
-                        parseMatch(matches, it)
-                    }
+                (0 until matches.length()).forEach {
+                    parseMatch(matches, it)
                 }
             }
-            val leagueNames = ArrayList<String>()
-            leagues.forEach { leagueNames.add("${it.name}") }
-            runOnUiThread {
-                val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, leagueNames)
-                binding.leagues.adapter = adapter
-            }
+        }
+        val leagueNames = ArrayList<String>()
+        leagues.forEach { leagueNames.add("${it.name}") }
+        runOnUiThread {
+            val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, leagueNames)
+            binding.leagues.adapter = adapter
         }
     }
 
