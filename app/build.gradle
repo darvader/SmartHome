@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 33
@@ -36,11 +35,6 @@ android {
     }
 }
 
-kotlin {
-    // For example:
-    jvmToolchain(8)
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10"
@@ -51,9 +45,9 @@ dependencies {
 
     // WebSocket
     implementation "org.java-websocket:Java-WebSocket:1.5.1"
-    // Moshi
+    // Moshi without kapt
     implementation 'com.squareup.moshi:moshi:1.15.0'
-    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.15.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.15.0'
 
     implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19'
     implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.19'

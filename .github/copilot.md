@@ -1,0 +1,14 @@
+# GitHub Copilot Project Instructions
+
+## Project Overview
+This project is an Android app for managing and monitoring smart home devices, including live score tracking for matrix games.
+
+## Coding Guidelines
+- Follow Android and Kotlin best practices.
+- Use MVVM or recommended Android architecture patterns.
+- Keep UI code in Activities/Fragments and business logic in ViewModels or appropriate classes.
+- Use meaningful variable and function names.
+- Write concise and clear documentation for public classes and methods.
+- Avoid hardcoding strings; use resources instead.
+- Ensure all new code is covered by unit tests where possible.
+
