@@ -1,20 +1,21 @@
 package com.darvader.livescore
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.darvader.smarthome.matrix.activity.LiveScoreActivity
+import com.darvader.livescore.databinding.ActivityLiveScoreMainBinding
 
 class LiveScoreMainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLiveScoreMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Directly launch the LiveScoreActivity from the main app module
-        val intent = Intent(this, LiveScoreActivity::class.java)
-        startActivity(intent)
+        // Initialize view binding
+        binding = ActivityLiveScoreMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Finish this activity so the user doesn't see it
-        finish()
+        // TODO: Implement LiveScore functionality
+        // This should contain the actual LiveScore logic that can be used by the main app
     }
 }
