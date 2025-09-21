@@ -47,7 +47,10 @@ class ScoreboardActivity : AppCompatActivity() {
         binding.setsDownRight.setOnClickListener { ledMatrix.setsRightDown() }
         binding.switchButton.setOnClickListener { ledMatrix.switch() }
         binding.reconnect.setOnClickListener {
-            LiveScoreActivity.livescoreActivity?.reInitWebSocket()
+            LiveScoreActivity.livescoreActivity?.let { activity ->
+                activity.webSocketManager.disconnect()
+                activity.webSocketManager.connect(activity.selectedRegion)
+            }
             ledMatrix.updateScore()
         }
 
@@ -82,7 +85,8 @@ class ScoreboardActivity : AppCompatActivity() {
         LiveScoreActivity.scoreboardActivity = this
 
         ledMatrix.startScoreboard()
-        if (LiveScoreActivity.webSocketClient != null) {
+        // Check if there's an active LiveScoreActivity with WebSocket connection
+        if (LiveScoreActivity.livescoreActivity != null) {
             inform()
         }
         timer = Timer("informer", true).schedule(1000, 1000 / 1) {
@@ -104,7 +108,7 @@ class ScoreboardActivity : AppCompatActivity() {
             if ((ledMatrix.pointsLeft > 0 || ledMatrix.pointsRight > 0) && (lastSet.team1 == 0 && lastSet.team2 == 0))
                 ledMatrix.switch = !ledMatrix.switch
             // switch on tie-break at 8 points in set 5
-            if ((lastSet.team1 == 8 || lastSet.team2.toInt() == 8) && size == 5 && (ledMatrix.pointsLeft < 8 && ledMatrix.pointsRight < 8))
+            if ((lastSet.team1 == 8 || lastSet.team2 == 8) && size == 5 && (ledMatrix.pointsLeft < 8 && ledMatrix.pointsRight < 8))
                 ledMatrix.switch = !ledMatrix.switch
 
             ledMatrix.pointsLeft = if (ledMatrix.switch) lastSet.team2.toByte() else lastSet.team1.toByte()
@@ -123,7 +127,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        timer?.cancel();
+        timer?.cancel()
     }
 
 }
