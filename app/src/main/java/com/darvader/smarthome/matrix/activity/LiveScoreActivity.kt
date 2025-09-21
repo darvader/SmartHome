@@ -27,8 +27,8 @@ import okhttp3.Request
 class LiveScoreActivity : AppCompatActivity() {
 
     companion object {
-        const val URL_DVV = "https://backend.sams-ticker.de/live/tickers/dvv"
-        const val URL_TVV = "https://backend.sams-ticker.de/live/tickers/tvv"
+        const val URL_DVV = "https://backend.sams-ticker.de/live/indoor/tickers/dvv"
+        const val URL_TVV = "https://backend.sams-ticker.de/live/indoor/tickers/tvv"
         const val WEB_SOCKET_URL_DVV = "wss://backend.sams-ticker.de/dvv"
         const val WEB_SOCKET_URL_TVV = "wss://backend.sams-ticker.de/tvv"
         const val TAG = "Coinbase"

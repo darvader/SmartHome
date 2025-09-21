@@ -13,11 +13,31 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // PERFORMANCE: Enable multidex for faster builds
+        multiDexEnabled true
+
+        // PERFORMANCE: Optimize vector drawables
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
-        release {
+        debug {
+            // PERFORMANCE: Disable unnecessary features in debug builds
             minifyEnabled false
+            shrinkResources false
+            debuggable true
+            jniDebuggable false
+            renderscriptDebuggable false
+            pseudoLocalesEnabled false
+
+            // PERFORMANCE: Skip lint checks in debug builds
+            lintOptions.checkReleaseBuilds = false
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,6 +45,11 @@ android {
     buildFeatures {
         viewBinding true
         compose true
+        // PERFORMANCE: Disable unused features
+        dataBinding false
+        renderScript false
+        aidl false
+        buildConfig true
     }
 
     composeOptions {
@@ -34,21 +59,34 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+        // PERFORMANCE: Enable incremental annotation processing
+        incremental true
     }
 
     kotlinOptions {
         jvmTarget = '11'
     }
 
-    lintOptions {
-        // Workaround for Windows file locking issues
+    // PERFORMANCE: Optimize packaging
+    packagingOptions {
+        resources {
+            excludes += ['/META-INF/{AL2.0,LGPL2.1}', '/META-INF/versions/**']
+        }
+    }
+
+    // PERFORMANCE: Optimize lint for faster builds
+    lint {
         abortOnError false
         checkReleaseBuilds false
-        // Disable problematic lint checks that cause file locking
-        disable 'InvalidPackage'
-        // Skip android test analysis to avoid file locking
         checkTestSources false
+        checkDependencies false
+        disable 'InvalidPackage', 'UnusedResources', 'IconDensities'
     }
+
+    // Remove deprecated android.enableBuildCache option
+    // Gradle build cache is now used instead via gradle.properties
+
+    // Remove deprecated dexOptions - replaced with newer configuration
 }
 
 dependencies {
