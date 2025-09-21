@@ -1,16 +1,15 @@
 package com.darvader.smarthome
 
 import android.Manifest
-import android.content.Context
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.wifi.WifiConfiguration
-import android.net.wifi.WifiManager
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -89,77 +88,26 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     private fun createHotspot() {
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // For Android 8.0 and above
-            enableHotspotOreo(wifiManager)
-        } else {
-            // For Android 7.1 and below
-            enableHotspotLegacy(wifiManager)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun enableHotspotOreo(wifiManager: WifiManager) {
-        val wifiConfig = WifiConfiguration().apply {
-            SSID = "andi_hotspot"
-            preSharedKey = "1q2w3e4r"
-            allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
-        }
-
+        // Modern hotspot creation requires directing user to system settings
+        // The deprecated WifiConfiguration API is no longer reliable on modern Android
         try {
-            val method = wifiManager.javaClass.getMethod("setWifiApEnabled", WifiConfiguration::class.java, Boolean::class.javaPrimitiveType)
-            method.invoke(wifiManager, wifiConfig, true)
+            val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+            startActivity(intent)
+            Toast.makeText(this, "Please enable hotspot manually in settings", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
-            Log.e("Hotspot", "Failed to enable hotspot", e)
-        }
-    }
-
-    private fun enableHotspotLegacy(wifiManager: WifiManager) {
-        val wifiConfig = WifiConfiguration().apply {
-            SSID = "andi_hotspot"
-            preSharedKey = "1q2w3e4r"
-            allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
-        }
-
-        try {
-            val method = wifiManager.javaClass.getMethod("setWifiApEnabled", WifiConfiguration::class.java, Boolean::class.javaPrimitiveType)
-            method.invoke(wifiManager, wifiConfig, true)
-        } catch (e: Exception) {
-            Log.e("Hotspot", "Failed to enable hotspot", e)
+            Log.e("Hotspot", "Failed to open hotspot settings", e)
+            Toast.makeText(this, "Unable to access hotspot settings", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_smart_home)
-
-        if (!hasPermissionsHotspot()) {
-            requestPermissionsHotspot()
-        } else {
-            // Permissions are already granted, proceed with creating hotspot
-            createHotspot()
-        }
-
-        if (haveStoragePermission()) {
-        } else {
-            requestPermissionStorage()
-        }
-
-        if (allPermissionsGranted()) {
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                REQUIRED_PERMISSIONS,
-                REQUEST_CODE_PERMISSIONS
-            )
-        }
 
         binding = ActivitySmartHomeBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
+        // Check and request all permissions at startup
+        checkAndRequestAllPermissions()
 
         binding.ledstrips.setOnClickListener {
             val intent = Intent(this, LedStripActivity::class.java)
@@ -200,27 +148,150 @@ class SmartHomeActivity : AppCompatActivity() {
             baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
+    private fun checkAndRequestAllPermissions() {
+        // Check all permissions and request them with explanations
+        val missingPermissions = mutableListOf<String>()
+
+        // Check hotspot permissions
+        if (!hasPermissionsHotspot()) {
+            showPermissionExplanationDialog(
+                "Network Permissions Required",
+                "This app needs network and location permissions to create a WiFi hotspot for your smart home devices. This allows your devices to connect and communicate with each other.",
+                "Grant Permissions"
+            ) {
+                requestPermissionsHotspot()
+            }
+            return // Request one at a time for better UX
+        }
+
+        // Check storage permissions
+        if (!haveStoragePermission()) {
+            showPermissionExplanationDialog(
+                "Storage Permissions Required",
+                "This app needs storage access to save and load smart home configurations, LED matrix patterns, and other app data.",
+                "Grant Storage Access"
+            ) {
+                requestPermissionStorage()
+            }
+            return
+        }
+
+        // Check camera permissions
+        if (!allPermissionsGranted()) {
+            showPermissionExplanationDialog(
+                "Camera Permission Required",
+                "Camera access is needed for features like QR code scanning and visual device setup.",
+                "Grant Camera Access"
+            ) {
+                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            }
+            return
+        }
+
+        // All permissions granted, initialize hotspot
+        createHotspot()
+    }
+
+    private fun showPermissionExplanationDialog(
+        title: String,
+        message: String,
+        positiveButtonText: String,
+        onPositiveAction: () -> Unit
+    ) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveButtonText) { _, _ ->
+                onPositiveAction()
+            }
+            .setNegativeButton("Not Now") { dialog, _ ->
+                dialog.dismiss()
+                Toast.makeText(this, "Some features may not work without permissions", Toast.LENGTH_LONG).show()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
         IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-            } else {
-                Toast.makeText(this,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
-                finish()
+        when (requestCode) {
+            REQUEST_CODE_PERMISSIONS -> {
+                if (allPermissionsGranted()) {
+                    Toast.makeText(this, "Camera permission granted!", Toast.LENGTH_SHORT).show()
+                    // All permissions granted, continue with app initialization
+                    createHotspot()
+                } else {
+                    showPermissionDeniedDialog(
+                        "Camera Permission Denied",
+                        "Camera features will not be available. You can grant this permission later in Settings.",
+                        "Open Settings"
+                    ) {
+                        openAppSettings()
+                    }
+                }
+            }
+            PERMISSIONS_REQUEST_CODE -> {
+                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    Toast.makeText(this, "Network permissions granted!", Toast.LENGTH_SHORT).show()
+                    // Continue with next permission check
+                    checkAndRequestAllPermissions()
+                } else {
+                    showPermissionDeniedDialog(
+                        "Network Permissions Denied",
+                        "Hotspot and device connectivity features may not work properly. You can grant these permissions later in Settings.",
+                        "Open Settings"
+                    ) {
+                        openAppSettings()
+                    }
+                }
+            }
+            READ_EXTERNAL_STORAGE_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    Toast.makeText(this, "Storage permission granted!", Toast.LENGTH_SHORT).show()
+                    Log.d("Permissions", "Storage permissions granted")
+                    // Continue with next permission check
+                    checkAndRequestAllPermissions()
+                } else {
+                    showPermissionDeniedDialog(
+                        "Storage Permission Denied",
+                        "App configurations and LED patterns cannot be saved. You can grant this permission later in Settings.",
+                        "Open Settings"
+                    ) {
+                        openAppSettings()
+                    }
+                }
             }
         }
-        if (requestCode == PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                // Permissions granted, proceed with creating hotspot
-                createHotspot()
-            } else {
-                // Handle the case where permissions are not granted
+    }
+
+    private fun showPermissionDeniedDialog(
+        title: String,
+        message: String,
+        positiveButtonText: String,
+        onPositiveAction: () -> Unit
+    ) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveButtonText) { _, _ ->
+                onPositiveAction()
             }
+            .setNegativeButton("Continue") { dialog, _ ->
+                dialog.dismiss()
+                // Continue with next permission check even if this one was denied
+                checkAndRequestAllPermissions()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = android.net.Uri.fromParts("package", packageName, null)
         }
+        startActivity(intent)
     }
 
     private fun allOff() {
