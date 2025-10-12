@@ -66,7 +66,7 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/pointsUpLeft"
                             android:layout_width="match_parent"
-                            android:layout_height="36dp"
+                            android:layout_height="48dp"
                             android:layout_marginBottom="2dp"
                             android:text="+"
                             android:textSize="16sp"
@@ -77,7 +77,7 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/pointsDownLeft"
                             android:layout_width="match_parent"
-                            android:layout_height="36dp"
+                            android:layout_height="48dp"
                             android:text="-"
                             android:textSize="16sp"
                             android:textColor="#FFFFFF"
@@ -140,7 +140,7 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/pointsUpRight"
                             android:layout_width="match_parent"
-                            android:layout_height="36dp"
+                            android:layout_height="48dp"
                             android:layout_marginBottom="2dp"
                             android:text="+"
                             android:textSize="16sp"
@@ -151,7 +151,7 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/pointsDownRight"
                             android:layout_width="match_parent"
-                            android:layout_height="36dp"
+                            android:layout_height="48dp"
                             android:text="-"
                             android:textSize="16sp"
                             android:textColor="#FFFFFF"
@@ -162,7 +162,7 @@
 
                 </LinearLayout>
 
-                <!-- Ball Control Buttons -->
+                <!-- Ball Control Buttons with Reset Points in Center -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -182,6 +182,19 @@
                         style="@style/Widget.Material3.Button.OutlinedButton" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/resetPoints"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:text="Reset Points"
+                        android:textSize="10sp"
+                        android:textColor="#FFFFFF"
+                        app:strokeColor="#666666"
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/ballRight"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
@@ -195,16 +208,7 @@
 
                 </LinearLayout>
 
-                <!-- Reset Points Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/resetPoints"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:text="Reset Points"
-                    android:textSize="12sp"
-                    android:textColor="#FFFFFF"
-                    app:strokeColor="#666666"
-                    style="@style/Widget.Material3.Button.OutlinedButton" />
+                <!-- Reset Points Button (Removed as it's now integrated in Ball Control) -->
 
                 <ProgressBar
                     android:id="@+id/timeoutBar"
