@@ -16,6 +16,10 @@ Instructions are split into topic-specific files for better organization:
 - [`debugging.md`](.github/debugging.md) - Common issues and debugging techniques
 - [`dependencies.md`](.github/dependencies.md) - Module dependencies and technology stack
 
+## PowerShell Guidelines
+- **Command Separation**: Always use semicolons (`;`) to separate multiple PowerShell commands on the same line
+- **Example**: `cd "D:\dev\AndroidStudioProjects\SmartHome"; gradlew build` instead of `cd "D:\dev\AndroidStudioProjects\SmartHome" && gradlew build`
+
 ## Quick Reference
 - **Target SDK**: 33, Min SDK: 26
 - **Language**: Kotlin

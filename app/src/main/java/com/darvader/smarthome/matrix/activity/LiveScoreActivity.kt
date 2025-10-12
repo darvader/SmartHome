@@ -89,7 +89,7 @@ class LiveScoreActivity : AppCompatActivity(),
 
         binding.matches.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Companion.match = selectedLeague?.matches?.get(position)
+                match = selectedLeague?.matches?.get(position)
                 showSets()
             }
 
@@ -119,7 +119,7 @@ class LiveScoreActivity : AppCompatActivity(),
 
     private fun showSets() {
         var result = ""
-        Companion.match?.matchSets?.forEach {
+        match?.matchSets?.forEach {
             result += "${it.team1}:${it.team2}(${it.setNumber} )"
         }
         runOnUiThread { binding.result.text = result }

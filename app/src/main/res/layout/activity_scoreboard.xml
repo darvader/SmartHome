@@ -1,218 +1,551 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scoreboard_actitivy_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_launcher_background"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:focusedByDefault="true"
-    android:minHeight="10sp"
-    tools:context=".matrix.activity.ScoreboardActivity">
+    android:background="@color/background_primary"
+    android:fillViewport="true">
 
-    <SeekBar
-        android:id="@+id/brightness"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="24dp"
-        android:max="100"
-        android:progress="50"
-        app:layout_constraintBottom_toTopOf="@+id/reset"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/ballRight"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:text="B"
-        app:layout_constraintEnd_toEndOf="@+id/pointsDownRight"
-        app:layout_constraintTop_toBottomOf="@+id/pointsDownRight" />
-
-    <Button
-        android:id="@+id/switchButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Switch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sets" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/setsUpLeft"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Up"
-        app:layout_constraintEnd_toStartOf="@+id/sets"
-        app:layout_constraintTop_toTopOf="@+id/sets" />
+        <!-- Header -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/primary_container">
 
-    <Button
-        android:id="@+id/reset_points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/points" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-    <TextView
-        android:id="@+id/sets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0:0"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reset_points" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Scoreboard Control"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_primary_container"
+                    android:gravity="center" />
 
-    <Button
-        android:id="@+id/setsDownRight"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Down"
-        app:layout_constraintStart_toEndOf="@+id/sets"
-        app:layout_constraintTop_toBottomOf="@+id/setsUpRight" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Manual scoreboard management"
+                    android:textSize="14sp"
+                    android:textColor="@color/on_primary_container"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
 
-    <Button
-        android:id="@+id/setsDownLeft"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Down"
-        app:layout_constraintEnd_toStartOf="@+id/sets"
-        app:layout_constraintTop_toBottomOf="@+id/setsUpLeft" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/setsUpRight"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Up"
-        app:layout_constraintStart_toEndOf="@+id/sets"
-        app:layout_constraintTop_toTopOf="@+id/sets" />
+        </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/pointsUpRight"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Up"
-        app:layout_constraintStart_toEndOf="@+id/points"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- Score Controls -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface">
 
-    <Button
-        android:id="@+id/pointsDownRight"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Down"
-        app:layout_constraintStart_toEndOf="@+id/points"
-        app:layout_constraintTop_toBottomOf="@+id/pointsUpRight" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-    <TextView
-        android:id="@+id/points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00"
-        android:textAlignment="center"
-        android:textSize="80sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Points Control"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/pointsUpLeft"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Up"
-        app:layout_constraintEnd_toStartOf="@+id/points"
-        app:layout_constraintTop_toTopOf="@+id/points" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:baselineAligned="false">
 
-    <Button
-        android:id="@+id/pointsDownLeft"
-        android:layout_width="70sp"
-        android:layout_height="48sp"
-        android:text="Down"
-        app:layout_constraintEnd_toStartOf="@+id/points"
-        app:layout_constraintTop_toBottomOf="@+id/pointsUpLeft" />
+                    <!-- Left Team -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="8dp">
 
-    <Button
-        android:id="@+id/reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Reset All"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Left Team"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp" />
 
-    <EditText
-        android:id="@+id/scrollText"
-        android:layout_width="391dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:focusedByDefault="false"
-        android:inputType="textPersonName"
-        android:lines="3"
-        android:text="VSV Jena 90 e.V. : Gastmannschaft"
-        app:layout_constraintBottom_toTopOf="@+id/brightness"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/pointsUpLeft"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="+"
+                            android:textSize="20sp"
+                            style="@style/Widget.Material3.Button.UnelevatedButton" />
 
-    <Button
-        android:id="@+id/ballLeft"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:text="B"
-        app:layout_constraintStart_toStartOf="@+id/pointsDownLeft"
-        app:layout_constraintTop_toBottomOf="@+id/pointsDownLeft" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/pointsDownLeft"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="-"
+                            android:textSize="20sp"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
 
-    <Button
-        android:id="@+id/timeout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time-Out"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchButton" />
+                    </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/timeoutBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:max="100"
-        android:scaleY="8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeout" />
+                    <!-- Right Team -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="8dp">
 
-    <Button
-        android:id="@+id/off"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Off"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Right Team"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/invert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Invert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchButton" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/pointsUpRight"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="+"
+                            android:textSize="20sp"
+                            style="@style/Widget.Material3.Button.UnelevatedButton" />
 
-    <Button
-        android:id="@+id/reconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Reconnect"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeoutBar" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/pointsDownRight"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="-"
+                            android:textSize="20sp"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/resetPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Reset Points"
+                    android:textSize="14sp"
+                    style="@style/Widget.Material3.Button.OutlinedButton" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Sets Control -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sets Control"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <!-- Left Sets -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="8dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/setsUpLeft"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="Set +"
+                            android:textSize="14sp"
+                            style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/setsDownLeft"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="Set -"
+                            android:textSize="14sp"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    </LinearLayout>
+
+                    <!-- Right Sets -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="8dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/setsUpRight"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="Set +"
+                            android:textSize="14sp"
+                            style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/setsDownRight"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="Set -"
+                            android:textSize="14sp"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Game Controls -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Game Controls"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/ballLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Ball Left"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/ballRight"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="Ball Right"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/switchButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Switch"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/timeout"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="Timeout"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Display Settings -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Display Settings"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Brightness"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="8dp" />
+
+                <SeekBar
+                    android:id="@+id/brightness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:progress="50"
+                    android:max="100" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:hint="Scroll Text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/scrollText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/invert"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Invert"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/reconnect"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="Reconnect"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- System Controls -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/error_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="System Controls"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_error_container"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/reset"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Reset"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton"
+                        app:backgroundTint="@color/error"
+                        android:textColor="@color/on_error" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/off"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="Turn Off"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton"
+                        app:backgroundTint="@color/error"
+                        android:textColor="@color/on_error" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Score Display -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Current Score"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:gravity="center"
+                    android:fontFamily="monospace"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/sets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0:0"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/secondary"
+                    android:gravity="center"
+                    android:fontFamily="monospace" />
+
+                <ProgressBar
+                    android:id="@+id/timeoutBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="16dp"
+                    android:progress="0"
+                    android:max="100"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -8,7 +8,6 @@ import com.darvader.smarthome.ProgressChangedListener
 import com.darvader.smarthome.R
 import com.darvader.smarthome.SmartHomeActivity
 import com.darvader.smarthome.databinding.ActivityLedStripBinding
-import com.darvader.smarthome.ledstrip.christmas.CalibrateActivity
 
 
 class LedStripActivity : AppCompatActivity() {

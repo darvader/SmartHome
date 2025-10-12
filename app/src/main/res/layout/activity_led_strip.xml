@@ -1,211 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/led_actitivy_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_launcher_background"
-    tools:context=".ledstrip.LedStripActivity">
+    android:background="@color/background_primary"
+    android:padding="16dp">
 
+    <!-- Header -->
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LED Strip Control"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:gravity="center"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Color Controls -->
     <SeekBar
         android:id="@+id/redSeekBar"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#F37474"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:max="255"
         android:progress="1"
-        android:progressTint="#00FA0303"
-        app:layout_constraintBottom_toTopOf="@+id/greenSeekBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <SeekBar
-        android:id="@+id/divisor"
-        android:layout_width="331dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="8dp"
-        android:background="#DCCBCB"
-        android:max="20"
-        android:progress="1"
-        android:progressTint="#00FA0303"
-        app:layout_constraintBottom_toTopOf="@+id/redSeekBar"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <SeekBar
-        android:id="@+id/speed"
-        android:layout_width="331dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="8dp"
-        android:background="#DCCBCB"
-        android:max="200"
+        android:id="@+id/greenSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:max="255"
         android:progress="1"
-        android:progressTint="#00FA0303"
-        app:layout_constraintBottom_toTopOf="@+id/divisor"
+        app:layout_constraintTop_toBottomOf="@id/redSeekBar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <SeekBar
         android:id="@+id/blueSeekBar"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#03A9F4"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:max="255"
         android:progress="1"
-        android:progressTint="#000000FA"
-        app:layout_constraintBottom_toTopOf="@+id/whiteSeekBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/greenSeekBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <SeekBar
         android:id="@+id/whiteSeekBar"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:max="255"
         android:progress="1"
-        android:progressTint="#000000FA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/blueSeekBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Effect Controls -->
+    <SeekBar
+        android:id="@+id/divisor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:max="10"
+        android:progress="1"
+        app:layout_constraintTop_toBottomOf="@id/whiteSeekBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <SeekBar
-        android:id="@+id/greenSeekBar"
+        android:id="@+id/delay"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#4CAF50"
-        android:max="255"
-        android:progress="1"
-        android:progressTint="#0003FA07"
-        app:layout_constraintBottom_toTopOf="@+id/blueSeekBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:max="1000"
+        android:progress="50"
+        app:layout_constraintTop_toBottomOf="@id/divisor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <SeekBar
+        android:id="@+id/speed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:max="100"
+        android:progress="50"
+        app:layout_constraintTop_toBottomOf="@id/delay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Effect Buttons Row 1 -->
     <Button
         android:id="@+id/detect"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/detect"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:text="Detect"
+        app:layout_constraintTop_toBottomOf="@id/speed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/seven"
+        app:layout_constraintHorizontal_chainStyle="spread" />
 
     <Button
         android:id="@+id/seven"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/seven"
-        app:layout_constraintStart_toEndOf="@+id/detect"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/rainbow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rainbow"
-        app:layout_constraintStart_toEndOf="@+id/seven"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/fft_remote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fftr"
-        app:layout_constraintStart_toEndOf="@+id/fft"
-        app:layout_constraintTop_toBottomOf="@+id/seven" />
-
-    <Button
-        android:id="@+id/fft_row"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fftro"
-        app:layout_constraintStart_toEndOf="@+id/fft_remote"
-        app:layout_constraintTop_toBottomOf="@+id/rainbow" />
-
-    <Button
-        android:id="@+id/fft_row_remote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fftrr"
-        app:layout_constraintStart_toEndOf="@+id/fft_row"
-        app:layout_constraintTop_toBottomOf="@+id/rainbow" />
-
-    <Button
-        android:id="@+id/fft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fft"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detect" />
-
-    <Button
-        android:id="@+id/off"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/off"
-        app:layout_constraintStart_toEndOf="@+id/rainbow"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="PrivateResource" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/divisor"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/redSeekBar"
-        app:layout_constraintEnd_toStartOf="@+id/divisor"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/speed"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/divisor"
-        app:layout_constraintHorizontal_bias="0.55"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/rain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rain"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fft" />
+        android:layout_marginHorizontal="4dp"
+        android:text="Seven"
+        app:layout_constraintTop_toTopOf="@id/detect"
+        app:layout_constraintStart_toEndOf="@id/detect"
+        app:layout_constraintEnd_toStartOf="@id/white" />
 
     <Button
         android:id="@+id/white"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/white"
-        app:layout_constraintStart_toEndOf="@+id/rain"
-        app:layout_constraintTop_toBottomOf="@+id/fft_remote" />
+        android:layout_marginStart="4dp"
+        android:text="White"
+        app:layout_constraintTop_toTopOf="@id/detect"
+        app:layout_constraintStart_toEndOf="@id/seven"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Effect Buttons Row 2 -->
     <Button
         android:id="@+id/dot"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/dot"
-        app:layout_constraintStart_toEndOf="@+id/white"
-        app:layout_constraintTop_toBottomOf="@+id/fft_row" />
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:text="Dot"
+        app:layout_constraintTop_toBottomOf="@id/detect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rain" />
+
+    <Button
+        android:id="@+id/rain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:text="Rain"
+        app:layout_constraintTop_toTopOf="@id/dot"
+        app:layout_constraintStart_toEndOf="@id/dot"
+        app:layout_constraintEnd_toStartOf="@id/rainbow" />
+
+    <Button
+        android:id="@+id/rainbow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Rainbow"
+        app:layout_constraintTop_toTopOf="@id/dot"
+        app:layout_constraintStart_toEndOf="@id/rain"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- FFT Buttons Row 3 -->
+    <Button
+        android:id="@+id/fft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:text="FFT"
+        app:layout_constraintTop_toBottomOf="@id/dot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fftRow" />
+
+    <Button
+        android:id="@+id/fftRow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:text="FFT Row"
+        app:layout_constraintTop_toTopOf="@id/fft"
+        app:layout_constraintStart_toEndOf="@id/fft"
+        app:layout_constraintEnd_toStartOf="@id/off" />
+
+    <Button
+        android:id="@+id/off"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Off"
+        app:layout_constraintTop_toTopOf="@id/fft"
+        app:layout_constraintStart_toEndOf="@id/fftRow"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Remote FFT Buttons Row 4 -->
+    <Button
+        android:id="@+id/fftRemote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:text="FFT Remote"
+        app:layout_constraintTop_toBottomOf="@id/fft"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fftRowRemote" />
+
+    <Button
+        android:id="@+id/fftRowRemote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="FFT Row Remote"
+        app:layout_constraintTop_toTopOf="@id/fftRemote"
+        app:layout_constraintStart_toEndOf="@id/fftRemote"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

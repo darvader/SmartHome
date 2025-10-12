@@ -26,32 +26,32 @@ class CounterActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("CounterPrefs", Context.MODE_PRIVATE)
         ledMatrix.counter = sharedPreferences.getInt("counter", 0)
-        binding.counterText.setText(ledMatrix.counter.toString())
+        binding.counter.text = ledMatrix.counter.toString()
         val editor = sharedPreferences.edit()
 
         binding.plusCounter.setOnClickListener {
             ledMatrix.plusCounter()
             storeCounter(editor)
-            binding.counterText.setText(ledMatrix.counter.toString())
+            binding.counter.text = ledMatrix.counter.toString()
         }
 
         binding.minusCounter.setOnClickListener {
             ledMatrix.minusCounter()
             storeCounter(editor)
-            binding.counterText.setText(ledMatrix.counter.toString())
+            binding.counter.text = ledMatrix.counter.toString()
         }
 
-        binding.resetCounter.setOnClickListener {
+        binding.reset.setOnClickListener {
             ledMatrix.counter = 0
             storeCounter(editor)
-            binding.counterText.setText(ledMatrix.counter.toString())
+            binding.counter.text = ledMatrix.counter.toString()
         }
 
         binding.detect.setOnClickListener {
             ledMatrix.detect()
         }
 
-        binding.counterText.addTextChangedListener(object : TextWatcher {
+        binding.counter.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Do something before text is changed
             }

@@ -1,66 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_launcher_background"
-    tools:context=".SmartHomeActivity">
+    android:background="@color/background_primary"
+    android:fillViewport="true">
 
-    <Button
-        android:id="@+id/allOff"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="alloff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/ledstrips"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LedStrips"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- Header -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/primary_container">
 
-    <Button
-        android:id="@+id/ledMatrix"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LedMatrix"
-        app:layout_constraintStart_toEndOf="@+id/ledstrips"
-        app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-    <Button
-        android:id="@+id/livingRoomLamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LivLamp"
-        app:layout_constraintStart_toEndOf="@+id/ledMatrix"
-        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Smart Home Control"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_primary_container"
+                    android:gravity="center" />
 
-    <Button
-        android:id="@+id/christmasTree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tree"
-        app:layout_constraintStart_toEndOf="@+id/livingRoomLamp"
-        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Control your smart devices"
+                    android:textSize="14sp"
+                    android:textColor="@color/on_primary_container"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
 
-    <Button
-        android:id="@+id/circulationPump"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pump"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ledstrips" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/booster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Booster"
-        app:layout_constraintStart_toEndOf="@+id/circulationPump"
-        app:layout_constraintTop_toBottomOf="@+id/ledMatrix" />
+        </com.google.android.material.card.MaterialCardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- LED Control Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LED Controls"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/ledstrips"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="LED Strips"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/ledMatrix"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="LED Matrix"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/livingRoomLamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Living Room Lamp"
+                    android:textSize="14sp"
+                    style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Devices Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Devices"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/christmasTree"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Christmas Tree"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/circulationPump"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="Pump"
+                        android:textSize="14sp"
+                        style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/booster"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Booster"
+                    android:textSize="14sp"
+                    style="@style/Widget.Material3.Button.UnelevatedButton" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Emergency Controls -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/error_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Emergency Controls"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_error_container"
+                    android:layout_marginBottom="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/allOff"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Turn All Off"
+                    android:textSize="16sp"
+                    style="@style/Widget.Material3.Button.UnelevatedButton"
+                    app:backgroundTint="@color/error"
+                    android:textColor="@color/on_error" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

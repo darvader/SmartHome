@@ -391,7 +391,7 @@ class LedMatrix(): HomeElement {
                 stopWatchStop()
         } else if (mode == Mode.counter) {
             plusCounter()
-            counterActivity.runOnUiThread{ counterActivity.binding.counterText.setText(counter.toString())}
+            counterActivity.runOnUiThread{ counterActivity.binding.counter.text = counter.toString()}
         }
         buttonPressedNr++;
 

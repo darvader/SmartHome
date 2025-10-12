@@ -2,7 +2,6 @@ package com.darvader.smarthome
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -149,8 +148,6 @@ class SmartHomeActivity : AppCompatActivity() {
     }
 
     private fun checkAndRequestAllPermissions() {
-        // Check all permissions and request them with explanations
-        val missingPermissions = mutableListOf<String>()
 
         // Check hotspot permissions
         if (!hasPermissionsHotspot()) {
@@ -289,7 +286,7 @@ class SmartHomeActivity : AppCompatActivity() {
 
     private fun openAppSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = android.net.Uri.fromParts("package", packageName, null)
+            data = Uri.fromParts("package", packageName, null)
         }
         startActivity(intent)
     }

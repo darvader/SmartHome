@@ -80,7 +80,7 @@ class LedMatrixActivity : AppCompatActivity() {
             else
                 binding.broadcast.setBackgroundColor(Color.GRAY)
         }
-        binding.off.setOnClickListener { ledMatrix?.off() }
+        binding.off.setOnClickListener { ledMatrix.off() }
 
         binding.brightness.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
