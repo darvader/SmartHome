@@ -47,11 +47,13 @@ class LedMatrix(): HomeElement {
         this.scoreboardActivity!!.binding.points.text = "${pointsLeft.toString().padStart(2, '0')}:${pointsRight.toString().padStart(2, '0')}"
         this.scoreboardActivity!!.binding.sets.text = "$setsLeft:$setsRight"
         if (leftTeamServes == 1.toByte()) {
-            scoreboardActivity!!.binding.ballLeft.setBackgroundColor(0xff404000.toInt())
-            scoreboardActivity!!.binding.ballRight.setBackgroundColor(0xffffffff.toInt())
+            // Left team serves - highlight left button with bright orange, right button normal
+            scoreboardActivity!!.binding.ballLeft.setBackgroundColor(0xFFFF9800.toInt()) // Bright orange for serving team
+            scoreboardActivity!!.binding.ballRight.setBackgroundColor(0xFF2C2C2C.toInt()) // Dark gray for non-serving team
         } else {
-            scoreboardActivity!!.binding.ballRight.setBackgroundColor(0xff404000.toInt())
-            scoreboardActivity!!.binding.ballLeft.setBackgroundColor(0xffffffff.toInt())
+            // Right team serves - highlight right button with bright orange, left button normal
+            scoreboardActivity!!.binding.ballRight.setBackgroundColor(0xFFFF9800.toInt()) // Bright orange for serving team
+            scoreboardActivity!!.binding.ballLeft.setBackgroundColor(0xFF2C2C2C.toInt()) // Dark gray for non-serving team
         }
     }
 

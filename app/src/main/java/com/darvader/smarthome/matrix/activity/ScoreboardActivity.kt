@@ -113,7 +113,15 @@ class ScoreboardActivity : AppCompatActivity() {
 
             ledMatrix.pointsLeft = if (ledMatrix.switch) lastSet.team2.toByte() else lastSet.team1.toByte()
             ledMatrix.pointsRight = if (ledMatrix.switch) lastSet.team1.toByte() else lastSet.team2.toByte()
-            ledMatrix.leftTeamServes = if (match.leftTeamServes && !ledMatrix.switch) 1 else 0
+
+            // Fix serving team logic to properly handle switch state
+            ledMatrix.leftTeamServes = if (ledMatrix.switch) {
+                // When switched: if match says left team serves, right team serves on display
+                if (match.leftTeamServes) 0 else 1
+            } else {
+                // When not switched: if match says left team serves, left team serves on display
+                if (match.leftTeamServes) 1 else 0
+            }
         }
         ledMatrix.setsLeft = if (ledMatrix.switch) match.setPointsTeam2.toByte() else match.setPointsTeam1.toByte()
         ledMatrix.setsRight = if (ledMatrix.switch) match.setPointsTeam1.toByte() else match.setPointsTeam2.toByte()
