@@ -342,13 +342,26 @@
 
                 </LinearLayout>
 
+                <!-- Timeout Display Section -->
+                <TextView
+                    android:id="@+id/timeoutText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Timeout: 30s"
+                    android:textSize="12sp"
+                    android:textColor="#FF9800"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:visibility="gone" />
+
                 <!-- Timeout Progress Bar -->
                 <ProgressBar
                     android:id="@+id/timeoutBar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="4dp"
                     android:progress="0"
                     android:max="100"
                     android:progressTint="#FF9800"
