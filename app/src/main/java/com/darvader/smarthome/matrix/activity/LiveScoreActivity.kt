@@ -62,7 +62,8 @@ class LiveScoreActivity : AppCompatActivity(),
 
     private fun setupUI() {
         val regions = arrayOf(URL_TVV, URL_DVV, TEST_MODE)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, regions)
+        val regionNames = arrayOf("TVV", "DVV", "TEST MODE")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, regionNames)
         binding.region.adapter = adapter
 
         binding.region.onItemSelectedListener = object : OnItemSelectedListener {

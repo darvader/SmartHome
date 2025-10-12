@@ -77,21 +77,21 @@
                 <Spinner
                     android:id="@+id/region"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="64dp"
                     android:layout_marginBottom="16dp" />
 
                 <!-- League Selection -->
                 <Spinner
                     android:id="@+id/leagues"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="64dp"
                     android:layout_marginBottom="16dp" />
 
                 <!-- Match Selection -->
                 <Spinner
                     android:id="@+id/matches"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp" />
+                    android:layout_height="64dp" />
 
             </LinearLayout>
 
