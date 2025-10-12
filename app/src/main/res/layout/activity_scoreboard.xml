@@ -210,18 +210,6 @@
 
                 <!-- Reset Points Button (Removed as it's now integrated in Ball Control) -->
 
-                <ProgressBar
-                    android:id="@+id/timeoutBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="12dp"
-                    android:progress="0"
-                    android:max="100"
-                    android:progressTint="#FF9800"
-                    android:progressBackgroundTint="#333333"
-                    android:visibility="gone" />
-
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -353,6 +341,19 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <!-- Timeout Progress Bar -->
+                <ProgressBar
+                    android:id="@+id/timeoutBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:progress="0"
+                    android:max="100"
+                    android:progressTint="#FF9800"
+                    android:progressBackgroundTint="#333333"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

@@ -194,6 +194,11 @@ class LedMatrix(): HomeElement {
 
     fun timeout() {
         send("timeout")
+        // Show the timeout bar when timeout starts
+        scoreboardActivity?.runOnUiThread {
+            scoreboardActivity?.binding?.timeoutBar?.visibility = android.view.View.VISIBLE
+        }
+
         Thread {
             val start = System.currentTimeMillis()
             var elapsed = System.currentTimeMillis() - start
@@ -206,6 +211,8 @@ class LedMatrix(): HomeElement {
             }
             scoreboardActivity?.runOnUiThread {
                 scoreboardActivity?.binding?.timeoutBar?.progress = 0
+                // Hide the timeout bar when timeout is finished
+                scoreboardActivity?.binding?.timeoutBar?.visibility = android.view.View.GONE
             }
         }.start()
 
