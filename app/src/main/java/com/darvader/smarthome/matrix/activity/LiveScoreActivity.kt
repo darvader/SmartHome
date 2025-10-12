@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.darvader.smarthome.R
 import com.darvader.smarthome.databinding.ActivityLiveScoreBinding
 import com.darvader.smarthome.matrix.livescore.League
 import com.darvader.smarthome.matrix.livescore.Match
@@ -63,7 +64,8 @@ class LiveScoreActivity : AppCompatActivity(),
     private fun setupUI() {
         val regions = arrayOf(URL_TVV, URL_DVV, TEST_MODE)
         val regionNames = arrayOf("TVV", "DVV", "TEST MODE")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, regionNames)
+        val adapter = ArrayAdapter(this, R.layout.spinner_item_dark, regionNames)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dark)
         binding.region.adapter = adapter
 
         binding.region.onItemSelectedListener = object : OnItemSelectedListener {
@@ -113,7 +115,8 @@ class LiveScoreActivity : AppCompatActivity(),
             matchNames.add("${it.teamDescription1}:${it.teamDescription2}")
         }
         runOnUiThread {
-            val adapter = ArrayAdapter(this@LiveScoreActivity, android.R.layout.simple_spinner_item, matchNames)
+            val adapter = ArrayAdapter(this@LiveScoreActivity, R.layout.spinner_item_dark, matchNames)
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dark)
             binding.matches.adapter = adapter
         }
     }
@@ -143,7 +146,8 @@ class LiveScoreActivity : AppCompatActivity(),
         val leagueNames = ArrayList<String>()
         leagues.forEach { leagueNames.add(it.name) }
         runOnUiThread {
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, leagueNames)
+            val adapter = ArrayAdapter(this, R.layout.spinner_item_dark, leagueNames)
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dark)
             binding.leagues.adapter = adapter
         }
     }
