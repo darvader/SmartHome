@@ -6,24 +6,39 @@ import java.net.InetAddress
 class Booster(private val boosterActivity: BoosterActivity) : HomeElement {
 
     companion object {
-        var address = "192.168.0.11"
-        var address2 = "192.168.0.23"
+        var booster1Address = "192.168.0.94"
+        var booster2Address = "192.168.0.11"
         val echoClient = SmartHomeActivity.echoClient
     }
 
     fun off() {
         println("Off called.")
-        echoClient.send("off", address)
+        echoClient.send("off", booster1Address)
+    }
+
+    fun off2() {
+        println("Off called.")
+        echoClient.send("off", booster2Address)
     }
 
     fun on() {
         println("On called.")
-        echoClient.send("on", address)
+        echoClient.send("on", booster1Address)
+    }
+
+    fun on2() {
+        println("On called.")
+        echoClient.send("on", booster2Address)
     }
 
     fun status() {
         println("Status called.")
-        echoClient.send("status", address)
+        echoClient.send("status", booster1Address)
+    }
+
+    fun status2() {
+        println("Status called.")
+        echoClient.send("status", booster2Address)
     }
 
     fun detect() {
@@ -35,7 +50,14 @@ class Booster(private val boosterActivity: BoosterActivity) : HomeElement {
         println("Turn lamps on: $intensity")
         val msg = "pwm=".toByteArray(Charsets.UTF_8) + intensity.toByte()
         println("pwm=$intensity")
-        echoClient.send(msg, address)
+        echoClient.send(msg, booster1Address)
+    }
+
+    fun changeBooster2(intensity: Int) {
+        println("Turn lamps on: $intensity")
+        val msg = "pwm=".toByteArray(Charsets.UTF_8) + intensity.toByte()
+        println("pwm=$intensity")
+        echoClient.send(msg, booster2Address)
     }
 
     override fun refresh(address: InetAddress, received: String) {
@@ -51,7 +73,10 @@ class Booster(private val boosterActivity: BoosterActivity) : HomeElement {
 
             val result = "Temp: $temp; Humidity: $humidity; Pwm: $pwm"
             println(result)
-            boosterActivity.runOnUiThread {this.boosterActivity.binding.tempText.setText(result)}
+            if (address.hostAddress == booster1Address)
+                boosterActivity.runOnUiThread {this.boosterActivity.binding.tempText.setText(result)}
+            else if (address.hostAddress == booster2Address)
+                boosterActivity.runOnUiThread {this.boosterActivity.binding.tempText2.setText(result)}
         }
     }
 

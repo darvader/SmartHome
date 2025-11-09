@@ -41,17 +41,17 @@ class BoosterActivity : AppCompatActivity() {
         }
         timer.schedule(task, 0, 5000)
 
-        binding.on2.setOnClickListener { booster.on() }
-        binding.off2.setOnClickListener { booster.off() }
+        binding.on2.setOnClickListener { booster.on2() }
+        binding.off2.setOnClickListener { booster.off2() }
         binding.boosterBar2.setOnSeekBarChangeListener(object : ProgressChangedListener() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                booster.changeBooster(progress)
+                booster.changeBooster2(progress)
             }
         })
 
         val task2 = object : TimerTask() {
             override fun run() {
-                booster.status()
+                booster.status2()
             }
         }
         timer2.schedule(task2, 0, 5000)
