@@ -246,6 +246,10 @@ class LedMatrix(): HomeElement {
         send("time4")
     }
 
+    fun startStarWars() {
+        send("timeStarWars")
+    }
+
     fun startSnow() {
         send("timeSnow")
     }

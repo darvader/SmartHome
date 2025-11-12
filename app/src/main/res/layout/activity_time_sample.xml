@@ -96,4 +96,12 @@
         android:text="Ellipse"
         app:layout_constraintStart_toEndOf="@+id/gameOfLife"
         app:layout_constraintTop_toBottomOf="@+id/mandelbrot" />
+
+    <Button
+        android:id="@+id/starWars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="StarWars"
+        app:layout_constraintStart_toEndOf="@+id/ellipse"
+        app:layout_constraintTop_toBottomOf="@+id/csnow" />
 </androidx.constraintlayout.widget.ConstraintLayout>
