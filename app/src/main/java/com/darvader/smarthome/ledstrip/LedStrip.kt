@@ -174,18 +174,24 @@ class LedStrip(private val ledStripActivity: LedStripActivity): HomeElement {
         val layoutParams = button.layoutParams as ConstraintLayout.LayoutParams
         val size = buttons.size
         if (size == 0) {
-            layoutParams.topToBottom = R.id.rain
+            // First button: position below fftRemote button
+            layoutParams.topToBottom = R.id.fftRemote
+            layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            layoutParams.topMargin = 32
         } else {
-            if (size>=4) {
+            if (size >= 4) {
+                // Start new row after 4 buttons
                 layoutParams.topToBottom = buttons[size - 4].id
-                layoutParams.leftToLeft = buttons[size - 4].id
-            }
-            else {
-                layoutParams.topToBottom = R.id.rain
-                layoutParams.leftToRight = buttons[size - 1].id
+                layoutParams.startToStart = buttons[size - 4].id
+                layoutParams.topMargin = 16
+            } else {
+                // Place next to previous button in same row
+                layoutParams.topToBottom = R.id.fftRemote
+                layoutParams.startToEnd = buttons[size - 1].id
+                layoutParams.marginStart = 16
+                layoutParams.topMargin = 32
             }
         }
-        //button.layoutParams = ConstraintLayout.LayoutParams(20, 10)
         this.buttons.add(button)
         //add button to the layout
         ledStripActivity.binding.ledActitivyLayout.addView(button)
